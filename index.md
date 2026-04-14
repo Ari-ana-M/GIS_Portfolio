@@ -1,71 +1,102 @@
-<div style="display:flex; justify-content:center; margin-top:20px;">
+<div style="display:flex; gap:40px; align-items:center; border:2px solid #333; padding:30px; border-radius:10px; margin-top:20px;">
 
-<svg width="600" height="480" viewBox="0 0 600 480">
+<!-- LEFT TEXT CONTENT -->
+<div style="flex:1; min-width:280px;">
+
+<h1 style="margin-bottom:5px;">GIS & Spatial Data Portfolio</h1>
+
+<p style="margin-top:0;"><b>Geospatial Analyst | Data-Driven Workflows | Environmental Systems</b></p>
+
+<h3>Education</h3>
+<ul>
+  <li><b>MSc Geography</b> – University of Waterloo</li>
+  <li>Focus: Climate data & lake ice systems</li>
+</ul>
+
+<h3>Approach</h3>
+<p>
+Workflow-oriented GIS: focusing on how data is acquired, processed, and transformed into usable insight.
+</p>
+
+<h3>Tools & Technologies</h3>
+
+<p>
+<span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">ArcGIS Pro</span>
+<span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">QGIS</span>
+<span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">Python</span>
+<span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">SQL</span>
+<span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">Remote Sensing</span>
+<span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">Spatial Analysis</span>
+</p>
+
+</div>
+
+<!-- RIGHT SVG -->
+<div style="flex:1; display:flex; justify-content:center;">
+
+<svg width="520" height="440" viewBox="0 0 520 440">
 
   <!-- TOP TITLE -->
-  <text x="300" y="25" text-anchor="middle" font-size="18" font-weight="bold">
+  <text x="260" y="25" text-anchor="middle" font-size="18" font-weight="bold">
     Communication & Translation
   </text>
 
-  <text x="300" y="45" text-anchor="middle" font-size="12" fill="gray">
+  <text x="260" y="45" text-anchor="middle" font-size="12">
     Presenting to stakeholders • Interdisciplinary collaboration • Reporting
   </text>
 
   <!-- CIRCLES -->
-  <!-- Left -->
-  <circle cx="180" cy="220" r="120" fill="#44BFC7" fill-opacity="0.6"/>
-
-  <!-- Right -->
-  <circle cx="420" cy="220" r="120" fill="#97D8CD" fill-opacity="0.6"/>
-
-  <!-- Bottom -->
-  <circle cx="300" cy="340" r="120" fill="#F5E8AD" fill-opacity="0.8"/>
+  <circle cx="170" cy="210" r="110" fill="#44BFC7" fill-opacity="0.6"/>
+  <circle cx="350" cy="210" r="110" fill="#97D8CD" fill-opacity="0.6"/>
+  <circle cx="260" cy="320" r="110" fill="#F5E8AD" fill-opacity="0.8"/>
 
   <!-- TITLES -->
-  <text x="180" y="90" text-anchor="middle" font-size="14" font-weight="bold">
+  <text x="170" y="95" text-anchor="middle" font-size="14" font-weight="bold">
     Data Acquisition
   </text>
 
-  <text x="420" y="90" text-anchor="middle" font-size="14" font-weight="bold">
+  <text x="350" y="95" text-anchor="middle" font-size="14" font-weight="bold">
     Geospatial Analysis & Modeling
   </text>
 
-  <text x="300" y="470" text-anchor="middle" font-size="14" font-weight="bold">
+  <text x="260" y="435" text-anchor="middle" font-size="14" font-weight="bold">
     Applied Systems
   </text>
 
   <!-- LEFT TEXT -->
-  <text x="180" y="200" text-anchor="middle" font-size="13" fill="gray">
-    <tspan x="180" dy="0">field surveying</tspan>
-    <tspan x="180" dy="16">remote sensing</tspan>
-    <tspan x="180" dy="16">data sourcing</tspan>
+  <text x="170" y="200" text-anchor="middle" font-size="13">
+    <tspan x="170" dy="0">field surveying</tspan>
+    <tspan x="170" dy="16">remote sensing</tspan>
+    <tspan x="170" dy="16">data sourcing</tspan>
   </text>
 
-  <!-- RIGHT TEXT -->
-  <text x="420" y="200" text-anchor="middle" font-size="13" fill="gray">
-    <tspan x="420" dy="0">GIS (ArcGIS, QGIS)</tspan>
-    <tspan x="420" dy="16">Python</tspan>
-    <tspan x="420" dy="16">Spatial Analysis</tspan>
-    <tspan x="420" dy="16">Climate modelling</tspan>
-    <tspan x="420" dy="16">workflows</tspan>
+  <!-- RIGHT TEXT (RAISED) -->
+  <text x="350" y="185" text-anchor="middle" font-size="13">
+    <tspan x="350" dy="0">GIS (ArcGIS, QGIS)</tspan>
+    <tspan x="350" dy="16">Python</tspan>
+    <tspan x="350" dy="16">Spatial Analysis</tspan>
+    <tspan x="350" dy="16">Climate modelling</tspan>
+    <tspan x="350" dy="16">workflows</tspan>
   </text>
 
   <!-- BOTTOM TEXT -->
-  <text x="300" y="350" text-anchor="middle" font-size="13" fill="gray">
-    <tspan x="300" dy="0">Policy</tspan>
-    <tspan x="300" dy="16">Planning</tspan>
-    <tspan x="300" dy="16">Environmental Systems</tspan>
-    <tspan x="300" dy="16">Infrastructure Applications</tspan>
+  <text x="260" y="315" text-anchor="middle" font-size="13">
+    <tspan x="260" dy="0">Policy</tspan>
+    <tspan x="260" dy="16">Planning</tspan>
+    <tspan x="260" dy="16">Environmental Systems</tspan>
+    <tspan x="260" dy="16">Infrastructure Applications</tspan>
   </text>
 
-  <!-- CENTER LABEL -->
-  <rect x="235" y="260" width="130" height="55" rx="10" fill="white" opacity="0.9"/>
-  <text x="300" y="285" text-anchor="middle" font-size="12" font-weight="bold">
-    <tspan x="300" dy="0">End-to-End</tspan>
-    <tspan x="300" dy="14">Geospatial</tspan>
-    <tspan x="300" dy="14">Workflows</tspan>
+  <!-- CENTER LABEL (FIXED) -->
+  <rect x="210" y="245" width="100" height="45" rx="8" fill="white" opacity="0.95"/>
+  <text x="260" y="265" text-anchor="middle" font-size="11" font-weight="bold">
+    <tspan x="260" dy="0">End-to-End</tspan>
+    <tspan x="260" dy="13">Geospatial</tspan>
+    <tspan x="260" dy="13">Workflows</tspan>
   </text>
 
 </svg>
+
+</div>
 
 </div>
