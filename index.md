@@ -94,8 +94,8 @@ Workflow-oriented GIS: focusing on how data is acquired, processed, and transfor
   </text>
 
   <!-- CENTER LABEL (FIXED) -->
-  <rect x="210" y="210" width="100" height="45" rx="8" fill="white" opacity="0.40"/>
-  <text x="260" y="220" text-anchor="middle" font-size="11" font-weight="bold">
+  <rect x="210" y="230" width="100" height="45" rx="8" fill="white" opacity="0.40"/>
+  <text x="260" y="240" text-anchor="middle" font-size="11" font-weight="bold">
     <tspan x="260" dy="0">End-to-End</tspan>
     <tspan x="260" dy="13">Geospatial</tspan>
     <tspan x="260" dy="13">Workflows</tspan>
