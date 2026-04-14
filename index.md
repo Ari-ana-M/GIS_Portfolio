@@ -8,9 +8,25 @@
 <p style="margin-top:0;"><b>Geospatial Analyst | Data-Driven Workflows | Environmental Systems</b></p>
 
 <h3>Education</h3>
-<ul>
-  <li><b>MSc Geography</b> – University of Waterloo</li>
-  <li>Focus: Climate data & lake ice systems</li>
+
+<ul style="list-style-type: none; padding-left: 0;">
+
+  <li>
+    <b>Honors BA Environmental Studies</b> – Wilfrid Laurier University
+    <ul style="list-style-type: none; margin-top:5px; margin-bottom:10px; padding-left:20px;">
+      <li>Option in Geomatics and Minor in Sociology</li>
+      <li>GPA: 3.8</li>
+    </ul>
+  </li>
+
+  <li>
+    <b>MSc Geography</b> – University of Waterloo
+    <ul style="list-style-type: none; margin-top:5px; padding-left:20px;">
+      <li>Focus: Climate data & lake ice systems</li>
+      <li>GPA: 3.8</li>
+    </ul>
+  </li>
+
 </ul>
 
 <h3>Approach</h3>
