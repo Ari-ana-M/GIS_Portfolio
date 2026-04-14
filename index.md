@@ -36,7 +36,7 @@ Workflow-oriented GIS: focusing on how data is acquired, processed, and transfor
 <div style="flex:1; display:flex; justify-content:center;">
 
 <svg width="520" height="465" viewBox="0 0 520 440">
-<rect x="10" y="60" width="500" height="400" 
+<rect x="10" y="60" width="500" height="380" 
       fill="none" 
       stroke="#333" 
       stroke-width="1" 
@@ -52,7 +52,7 @@ Workflow-oriented GIS: focusing on how data is acquired, processed, and transfor
   </text>
 
   <!-- CIRCLES -->
-  <circle cx="170" cy="210" r="110" fill="#44BFC7" fill-opacity="0.6"/>
+  <circle cx="170" cy="210" r="110" fill="#44BFC7" fill-opacity="0.8"/>
   <circle cx="350" cy="210" r="110" fill="#97D8CD" fill-opacity="0.6"/>
   <circle cx="260" cy="320" r="110" fill="#F5E8AD" fill-opacity="0.8"/>
 
@@ -70,7 +70,7 @@ Workflow-oriented GIS: focusing on how data is acquired, processed, and transfor
   </text>
 
   <!-- LEFT TEXT -->
-  <text x="170" y="180" text-anchor="middle" font-size="13">
+  <text x="170" y="160" text-anchor="middle" font-size="13">
     <tspan x="170" dy="0">Field Surveying</tspan>
     <tspan x="170" dy="16">Remote Sensing</tspan>
     <tspan x="170" dy="16">Data Sourcing</tspan>
@@ -94,8 +94,8 @@ Workflow-oriented GIS: focusing on how data is acquired, processed, and transfor
   </text>
 
   <!-- CENTER LABEL (FIXED) -->
-  <rect x="210" y="245" width="100" height="45" rx="8" fill="white" opacity="0.20"/>
-  <text x="260" y="265" text-anchor="middle" font-size="11" font-weight="bold">
+  <rect x="210" y="225" width="100" height="45" rx="8" fill="white" opacity="0.20"/>
+  <text x="260" y="250" text-anchor="middle" font-size="11" font-weight="bold">
     <tspan x="260" dy="0">End-to-End</tspan>
     <tspan x="260" dy="13">Geospatial</tspan>
     <tspan x="260" dy="13">Workflows</tspan>
