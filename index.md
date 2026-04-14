@@ -35,7 +35,7 @@ Workflow-oriented GIS: focusing on how data is acquired, processed, and transfor
 
 <div style="flex:1; display:flex; justify-content:center;">
 
-<svg width="520" height="440" viewBox="0 0 520 440">
+<svg width="520" height="465" viewBox="0 0 520 440">
 <rect x="10" y="60" width="500" height="400" 
       fill="none" 
       stroke="#333" 
@@ -70,10 +70,10 @@ Workflow-oriented GIS: focusing on how data is acquired, processed, and transfor
   </text>
 
   <!-- LEFT TEXT -->
-  <text x="170" y="200" text-anchor="middle" font-size="13">
-    <tspan x="170" dy="0">field surveying</tspan>
-    <tspan x="170" dy="16">remote sensing</tspan>
-    <tspan x="170" dy="16">data sourcing</tspan>
+  <text x="170" y="220" text-anchor="middle" font-size="13">
+    <tspan x="170" dy="0">Field Surveying</tspan>
+    <tspan x="170" dy="16">Remote Sensing</tspan>
+    <tspan x="170" dy="16">Data Sourcing</tspan>
   </text>
 
   <!-- RIGHT TEXT (RAISED) -->
