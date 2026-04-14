@@ -32,6 +32,11 @@ Workflow-oriented GIS: focusing on how data is acquired, processed, and transfor
 </div>
 
 <!-- RIGHT SVG -->
+<rect x="10" y="60" width="500" height="360" 
+      fill="none" 
+      stroke="#333" 
+      stroke-width="2" 
+      rx="10"/>
 <div style="flex:1; display:flex; justify-content:center;">
 
 <svg width="520" height="440" viewBox="0 0 520 440">
