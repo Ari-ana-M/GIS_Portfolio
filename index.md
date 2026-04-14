@@ -35,7 +35,7 @@ Workflow-oriented GIS: focusing on how data is acquired, processed, and transfor
 
 <div style="flex:1; display:flex; justify-content:center;">
 
-<svg width="520" height="465" viewBox="0 0 520 440">
+<svg width="520" height="475" viewBox="0 0 520 440">
 <rect x="10" y="60" width="500" height="395" 
       fill="none" 
       stroke="#333" 
@@ -94,7 +94,7 @@ Workflow-oriented GIS: focusing on how data is acquired, processed, and transfor
   </text>
 
   <!-- CENTER LABEL (FIXED) -->
-  <rect x="210" y="240" width="100" height="45" rx="8" fill="white" opacity="0.20"/>
+  <rect x="210" y="230" width="100" height="45" rx="8" fill="white" opacity="0.20"/>
   <text x="260" y="250" text-anchor="middle" font-size="11" font-weight="bold">
     <tspan x="260" dy="0">End-to-End</tspan>
     <tspan x="260" dy="13">Geospatial</tspan>
