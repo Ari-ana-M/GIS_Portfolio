@@ -1,70 +1,71 @@
-<div style="border:1px solid #ddd; border-radius:12px; padding:20px; margin-bottom:30px; background:#fafafa;">
+<div style="display:flex; justify-content:center; margin-top:20px;">
 
-<div style="display:flex; flex-wrap:wrap; gap:20px;">
+<svg width="600" height="480" viewBox="0 0 600 480">
 
-<!-- LEFT SIDE -->
-<div style="flex:1; min-width:280px;">
+  <!-- TOP TITLE -->
+  <text x="300" y="25" text-anchor="middle" font-size="18" font-weight="bold">
+    Communication & Translation
+  </text>
 
-<h1 style="margin-bottom:5px;">GIS & Spatial Data Portfolio</h1>
+  <text x="300" y="45" text-anchor="middle" font-size="12" fill="gray">
+    Presenting to stakeholders • Interdisciplinary collaboration • Reporting
+  </text>
 
-<p style="margin-top:0;"><b>Geospatial Analyst | Data-Driven Workflows | Environmental Systems</b></p>
+  <!-- CIRCLES -->
+  <!-- Left -->
+  <circle cx="180" cy="220" r="120" fill="#44BFC7" fill-opacity="0.6"/>
 
-<h3>Education</h3>
-<ul>
-  <li><b>MSc Geography</b> – University of Waterloo</li>
-  <li>Focus: Climate data & lake ice systems</li>
-</ul>
+  <!-- Right -->
+  <circle cx="420" cy="220" r="120" fill="#97D8CD" fill-opacity="0.6"/>
 
-<h3>Approach</h3>
-<p style="margin-bottom:0;">
-Workflow-oriented GIS: focusing on how data is acquired, processed, and transformed into usable insight.
-</p>
+  <!-- Bottom -->
+  <circle cx="300" cy="340" r="120" fill="#F5E8AD" fill-opacity="0.8"/>
 
-</div>
+  <!-- TITLES -->
+  <text x="180" y="90" text-anchor="middle" font-size="14" font-weight="bold">
+    Data Acquisition
+  </text>
 
-<!-- RIGHT SIDE (VENN DIAGRAM) -->
-<div style="flex:1; min-width:280px; display:flex; justify-content:center; align-items:center;">
+  <text x="420" y="90" text-anchor="middle" font-size="14" font-weight="bold">
+    Geospatial Analysis & Modeling
+  </text>
 
-<div style="position:relative; width:220px; height:220px;">
+  <text x="300" y="470" text-anchor="middle" font-size="14" font-weight="bold">
+    Applied Systems
+  </text>
 
-<!-- Circle 1 -->
-<div style="position:absolute; width:140px; height:140px; border-radius:50%; background:#44BFC7; opacity:0.6; top:20px; left:0;"></div>
+  <!-- LEFT TEXT -->
+  <text x="180" y="200" text-anchor="middle" font-size="13" fill="gray">
+    <tspan x="180" dy="0">field surveying</tspan>
+    <tspan x="180" dy="16">remote sensing</tspan>
+    <tspan x="180" dy="16">data sourcing</tspan>
+  </text>
 
-<!-- Circle 2 -->
-<div style="position:absolute; width:140px; height:140px; border-radius:50%; background:#97D8CD; opacity:0.6; top:20px; right:0;"></div>
+  <!-- RIGHT TEXT -->
+  <text x="420" y="200" text-anchor="middle" font-size="13" fill="gray">
+    <tspan x="420" dy="0">GIS (ArcGIS, QGIS)</tspan>
+    <tspan x="420" dy="16">Python</tspan>
+    <tspan x="420" dy="16">Spatial Analysis</tspan>
+    <tspan x="420" dy="16">Climate modelling</tspan>
+    <tspan x="420" dy="16">workflows</tspan>
+  </text>
 
-<!-- Circle 3 -->
-<div style="position:absolute; width:140px; height:140px; border-radius:50%; background:#F5E8AD; opacity:0.7; bottom:0; left:40px;"></div>
+  <!-- BOTTOM TEXT -->
+  <text x="300" y="350" text-anchor="middle" font-size="13" fill="gray">
+    <tspan x="300" dy="0">Policy</tspan>
+    <tspan x="300" dy="16">Planning</tspan>
+    <tspan x="300" dy="16">Environmental Systems</tspan>
+    <tspan x="300" dy="16">Infrastructure Applications</tspan>
+  </text>
 
-<!-- Labels -->
-<div style="position:absolute; top:10px; left:10px; font-size:12px;">GIS</div>
-<div style="position:absolute; top:10px; right:10px; font-size:12px;">Data</div>
-<div style="position:absolute; bottom:5px; left:80px; font-size:12px;">Environment</div>
+  <!-- CENTER LABEL -->
+  <rect x="235" y="260" width="130" height="55" rx="10" fill="white" opacity="0.9"/>
+  <text x="300" y="285" text-anchor="middle" font-size="12" font-weight="bold">
+    <tspan x="300" dy="0">End-to-End</tspan>
+    <tspan x="300" dy="14">Geospatial</tspan>
+    <tspan x="300" dy="14">Workflows</tspan>
+  </text>
 
-<div style="position:absolute; top:90px; left:70px; font-size:13px; font-weight:bold;">
-Integration
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- BOTTOM ROW (TOOLS) -->
-<div style="margin-top:20px;">
-
-<h3>Tools & Technologies</h3>
-
-<p>
-<span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">ArcGIS Pro</span>
-<span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">QGIS</span>
-<span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">Python</span>
-<span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">SQL</span>
-<span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">Remote Sensing</span>
-<span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">Spatial Analysis</span>
-</p>
-
-</div>
+</svg>
 
 </div>
