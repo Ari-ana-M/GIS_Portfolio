@@ -77,7 +77,7 @@ Workflow-oriented GIS: focusing on how data is acquired, processed, and transfor
   </text>
 
   <!-- RIGHT TEXT (RAISED) -->
-  <text x="350" y="185" text-anchor="middle" font-size="13">
+  <text x="350" y="150" text-anchor="middle" font-size="13">
     <tspan x="350" dy="0">GIS (ArcGIS, QGIS)</tspan>
     <tspan x="350" dy="16">Python</tspan>
     <tspan x="350" dy="16">Spatial Analysis</tspan>
@@ -94,7 +94,7 @@ Workflow-oriented GIS: focusing on how data is acquired, processed, and transfor
   </text>
 
   <!-- CENTER LABEL (FIXED) -->
-  <rect x="210" y="245" width="100" height="45" rx="8" fill="white" opacity="0.95"/>
+  <rect x="210" y="245" width="100" height="45" rx="8" fill="white" opacity="0.20"/>
   <text x="260" y="265" text-anchor="middle" font-size="11" font-weight="bold">
     <tspan x="260" dy="0">End-to-End</tspan>
     <tspan x="260" dy="13">Geospatial</tspan>
