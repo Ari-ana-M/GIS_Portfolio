@@ -70,7 +70,7 @@ Workflow-oriented GIS: focusing on how data is acquired, processed, and transfor
   </text>
 
   <!-- LEFT TEXT -->
-  <text x="170" y="220" text-anchor="middle" font-size="13">
+  <text x="170" y="180" text-anchor="middle" font-size="13">
     <tspan x="170" dy="0">Field Surveying</tspan>
     <tspan x="170" dy="16">Remote Sensing</tspan>
     <tspan x="170" dy="16">Data Sourcing</tspan>
