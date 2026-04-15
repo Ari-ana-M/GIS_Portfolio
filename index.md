@@ -150,12 +150,38 @@ Workflow-oriented GIS: focusing on how data is acquired, processed, and transfor
 </div>
 
 <!-- PROJECT LIST -->
-<div style="margin-top:20px;">
-  <h3>Project List</h3>
-  <ul id="project-list" style="cursor:pointer;"></ul>
+<div style="display:flex; height:600px; margin-top:40px; border:2px solid #333; border-radius:10px; overflow:hidden;">
+
+  <!-- SIDEBAR -->
+  <div style="width:300px; padding:15px; overflow-y:auto; background:#fafafa; border-right:1px solid #ccc;">
+
+    <h3>Legend</h3>
+    <p><span style="color:green;">●</span> Applied GIS</p>
+    <p><span style="color:purple;">●</span> Technical</p>
+    <p><span style="color:blue;">●</span> Research</p>
+
+    <hr>
+
+    <h3>Projects</h3>
+    <ul id="project-list" style="padding-left:15px;"></ul>
+
+  </div>
+
+  <!-- MAP -->
+  <div id="map" style="flex:1;"></div>
+
 </div>
 
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css"/>
+<script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+
 <script>
+
+// INIT MAP
 var map = L.map('map').setView([45, -80], 5);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -169,125 +195,50 @@ function getColor(category) {
   return "blue";
 }
 
-// STORE MARKERS BY CATEGORY
-const layers = {
-  "Applied GIS": L.layerGroup().addTo(map),
-  "Technical": L.layerGroup().addTo(map),
-  "Research": L.layerGroup().addTo(map)
-};
+// CLUSTER GROUP
+var clusterGroup = L.markerClusterGroup();
 
-// PROJECT DATA (ALL POINTS)
+// PROJECT DATA
 const projects = [
 
-  // 🟢 Applied GIS (ALL 3 LOCATIONS SEPARATE)
-  {
-    category: "Applied GIS",
-    title: "Field Research Assistant — Sauble Beach",
-    coords: [44.6296, -81.26508],
-    description: "Field data collection using GPS/RTK for coastal monitoring."
-  },
-  {
-    category: "Applied GIS",
-    title: "Field Research Assistant — Burlington Beach",
-    coords: [43.31523, -79.80701],
-    description: "QA/QC and GIS integration of coastal monitoring data."
-  },
-  {
-    category: "Applied GIS",
-    title: "Field Research Assistant — Wasaga Beach",
-    coords: [44.52372, -80.0033],
-    description: "Integrated field observations into spatial analysis workflows."
-  },
+  // 🟢 Applied GIS
+  { category:"Applied GIS", title:"Sauble Beach Field Work", coords:[44.6296,-81.26508], description:"Coastal monitoring using RTK GNSS" },
+  { category:"Applied GIS", title:"Burlington Beach Field Work", coords:[43.31523,-79.80701], description:"QA/QC and GIS integration" },
+  { category:"Applied GIS", title:"Wasaga Beach Field Work", coords:[44.52372,-80.0033], description:"Spatial workflow integration" },
 
-  {
-    category: "Applied GIS",
-    title: "Invasive Species Monitoring — Bernard Lake",
-    coords: [45.72458, -79.3857],
-    description: "Analyzed Phragmites spread using GIS and remote sensing.",
-    link: "https://www.youtube.com/watch?v=5Io_79IMANw"
-  },
+  { category:"Applied GIS", title:"Phragmites Monitoring — Bernard Lake", coords:[45.72458,-79.3857], link:"https://www.youtube.com/watch?v=5Io_79IMANw" },
 
-  {
-    category: "Applied GIS",
-    title: "Municipal Housing Planning — Cambridge",
-    coords: [43.40175, -80.32597],
-    description: "GIS + policy analysis for housing planning."
-  },
+  { category:"Applied GIS", title:"Housing Planning — Cambridge", coords:[43.40175,-80.32597] },
 
   // 🟣 Technical
-  {
-    category: "Technical",
-    title: "Climate Data Analysis — Africa",
-    coords: [0, 20],
-    description: "Climate resilience research and synthesis.",
-    link: "https://ecologyandsociety.org/vol29/iss3/art22/"
-  },
+  { category:"Technical", title:"Climate Data Research — Africa", coords:[0,20], link:"https://ecologyandsociety.org/vol29/iss3/art22/" },
 
-  {
-    category: "Technical",
-    title: "ReSEC — Great Bear Lake",
-    coords: [66, -121],
-    description: "Remote sensing + climate workflows."
-  },
-  {
-    category: "Technical",
-    title: "ReSEC — Great Slave Lake",
-    coords: [61, -114],
-    description: "Spatial analysis of lake ice systems."
-  },
+  { category:"Technical", title:"ReSEC — Great Bear Lake", coords:[66,-121] },
+  { category:"Technical", title:"ReSEC — Great Slave Lake", coords:[61,-114] },
 
   // 🔵 Research (ALL LAKES)
-  {
-    category: "Research",
-    title: "ERA5-Land — Great Bear Lake",
-    coords: [66, -121]
-  },
-  {
-    category: "Research",
-    title: "ERA5-Land — Great Slave Lake",
-    coords: [61, -114]
-  },
-  {
-    category: "Research",
-    title: "ERA5-Land — Lake Athabasca",
-    coords: [59, -109]
-  },
-  {
-    category: "Research",
-    title: "ERA5-Land — Lake Winnipeg",
-    coords: [52, -97]
-  },
-  {
-    category: "Research",
-    title: "ERA5-Land — Lake Superior",
-    coords: [47.7, -87.5]
-  },
-  {
-    category: "Research",
-    title: "ERA5-Land — Lake Huron",
-    coords: [45.0, -82.4]
-  },
-  {
-    category: "Research",
-    title: "ERA5-Land — Lake Erie",
-    coords: [42.2, -81.2],
-    link: "https://uwspace.uwaterloo.ca/items/b983d97f-d2ec-4c1a-a6d0-82be963c476a"
-  }
+  { category:"Research", title:"ERA5 — Great Bear Lake", coords:[66,-121] },
+  { category:"Research", title:"ERA5 — Great Slave Lake", coords:[61,-114] },
+  { category:"Research", title:"ERA5 — Lake Athabasca", coords:[59,-109] },
+  { category:"Research", title:"ERA5 — Lake Winnipeg", coords:[52,-97] },
+  { category:"Research", title:"ERA5 — Lake Superior", coords:[47.7,-87.5] },
+  { category:"Research", title:"ERA5 — Lake Huron", coords:[45,-82.4] },
+  { category:"Research", title:"ERA5 — Lake Erie", coords:[42.2,-81.2], link:"https://uwspace.uwaterloo.ca/items/b983d97f-d2ec-4c1a-a6d0-82be963c476a" }
 
 ];
 
-// STORE MARKERS FOR CLICKING
+// STORE MARKERS
 const markerRefs = [];
 
 // ADD MARKERS
-projects.forEach((p, index) => {
+projects.forEach((p, i) => {
 
   let marker = L.circleMarker(p.coords, {
-    radius: 8,
-    fillColor: getColor(p.category),
-    color: "#000",
-    weight: 1,
-    fillOpacity: 0.8
+    radius:8,
+    fillColor:getColor(p.category),
+    color:"#000",
+    weight:1,
+    fillOpacity:0.8
   });
 
   let popup = `<b>${p.title}</b>`;
@@ -296,27 +247,22 @@ projects.forEach((p, index) => {
 
   marker.bindPopup(popup);
 
-  marker.addTo(layers[p.category]);
+  clusterGroup.addLayer(marker);
 
-  markerRefs.push({ marker, data: p });
+  markerRefs.push({ marker, data:p });
 
 });
 
-// FILTER FUNCTION
-function toggleCategory(category) {
-  if (map.hasLayer(layers[category])) {
-    map.removeLayer(layers[category]);
-  } else {
-    map.addLayer(layers[category]);
-  }
-}
+map.addLayer(clusterGroup);
 
-// BUILD CLICKABLE LIST
+// BUILD SIDEBAR LIST
 const list = document.getElementById("project-list");
 
-markerRefs.forEach((item, i) => {
+markerRefs.forEach(item => {
+
   let li = document.createElement("li");
   li.innerText = item.data.title;
+  li.style.cursor = "pointer";
 
   li.onclick = () => {
     map.setView(item.data.coords, 7);
@@ -324,5 +270,7 @@ markerRefs.forEach((item, i) => {
   };
 
   list.appendChild(li);
+
 });
+
 </script>
