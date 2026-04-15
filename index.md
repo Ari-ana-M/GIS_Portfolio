@@ -135,4 +135,109 @@ Workflow-oriented GIS: focusing on how data is acquired, processed, and transfor
 
 </div>
 
+<div id="map" style="height:500px; margin-top:40px;"></div>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script>
+var map = L.map('map').setView([45, -80], 5);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap'
+}).addTo(map);
+
+// ICON COLORS
+function getColor(category) {
+  if (category === "Applied GIS") return "green";
+  if (category === "Technical") return "purple";
+  return "blue";
+}
+
+// PROJECTS
+const projects = [
+
+  // 🟢 Applied GIS
+  {
+    category: "Applied GIS",
+    title: "Field Research Assistant — Coastal Monitoring",
+    coords: [44.6296, -81.26508],
+    description: "Collected high-accuracy field data using GPS and RTK GNSS to support environmental analysis."
+  },
+  {
+    category: "Applied GIS",
+    title: "Field Research Assistant — Coastal Monitoring",
+    coords: [43.31523, -79.80701],
+    description: "Field data collection and QA/QC for coastal monitoring."
+  },
+  {
+    category: "Applied GIS",
+    title: "Field Research Assistant — Coastal Monitoring",
+    coords: [44.52372, -80.0033],
+    description: "Integrated field data into GIS workflows for analysis."
+  },
+
+  {
+    category: "Applied GIS",
+    title: "Invasive Species Monitoring",
+    coords: [45.72458, -79.3857],
+    description: "Analyzed Phragmites spread using GIS and remote sensing.",
+    link: "https://www.youtube.com/watch?v=5Io_79IMANw"
+  },
+
+  {
+    category: "Applied GIS",
+    title: "Municipal Housing Planning",
+    coords: [43.40175, -80.32597],
+    description: "GIS and policy analysis for housing and planning initiatives."
+  },
+
+  // 🟣 Technical
+  {
+    category: "Technical",
+    title: "Climate Data Analysis (Africa)",
+    coords: [0, 20],
+    description: "Climate resilience research and data synthesis.",
+    link: "https://ecologyandsociety.org/vol29/iss3/art22/"
+  },
+
+  {
+    category: "Technical",
+    title: "ReSEC Lake Ice Research",
+    coords: [66, -120],
+    description: "Remote sensing and Python-based climate data workflows."
+  },
+
+  // 🔵 Research
+  {
+    category: "Research",
+    title: "MSc Thesis — ERA5-Land",
+    coords: [50, -90],
+    description: "Assessment of lake ice variables across Canadian lakes.",
+    link: "https://uwspace.uwaterloo.ca/items/b983d97f-d2ec-4c1a-a6d0-82be963c476a"
+  }
+
+];
+
+// ADD MARKERS
+projects.forEach(p => {
+  var marker = L.circleMarker(p.coords, {
+    radius: 8,
+    fillColor: getColor(p.category),
+    color: "#000",
+    weight: 1,
+    fillOpacity: 0.8
+  }).addTo(map);
+
+  let popup = `<b>${p.title}</b><br>${p.description}`;
+
+  if (p.link) {
+    popup += `<br><a href="${p.link}" target="_blank">View Project</a>`;
+  }
+
+  marker.bindPopup(popup);
+});
+</script>
+
+
 </div>
