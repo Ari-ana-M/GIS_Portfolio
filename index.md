@@ -142,6 +142,19 @@ Workflow-oriented GIS: focusing on how data is acquired, processed, and transfor
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
+<!-- FILTERS -->
+<div style="margin-top:20px;">
+  <label><input type="checkbox" checked onclick="toggleCategory('Applied GIS')"> 🟢 Applied GIS</label>
+  <label style="margin-left:15px;"><input type="checkbox" checked onclick="toggleCategory('Technical')"> 🟣 Technical</label>
+  <label style="margin-left:15px;"><input type="checkbox" checked onclick="toggleCategory('Research')"> 🔵 Research</label>
+</div>
+
+<!-- PROJECT LIST -->
+<div style="margin-top:20px;">
+  <h3>Project List</h3>
+  <ul id="project-list" style="cursor:pointer;"></ul>
+</div>
+
 <script>
 var map = L.map('map').setView([45, -80], 5);
 
@@ -149,39 +162,46 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '© OpenStreetMap'
 }).addTo(map);
 
-// ICON COLORS
+// COLOR FUNCTION
 function getColor(category) {
   if (category === "Applied GIS") return "green";
   if (category === "Technical") return "purple";
   return "blue";
 }
 
-// PROJECTS
+// STORE MARKERS BY CATEGORY
+const layers = {
+  "Applied GIS": L.layerGroup().addTo(map),
+  "Technical": L.layerGroup().addTo(map),
+  "Research": L.layerGroup().addTo(map)
+};
+
+// PROJECT DATA (ALL POINTS)
 const projects = [
 
-  // 🟢 Applied GIS
+  // 🟢 Applied GIS (ALL 3 LOCATIONS SEPARATE)
   {
     category: "Applied GIS",
-    title: "Field Research Assistant — Coastal Monitoring",
+    title: "Field Research Assistant — Sauble Beach",
     coords: [44.6296, -81.26508],
-    description: "Collected high-accuracy field data using GPS and RTK GNSS to support environmental analysis."
+    description: "Field data collection using GPS/RTK for coastal monitoring."
   },
   {
     category: "Applied GIS",
-    title: "Field Research Assistant — Coastal Monitoring",
+    title: "Field Research Assistant — Burlington Beach",
     coords: [43.31523, -79.80701],
-    description: "Field data collection and QA/QC for coastal monitoring."
+    description: "QA/QC and GIS integration of coastal monitoring data."
   },
   {
     category: "Applied GIS",
-    title: "Field Research Assistant — Coastal Monitoring",
+    title: "Field Research Assistant — Wasaga Beach",
     coords: [44.52372, -80.0033],
-    description: "Integrated field data into GIS workflows for analysis."
+    description: "Integrated field observations into spatial analysis workflows."
   },
 
   {
     category: "Applied GIS",
-    title: "Invasive Species Monitoring",
+    title: "Invasive Species Monitoring — Bernard Lake",
     coords: [45.72458, -79.3857],
     description: "Analyzed Phragmites spread using GIS and remote sensing.",
     link: "https://www.youtube.com/watch?v=5Io_79IMANw"
@@ -189,54 +209,120 @@ const projects = [
 
   {
     category: "Applied GIS",
-    title: "Municipal Housing Planning",
+    title: "Municipal Housing Planning — Cambridge",
     coords: [43.40175, -80.32597],
-    description: "GIS and policy analysis for housing and planning initiatives."
+    description: "GIS + policy analysis for housing planning."
   },
 
   // 🟣 Technical
   {
     category: "Technical",
-    title: "Climate Data Analysis (Africa)",
+    title: "Climate Data Analysis — Africa",
     coords: [0, 20],
-    description: "Climate resilience research and data synthesis.",
+    description: "Climate resilience research and synthesis.",
     link: "https://ecologyandsociety.org/vol29/iss3/art22/"
   },
 
   {
     category: "Technical",
-    title: "ReSEC Lake Ice Research",
-    coords: [66, -120],
-    description: "Remote sensing and Python-based climate data workflows."
+    title: "ReSEC — Great Bear Lake",
+    coords: [66, -121],
+    description: "Remote sensing + climate workflows."
+  },
+  {
+    category: "Technical",
+    title: "ReSEC — Great Slave Lake",
+    coords: [61, -114],
+    description: "Spatial analysis of lake ice systems."
   },
 
-  // 🔵 Research
+  // 🔵 Research (ALL LAKES)
   {
     category: "Research",
-    title: "MSc Thesis — ERA5-Land",
-    coords: [50, -90],
-    description: "Assessment of lake ice variables across Canadian lakes.",
+    title: "ERA5-Land — Great Bear Lake",
+    coords: [66, -121]
+  },
+  {
+    category: "Research",
+    title: "ERA5-Land — Great Slave Lake",
+    coords: [61, -114]
+  },
+  {
+    category: "Research",
+    title: "ERA5-Land — Lake Athabasca",
+    coords: [59, -109]
+  },
+  {
+    category: "Research",
+    title: "ERA5-Land — Lake Winnipeg",
+    coords: [52, -97]
+  },
+  {
+    category: "Research",
+    title: "ERA5-Land — Lake Superior",
+    coords: [47.7, -87.5]
+  },
+  {
+    category: "Research",
+    title: "ERA5-Land — Lake Huron",
+    coords: [45.0, -82.4]
+  },
+  {
+    category: "Research",
+    title: "ERA5-Land — Lake Erie",
+    coords: [42.2, -81.2],
     link: "https://uwspace.uwaterloo.ca/items/b983d97f-d2ec-4c1a-a6d0-82be963c476a"
   }
 
 ];
 
+// STORE MARKERS FOR CLICKING
+const markerRefs = [];
+
 // ADD MARKERS
-projects.forEach(p => {
-  var marker = L.circleMarker(p.coords, {
+projects.forEach((p, index) => {
+
+  let marker = L.circleMarker(p.coords, {
     radius: 8,
     fillColor: getColor(p.category),
     color: "#000",
     weight: 1,
     fillOpacity: 0.8
-  }).addTo(map);
+  });
 
-  let popup = `<b>${p.title}</b><br>${p.description}`;
-
-  if (p.link) {
-    popup += `<br><a href="${p.link}" target="_blank">View Project</a>`;
-  }
+  let popup = `<b>${p.title}</b>`;
+  if (p.description) popup += `<br>${p.description}`;
+  if (p.link) popup += `<br><a href="${p.link}" target="_blank">View Project</a>`;
 
   marker.bindPopup(popup);
+
+  marker.addTo(layers[p.category]);
+
+  markerRefs.push({ marker, data: p });
+
+});
+
+// FILTER FUNCTION
+function toggleCategory(category) {
+  if (map.hasLayer(layers[category])) {
+    map.removeLayer(layers[category]);
+  } else {
+    map.addLayer(layers[category]);
+  }
+}
+
+// BUILD CLICKABLE LIST
+const list = document.getElementById("project-list");
+
+markerRefs.forEach((item, i) => {
+  let li = document.createElement("li");
+  li.innerText = item.data.title;
+
+  li.onclick = () => {
+    map.setView(item.data.coords, 7);
+    item.marker.openPopup();
+  };
+
+  list.appendChild(li);
 });
 </script>
