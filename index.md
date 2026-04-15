@@ -135,6 +135,8 @@ Workflow-oriented GIS: focusing on how data is acquired, processed, and transfor
 
 </div>
 
+</div>
+
 <div id="map" style="height:500px; margin-top:40px;"></div>
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
@@ -238,6 +240,3 @@ projects.forEach(p => {
   marker.bindPopup(popup);
 });
 </script>
-
-
-</div>
