@@ -140,34 +140,39 @@ Workflow-oriented GIS: focusing on how data is acquired, processed, and transfor
 <!-- MAP + SIDEBAR CONTAINER -->
 <!-- MAP + SIDEBAR + INFO PANEL -->
 <!-- MAP CONTAINER (WIDER) -->
-<div style="position:relative; margin-top:40px; border:2px solid #333; border-radius:10px; overflow:hidden;">
-  
-  <!-- FILTER (TOP LEFT OVERLAY) -->
-  <div style="position:absolute; top:10px; left:10px; z-index:1000; background:white; padding:10px; border-radius:8px; border:1px solid #ccc;">
-    <b>Filter</b><br>
+<!-- MAIN LAYOUT -->
+<div style="display:flex; height:750px; margin-top:40px; border:2px solid #333; border-radius:10px; overflow:hidden;">
+
+  <!-- LEFT PANEL (COLLAPSIBLE) -->
+  <div id="leftPanel" style="width:320px; background:#fafafa; border-right:1px solid #ccc; padding:15px; overflow-y:auto; transition:0.3s;">
+
+    <button onclick="toggleLeftPanel()" style="margin-bottom:10px;">☰</button>
+
+    <h3>Filter</h3>
     <label><input type="checkbox" checked onchange="toggleCategory('Applied GIS')"> 🟢 Applied GIS</label><br>
     <label><input type="checkbox" checked onchange="toggleCategory('Technical')"> 🟣 Technical</label><br>
     <label><input type="checkbox" checked onchange="toggleCategory('Research')"> 🔵 Research</label>
+
+    <hr>
+
+    <h3>Projects</h3>
+    <div id="project-list"></div>
+
   </div>
 
   <!-- MAP -->
-  <div id="map" style="height:700px; width:100%;"></div>
+  <div id="map" style="flex:1;"></div>
 
-  <!-- RIGHT PANEL (HIDDEN BY DEFAULT) -->
+  <!-- RIGHT PANEL -->
   <div id="infoPanel" style="
-    position:absolute;
-    top:0;
-    right:-400px;
     width:400px;
-    height:100%;
     background:white;
     border-left:2px solid #333;
     padding:15px;
-    transition:0.3s;
     overflow-y:auto;
-    z-index:1000;
+    display:none;
   ">
-    <button onclick="closePanel()" style="float:right;">X</button>
+    <button onclick="closePanel()">Close</button>
     <div id="panelContent"></div>
   </div>
 
@@ -179,61 +184,51 @@ Workflow-oriented GIS: focusing on how data is acquired, processed, and transfor
 
 <script>
 
-// INIT MAP
-var map = L.map('map').setView([52, -90], 4);
+// MAP
+var map = L.map('map').setView([52,-90],4);
 
-// BASEMAP
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '© OpenStreetMap'
+  attribution:'© OpenStreetMap'
 }).addTo(map);
 
-// COLOR FUNCTION
-function getColor(category) {
-  if (category === "Applied GIS") return "green";
-  if (category === "Technical") return "purple";
+// COLORS
+function getColor(cat){
+  if(cat==="Applied GIS") return "green";
+  if(cat==="Technical") return "purple";
   return "blue";
 }
 
-// CATEGORY LAYERS
+// LAYERS
 const categoryLayers = {
-  "Applied GIS": L.layerGroup().addTo(map),
-  "Technical": L.layerGroup().addTo(map),
-  "Research": L.layerGroup().addTo(map)
+  "Applied GIS":L.layerGroup().addTo(map),
+  "Technical":L.layerGroup().addTo(map),
+  "Research":L.layerGroup().addTo(map)
 };
 
-// STORE REFERENCES
-const projectRefs = {};
-const allPolygons = {};
 const allMarkers = [];
+const allPolygons = {};
 
-// RESET HIGHLIGHT
-function resetHighlight() {
-  Object.values(allPolygons).forEach(p => {
-    p.setStyle({ weight:1, color:"#333" });
-  });
-
-  allMarkers.forEach(m => {
-    m.setStyle({ radius:8 });
-  });
+// RESET
+function resetHighlight(){
+  allMarkers.forEach(m=>m.setStyle({radius:8,color:"#000"}));
+  Object.values(allPolygons).forEach(p=>p.setStyle({color:"#333",weight:1}));
 }
 
 // SELECT PROJECT
-function selectProject(project) {
+function selectProject(project){
 
   resetHighlight();
 
-  let bounds = [];
+  let bounds=[];
 
-  project.layers.forEach(layer => {
-
-    if (layer.feature) {
-      layer.setStyle({ color:"yellow", weight:3 });
-      bounds.push(layer.getBounds());
-    } else {
-      layer.setStyle({ radius:12 });
-      bounds.push(layer.getLatLng());
+  project.layers.forEach(l=>{
+    if(l.getLatLng){
+      l.setStyle({radius:12,color:"yellow"});
+      bounds.push(l.getLatLng());
+    }else{
+      l.setStyle({color:"yellow",weight:3});
+      bounds.push(l.getBounds());
     }
-
   });
 
   map.fitBounds(bounds);
@@ -242,42 +237,43 @@ function selectProject(project) {
 }
 
 // PANEL
-function openPanel(project) {
+function openPanel(project){
+  document.getElementById("infoPanel").style.display="block";
 
-  document.getElementById("infoPanel").style.right = "0";
+  let locs = project.locations.map(l=>`<li>${l.name}</li>`).join("");
 
-  let locations = project.locations.map(l => `<li>${l.name}</li>`).join("");
-
-  document.getElementById("panelContent").innerHTML = `
+  document.getElementById("panelContent").innerHTML=`
     <h2>${project.title}</h2>
+    <ul>${locs}</ul>
 
-    <b>Locations:</b>
-    <ul>${locations}</ul>
-
-    <table style="width:100%; border-collapse:collapse;">
+    <table style="width:100%;">
       <tr><td><b>Type</b></td><td>${project.category}</td></tr>
-      <tr><td><b>Start</b></td><td>${project.start || "N/A"}</td></tr>
-      <tr><td><b>End</b></td><td>${project.end || "N/A"}</td></tr>
       <tr><td><b>Description</b></td><td>${project.description}</td></tr>
-      <tr><td><b>Link</b></td><td>${project.link ? `<a href="${project.link}" target="_blank">View</a>` : "-"}</td></tr>
+      <tr><td><b>Link</b></td><td>${project.link ? `<a href="${project.link}" target="_blank">View</a>`:"-"}</td></tr>
     </table>
   `;
 }
 
-function closePanel() {
-  document.getElementById("infoPanel").style.right = "-400px";
+function closePanel(){
+  document.getElementById("infoPanel").style.display="none";
+}
+
+// LEFT PANEL TOGGLE
+function toggleLeftPanel(){
+  const panel = document.getElementById("leftPanel");
+  panel.style.width = panel.style.width === "0px" ? "320px" : "0px";
 }
 
 // FILTER
-function toggleCategory(cat) {
-  if (map.hasLayer(categoryLayers[cat])) {
+function toggleCategory(cat){
+  if(map.hasLayer(categoryLayers[cat])){
     map.removeLayer(categoryLayers[cat]);
   } else {
     map.addLayer(categoryLayers[cat]);
   }
 }
 
-// LOAD LAKES
+// LOAD GEOJSON
 const lakes = {
   "Great Bear Lake":"data/GBL.geojson",
   "Great Slave Lake":"data/GSL.geojson",
@@ -289,75 +285,76 @@ const lakes = {
   "Bernard Lake":"data/Bernard.geojson"
 };
 
-Object.entries(lakes).forEach(([name, path]) => {
+Object.entries(lakes).forEach(([name,path])=>{
+  fetch(path).then(r=>r.json()).then(data=>{
+    const layer=L.geoJSON(data,{
+      style:{color:"#333",weight:1,fillOpacity:0.3}
+    }).addTo(map);
 
-  fetch(path)
-    .then(res => res.json())
-    .then(data => {
-
-      const layer = L.geoJSON(data, {
-        style:{
-          color:"#333",
-          weight:1,
-          fillOpacity:0.3
-        }
-      }).addTo(map);
-
-      allPolygons[name] = layer;
-    });
-
+    allPolygons[name]=layer;
+  });
 });
 
-// PROJECTS
-const projects = [
+// PROJECT DATA (FULL)
+const projects=[
 
-  {
-    title:"Field Research Assistant — Coastal Monitoring",
-    category:"Applied GIS",
-    description:"Field-based GPS and RTK GNSS data collection supporting environmental analysis.",
-    locations:[
-      { name:"Sauble Beach", coords:[44.6296,-81.26508] },
-      { name:"Burlington Beach", coords:[43.31523,-79.80701] },
-      { name:"Wasaga Beach", coords:[44.52372,-80.0033] }
-    ]
-  },
+{
+title:"Field Research Assistant — Coastal Monitoring",
+category:"Applied GIS",
+description:"RTK GNSS coastal data collection and QA/QC workflows.",
+locations:[
+{name:"Sauble Beach",coords:[44.6296,-81.26508]},
+{name:"Burlington Beach",coords:[43.31523,-79.80701]},
+{name:"Wasaga Beach",coords:[44.52372,-80.0033]}
+]
+},
 
-  {
-    title:"Invasive Species Monitoring",
-    category:"Applied GIS",
-    description:"Phragmites mapping and ecological assessment.",
-    link:"https://www.youtube.com/watch?v=5Io_79IMANw",
-    locations:[
-      { name:"Bernard Lake", coords:[45.72458,-79.3857] }
-    ]
-  },
+{
+title:"Invasive Species Monitoring",
+category:"Applied GIS",
+description:"Phragmites mapping and analysis.",
+link:"https://www.youtube.com/watch?v=5Io_79IMANw",
+locations:[
+{name:"Bernard Lake",coords:[45.72458,-79.3857]}
+]
+},
 
-  {
-    title:"ERA5-Land Thesis",
-    category:"Research",
-    description:"Lake ice model validation across Canada.",
-    link:"https://uwspace.uwaterloo.ca/items/b983d97f-d2ec-4c1a-a6d0-82be963c476a",
-    locations:[
-      { name:"Great Bear Lake", coords:[66,-121] },
-      { name:"Great Slave Lake", coords:[61,-114] },
-      { name:"Lake Athabasca", coords:[59,-109] },
-      { name:"Lake Winnipeg", coords:[52,-97] },
-      { name:"Lake Superior", coords:[47.7,-87.5] },
-      { name:"Lake Huron", coords:[45,-82.4] },
-      { name:"Lake Erie", coords:[42.2,-81.2] }
-    ]
-  }
+{
+title:"ERA5-Land Thesis",
+category:"Research",
+description:"Lake ice validation across 7 lakes.",
+link:"https://uwspace.uwaterloo.ca/items/b983d97f-d2ec-4c1a-a6d0-82be963c476a",
+locations:[
+{name:"Great Bear Lake",coords:[66,-121]},
+{name:"Great Slave Lake",coords:[61,-114]},
+{name:"Lake Athabasca",coords:[59,-109]},
+{name:"Lake Winnipeg",coords:[52,-97]},
+{name:"Lake Superior",coords:[47.7,-87.5]},
+{name:"Lake Huron",coords:[45,-82.4]},
+{name:"Lake Erie",coords:[42.2,-81.2]}
+]
+}
 
 ];
 
-// ADD MARKERS + LINK TO PROJECTS
-projects.forEach(project => {
+// ADD TO MAP + SIDEBAR
+const list=document.getElementById("project-list");
 
-  project.layers = [];
+projects.forEach(project=>{
 
-  project.locations.forEach(loc => {
+  project.layers=[];
 
-    let marker = L.circleMarker(loc.coords, {
+  // SIDEBAR CLICK
+  let div=document.createElement("div");
+  div.innerHTML=`<b style="cursor:pointer;">${project.title}</b>`;
+  div.onclick=()=>selectProject(project);
+  list.appendChild(div);
+
+  let ul=document.createElement("ul");
+
+  project.locations.forEach(loc=>{
+
+    let marker=L.circleMarker(loc.coords,{
       radius:8,
       fillColor:getColor(project.category),
       color:"#000",
@@ -365,17 +362,29 @@ projects.forEach(project => {
       fillOpacity:0.8
     }).addTo(categoryLayers[project.category]);
 
-    marker.on('click', () => selectProject(project));
+    marker.on('click',()=>selectProject(project));
 
     project.layers.push(marker);
     allMarkers.push(marker);
 
+    let li=document.createElement("li");
+    li.innerText=loc.name;
+    ul.appendChild(li);
+
   });
 
-  // attach polygons
-  project.locations.forEach(loc => {
-    if (allPolygons[loc.name]) {
-      allPolygons[loc.name].eachLayer(l => project.layers.push(l));
+  list.appendChild(ul);
+
+  // LINK POLYGONS
+  project.locations.forEach(loc=>{
+    if(allPolygons[loc.name]){
+      allPolygons[loc.name].eachLayer(l=>project.layers.push(l));
+    }
+  });
+
+});
+
+</script>
     }
   });
 
