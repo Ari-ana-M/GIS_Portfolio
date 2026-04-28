@@ -210,13 +210,15 @@ FULL GIS DASHBOARD LAYOUT
 
 <script>
 
-// =========================
-// MAP INIT
-// =========================
-var map = L.map('map').setView([52,-90],4);
+<script>
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-  attribution:'© OpenStreetMap'
+// =========================
+// MAP INIT (SAFE GUARD)
+// =========================
+var map = L.map('map').setView([52, -90], 4);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap'
 }).addTo(map);
 
 // =========================
@@ -232,94 +234,47 @@ const allMarkers = [];
 const allPolygons = {};
 
 // =========================
-// RESET HIGHLIGHT
+// RESET HIGHLIGHT (FIXED BRACES)
 // =========================
-function resetHighlight(){
+function resetHighlight() {
 
-  allMarkers.forEach(m=>{
+  allMarkers.forEach(m => {
     m.setStyle({
-      radius:8,
-      color:"#000",
-      fillColor:m.options.fillColor
+      radius: 8,
+      color: "#000",
+      fillColor: m.options.fillColor
     });
   });
 
-Object.values(allPolygons).forEach(p=>{
-  if(p && p.setStyle){
-    p.setStyle({
-      color:"#333",
-      weight:1.5,
-      fillOpacity:0.25,
-      fillColor:"#97D8CD"
-    });
-  }
-});
+  Object.values(allPolygons).forEach(p => {
+    if (p && p.setStyle) {
+      p.setStyle({
+        color: "#333",
+        weight: 1.5,
+        fillOpacity: 0.25,
+        fillColor: "#97D8CD"
+      });
+    }
+  });
+}
 
 // =========================
-// FIX: PROJECT SELECTION (POINTS + POLYGONS + ZOOM OFFSET)
+// PROJECT SELECT
 // =========================
-function selectProject(project){
+function selectProject(project) {
 
   resetHighlight();
 
-  let bounds = [];
+  const groupLayers = [...project.layers];
 
-  project.layers.forEach(l => {
+  const group = L.featureGroup(groupLayers);
 
-    // include BOTH markers + polygons
-    if(l.getLatLng){
-
-      l.setStyle({
-        radius:12,
-        color:"yellow",
-        weight:3,
-        fillColor:"yellow",
-        fillOpacity:1
-      });
-
-      bounds.push(l.getLatLng());
-
-    } else {
-
-      l.setStyle({
-        color:"yellow",
-        weight:4,
-        fillOpacity:0.25,
-        fillColor:"#F5E8AD"
-      });
-
-      bounds.push(l.getBounds());
-
-    }
-
-  });
-
-  // FIX: handle polygon bounds properly
-  let fitBoundsArray = [];
-
-  bounds.forEach(b => {
-    if(b instanceof L.LatLng){
-      fitBoundsArray.push(b);
-    } else {
-      fitBoundsArray.push(b);
-    }
-  });
-
-const groupLayers = [...project.layers];
-
-// fallback: include polygon layers if they exist globally
-Object.values(allPolygons).forEach(poly => {
-  if(poly && poly.getBounds){
-    groupLayers.push(poly);
+  if (groupLayers.length > 0) {
+    map.fitBounds(group.getBounds(), {
+      paddingTopLeft: [160, 20],
+      paddingBottomRight: [260, 20]
+    });
   }
-});
-
-const group = L.featureGroup(groupLayers);
-
-map.fitBounds(group.getBounds(), {
-  paddingTopLeft: [160, 20],
-  paddingBottomRight: [260, 20]
-});
 
   openPanel(project);
 }
@@ -327,13 +282,13 @@ map.fitBounds(group.getBounds(), {
 // =========================
 // RIGHT PANEL
 // =========================
-function openPanel(project){
+function openPanel(project) {
 
-  document.getElementById("infoPanel").style.display="block";
+  document.getElementById("infoPanel").style.display = "block";
 
-  let locs = project.locations.map(l=>`<li>${l.name}</li>`).join("");
+  const locs = project.locations.map(l => `<li>${l.name}</li>`).join("");
 
-  document.getElementById("panelContent").innerHTML=`
+  document.getElementById("panelContent").innerHTML = `
     <h2>${project.title}</h2>
     <ul>${locs}</ul>
 
@@ -347,23 +302,23 @@ function openPanel(project){
   `;
 }
 
-function closePanel(){
-  document.getElementById("infoPanel").style.display="none";
+function closePanel() {
+  document.getElementById("infoPanel").style.display = "none";
 }
 
 // =========================
-// LEFT PANEL
+// LEFT PANEL TOGGLE
 // =========================
-function toggleLeftPanel(){
-  const panel=document.getElementById("leftPanel");
-  panel.style.width = panel.style.width==="0px"?"160px":"0px";
+function toggleLeftPanel() {
+  const panel = document.getElementById("leftPanel");
+  panel.style.width = panel.style.width === "0px" ? "160px" : "0px";
 }
 
 // =========================
-// FILTER
+// CATEGORY FILTER
 // =========================
-function toggleCategory(cat){
-  if(map.hasLayer(categoryLayers[cat])){
+function toggleCategory(cat) {
+  if (map.hasLayer(categoryLayers[cat])) {
     map.removeLayer(categoryLayers[cat]);
   } else {
     map.addLayer(categoryLayers[cat]);
@@ -371,174 +326,105 @@ function toggleCategory(cat){
 }
 
 // =========================
-// ATTACH POLYGONS TO PROJECTS (CRITICAL FIX)
-// =========================
-// =========================
-// FIXED POLYGON MAPPING (ROBUST + EXPLICIT)
-// =========================
-
-// map lake name → actual project keywords
-const lakeProjectMap = {
-  "Great Bear Lake": "Great Bear Lake",
-  "Great Slave Lake": "Great Slave Lake",
-  "Lake Athabasca": "Lake Athabasca",
-  "Lake Winnipeg": "Lake Winnipeg",
-  "Lake Superior": "Lake Superior",
-  "Lake Huron": "Lake Huron",
-  "Lake Erie": "Lake Erie",
-  "Bernard Lake": "Bernard Lake"
-};
-
-// attach polygons AFTER they load
-function registerPolygon(name, layer){
-
-  allPolygons[name] = layer;
-
-  projects.forEach(project => {
-    const match = project.locations.some(loc =>
-      loc.name === lakeProjectMap[name]
-    );
-
-    if(match){
-      project.layers.push(layer);
-    }
-  });
-}
-
-const lakes = {
-  "Great Bear Lake":"data/GBL.geojson",
-  "Great Slave Lake":"data/GSL.geojson",
-  "Lake Athabasca":"data/Athabasca.geojson",
-  "Lake Winnipeg":"data/Winnipeg.geojson",
-  "Lake Superior":"data/Superior.geojson",
-  "Lake Huron":"data/Huron.geojson",
-  "Lake Erie":"data/Erie.geojson",
-  "Bernard Lake":"data/Bernard.geojson"
-};
-  
-// replace your fetch loop with THIS
-Object.entries(lakes).forEach(([name, path])=>{
-  fetch(path).then(r=>r.json()).then(data=>{
-    const layer = L.geoJSON(data,{
-      style:{
-        color:"#333",
-        weight:1.5,
-        fillOpacity:0.25,
-        fillColor:"#97D8CD"
-      }
-    }).addTo(map);
-
-    registerPolygon(name, layer);
-  });
-});
-
-// =========================
 // PROJECT DATA
 // =========================
-const projects=[
-
+const projects = [
 {
-title:"Field Research Assistant — Coastal & Environmental Monitoring",
-category:"Applied GIS",
-description:"Field-based GPS and RTK GNSS coastal data collection, QA/QC, and spatial integration workflows.",
-locations:[
-{name:"Sauble Beach",coords:[44.6296,-81.26508]},
-{name:"Burlington Beach",coords:[43.31523,-79.80701]},
-{name:"Wasaga Beach",coords:[44.52372,-80.0033]}
-]
+  title: "Field Research Assistant — Coastal & Environmental Monitoring",
+  category: "Applied GIS",
+  description: "Field-based GPS and RTK GNSS coastal data collection, QA/QC, and spatial integration workflows.",
+  locations: [
+    { name: "Sauble Beach", coords: [44.6296, -81.26508] },
+    { name: "Burlington Beach", coords: [43.31523, -79.80701] },
+    { name: "Wasaga Beach", coords: [44.52372, -80.0033] }
+  ]
 },
-
 {
-title:"Research Presenter — Invasive Species Monitoring",
-category:"Applied GIS",
-description:"Spatial + NDVI analysis of Phragmites spread in Lake Bernard.",
-link:"https://www.youtube.com/watch?v=5Io_79IMANw",
-locations:[
-{name:"Bernard Lake",coords:[45.72458,-79.3857]}
-]
+  title: "Research Presenter — Invasive Species Monitoring",
+  category: "Applied GIS",
+  description: "Spatial + NDVI analysis of Phragmites spread in Lake Bernard.",
+  link: "https://www.youtube.com/watch?v=5Io_79IMANw",
+  locations: [
+    { name: "Bernard Lake", coords: [45.72458, -79.3857] }
+  ]
 },
-
 {
-title:"Student Planner — Municipal Housing Policy",
-category:"Applied GIS",
-description:"Missing middle housing analysis using GIS and census data.",
-link:"https://www.cambridgetimes.ca/news/housing-affordability-is-a-human-rights-issue-wilfrid-laurier-students-exploring-housing-concerns-with-city/article_c289ca4b-507c-5777-b38d-90a1d676d692.html",
-locations:[
-{name:"Cambridge",coords:[43.40175,-80.32597]}
-]
+  title: "Student Planner — Municipal Housing Policy",
+  category: "Applied GIS",
+  description: "Missing middle housing analysis using GIS and census data.",
+  link: "https://www.cambridgetimes.ca/news/housing-affordability-is-a-human-rights-issue-wilfrid-laurier-students-exploring-housing-concerns-with-city/article_c289ca4b-507c-5777-b38d-90a1d676d692.html",
+  locations: [
+    { name: "Cambridge", coords: [43.40175, -80.32597] }
+  ]
 },
-
 {
-title:"Research Assistant — Environmental & Climate Data Analysis",
-category:"Technical",
-description:"Scoping review + spatial climate synthesis workflows.",
-link:"https://ecologyandsociety.org/vol29/iss3/art22/",
-locations:[
-{name:"Africa",coords:[0,20]}
-]
+  title: "Research Assistant — Environmental & Climate Data Analysis",
+  category: "Technical",
+  description: "Scoping review + spatial climate synthesis workflows.",
+  link: "https://ecologyandsociety.org/vol29/iss3/art22/",
+  locations: [
+    { name: "Africa", coords: [0, 20] }
+  ]
 },
-
 {
-title:"ReSEC Research Assistant — Remote Sensing of Climate Change",
-category:"Technical",
-description:"Python + GIS analysis of lake ice variability using satellite data.",
-locations:[
-{name:"Great Bear Lake",coords:[66,-121]},
-{name:"Great Slave Lake",coords:[61,-114]}
-]
+  title: "ReSEC Research Assistant — Remote Sensing of Climate Change",
+  category: "Technical",
+  description: "Python + GIS analysis of lake ice variability using satellite data.",
+  locations: [
+    { name: "Great Bear Lake", coords: [66, -121] },
+    { name: "Great Slave Lake", coords: [61, -114] }
+  ]
 },
-
 {
-title:"ERA5-Land Lake Ice Thesis",
-category:"Research",
-description:"20-year lake ice bias evaluation across 7 Canadian lakes.",
-link:"https://uwspace.uwaterloo.ca/items/b983d97f-d2ec-4c1a-a6d0-82be963c476a",
-locations:[
-{name:"Great Bear Lake",coords:[66,-121]},
-{name:"Great Slave Lake",coords:[61,-114]},
-{name:"Lake Athabasca",coords:[59,-109]},
-{name:"Lake Winnipeg",coords:[52,-97]},
-{name:"Lake Superior",coords:[47.7,-87.5]},
-{name:"Lake Huron",coords:[45,-82.4]},
-{name:"Lake Erie",coords:[42.2,-81.2]}
-]
+  title: "ERA5-Land Lake Ice Thesis",
+  category: "Research",
+  description: "20-year lake ice bias evaluation across 7 Canadian lakes.",
+  link: "https://uwspace.uwaterloo.ca/items/b983d97f-d2ec-4c1a-a6d0-82be963c476a",
+  locations: [
+    { name: "Great Bear Lake", coords: [66, -121] },
+    { name: "Great Slave Lake", coords: [61, -114] },
+    { name: "Lake Athabasca", coords: [59, -109] },
+    { name: "Lake Winnipeg", coords: [52, -97] },
+    { name: "Lake Superior", coords: [47.7, -87.5] },
+    { name: "Lake Huron", coords: [45, -82.4] },
+    { name: "Lake Erie", coords: [42.2, -81.2] }
+  ]
 }
-
 ];
 
 // =========================
-// LOAD MARKERS + POLYGONS
+// LOAD UI + MARKERS
 // =========================
-const list=document.getElementById("project-list");
+const list = document.getElementById("project-list");
 
-projects.forEach(project=>{
+projects.forEach(project => {
 
-  project.layers=[];
+  project.layers = [];
 
-  let div=document.createElement("div");
-  div.innerHTML=`<span class="project-link">${project.title}</span>`;
-  div.onclick=()=>selectProject(project);
+  const div = document.createElement("div");
+  div.innerHTML = `<span class="project-link">${project.title}</span>`;
+  div.onclick = () => selectProject(project);
   list.appendChild(div);
 
-  let ul=document.createElement("ul");
+  const ul = document.createElement("ul");
 
-  project.locations.forEach(loc=>{
+  project.locations.forEach(loc => {
 
-    let marker=L.circleMarker(loc.coords,{
-      radius:8,
-      fillColor:"#44BFC7",
-      color:"#000",
-      weight:1,
-      fillOpacity:0.8
+    const marker = L.circleMarker(loc.coords, {
+      radius: 8,
+      fillColor: "#44BFC7",
+      color: "#000",
+      weight: 1,
+      fillOpacity: 0.8
     }).addTo(categoryLayers[project.category]);
 
-    marker.on('click',()=>selectProject(project));
+    marker.on("click", () => selectProject(project));
 
     project.layers.push(marker);
     allMarkers.push(marker);
 
-    let li=document.createElement("li");
-    li.innerText=loc.name;
+    const li = document.createElement("li");
+    li.innerText = loc.name;
     ul.appendChild(li);
 
   });
