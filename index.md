@@ -139,17 +139,12 @@ Workflow-oriented GIS: focusing on how data is acquired, processed, and transfor
 
 <!-- MAP + SIDEBAR CONTAINER -->
 <!-- MAP + SIDEBAR + INFO PANEL -->
-<div style="display:flex; height:650px; margin-top:40px; border:2px solid #333; border-radius:10px; overflow:hidden;">
+<div style="position:relative; height:700px; margin-top:40px; border:2px solid #333; border-radius:10px; overflow:hidden; display:flex;">
 
-  <!-- SIDEBAR -->
-  <div style="width:320px; padding:15px; overflow-y:auto; background:#fafafa; border-right:1px solid #ccc;">
-
-    <h3>Filter</h3>
-    <label><input type="checkbox" checked onchange="toggleCategory('Applied GIS')"> 🟢 Applied GIS</label><br>
-    <label><input type="checkbox" checked onchange="toggleCategory('Technical')"> 🟣 Technical</label><br>
-    <label><input type="checkbox" checked onchange="toggleCategory('Research')"> 🔵 Research</label>
-
-    <hr>
+  <!-- SIDEBAR (POP-OUT) -->
+  <div id="sidebar" style="width:300px; background:#fafafa; border-right:1px solid #ccc; padding:15px; overflow-y:auto; transition:0.3s;">
+    
+    <button onclick="toggleSidebar()" style="margin-bottom:10px;">☰</button>
 
     <h3>Projects</h3>
     <div id="project-list"></div>
@@ -160,9 +155,8 @@ Workflow-oriented GIS: focusing on how data is acquired, processed, and transfor
   <div id="map" style="flex:1;"></div>
 
   <!-- INFO PANEL -->
-  <div id="info-panel" style="width:340px; padding:15px; background:#fff; border-left:1px solid #ccc; overflow-y:auto;">
+  <div id="info-panel" style="width:350px; background:#fff; border-left:1px solid #ccc; padding:15px; overflow-y:auto;">
     <h3>Select a project</h3>
-    <p>Click a project to view details</p>
   </div>
 
 </div>
@@ -171,7 +165,6 @@ Workflow-oriented GIS: focusing on how data is acquired, processed, and transfor
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css"/>
-<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css"/>
 <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
 
 <script>
@@ -184,75 +177,156 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '© OpenStreetMap'
 }).addTo(map);
 
-// COLOR FUNCTION (match your Venn palette)
+// COLORS
 function getColor(category) {
   if (category === "Applied GIS") return "#44BFC7";
   if (category === "Technical") return "#97D8CD";
   return "#F5E8AD";
 }
 
-// CATEGORY LAYERS
+// MARKER CLUSTERS
 const categoryLayers = {
-  "Applied GIS": L.markerClusterGroup(),
-  "Technical": L.markerClusterGroup(),
-  "Research": L.markerClusterGroup()
+  "Applied GIS": L.markerClusterGroup().addTo(map),
+  "Technical": L.markerClusterGroup().addTo(map),
+  "Research": L.markerClusterGroup().addTo(map)
 };
 
-// HIGHLIGHT LAYER (ArcGIS-style)
+// HIGHLIGHT LAYER
 let highlightLayer = L.layerGroup().addTo(map);
 
-// STORE LAKES
+// LAKES (GeoJSON)
 let lakeLayers = {};
 
-// LOAD GEOJSON LAKES
 const lakeFiles = {
-  "Lake Athabasca": "data/Athabasca.geojson",
-  "Bernard Lake": "data/Bernard.geojson",
-  "Lake Erie": "data/Erie.geojson",
   "Great Bear Lake": "data/GBL.geojson",
   "Great Slave Lake": "data/GSL.geojson",
-  "Lake Huron": "data/Huron.geojson",
+  "Lake Athabasca": "data/Athabasca.geojson",
+  "Lake Winnipeg": "data/Winnipeg.geojson",
   "Lake Superior": "data/Superior.geojson",
-  "Lake Winnipeg": "data/Winnipeg.geojson"
+  "Lake Huron": "data/Huron.geojson",
+  "Lake Erie": "data/Erie.geojson",
+  "Bernard Lake": "data/Bernard.geojson"
 };
 
 Object.entries(lakeFiles).forEach(([name, path]) => {
-
   fetch(path)
     .then(res => res.json())
     .then(data => {
-
       let layer = L.geoJSON(data, {
         style: {
           color: "#333",
           weight: 1,
-          fillColor: "#888",
+          fillColor: "#999",
           fillOpacity: 0.2
         }
       }).addTo(map);
 
       lakeLayers[name] = layer;
-
     });
-
 });
 
-// PROJECT DATA
+// PROJECT DATA (FULL)
 const projects = [
-  {
-    category: "Research",
-    title: "ERA5-Land Thesis",
-    locations: [
-      "Great Bear Lake","Great Slave Lake","Lake Athabasca","Lake Winnipeg",
-      "Lake Superior","Lake Huron","Lake Erie"
-    ],
-    start: "2004",
-    end: "2023",
-    short: "ERA5-Land validation against satellite observations",
-    long: "Evaluates biases in lake ice fraction, timing, and temperature across 7 lakes.",
-    link: "https://uwspace.uwaterloo.ca/items/b983d97f-d2ec-4c1a-a6d0-82be963c476a"
-  }
+
+{
+  category:"Applied GIS",
+  title:"Field Research Assistant — Coastal & Environmental Monitoring",
+  locations:[
+    {name:"Sauble Beach", coords:[44.6296,-81.26508]},
+    {name:"Burlington Beach", coords:[43.31523,-79.80701]},
+    {name:"Wasaga Beach", coords:[44.52372,-80.0033]}
+  ],
+  lakes:[],
+  short:"Field data collection & QA/QC",
+  long:"Collected RTK GNSS data, validated datasets, and integrated field observations into GIS workflows."
+},
+
+{
+  category:"Applied GIS",
+  title:"Research Presenter — Invasive Species Monitoring",
+  locations:[
+    {name:"Bernard Lake", coords:[45.72458,-79.3857], link:"https://www.youtube.com/watch?v=5Io_79IMANw"}
+  ],
+  lakes:["Bernard Lake"],
+  short:"Phragmites monitoring",
+  long:"Analyzed invasive vegetation using GIS, remote sensing, and UAV data to support management strategies."
+},
+
+{
+  category:"Applied GIS",
+  title:"Student Planner — Municipality Housing Policies",
+  locations:[
+    {name:"Cambridge", coords:[43.40175,-80.32597]}
+  ],
+  lakes:[],
+  short:"Housing policy analysis",
+  long:"Analyzed missing middle housing strategies and policy impacts using GIS and census data."
+},
+
+{
+  category:"Technical",
+  title:"Environmental & Climate Data Analysis",
+  locations:[
+    {name:"Africa", coords:[0,20], link:"https://ecologyandsociety.org/vol29/iss3/art22/"}
+  ],
+  lakes:[],
+  short:"Climate resilience research",
+  long:"Conducted spatial and literature-based analysis supporting climate resilience research."
+},
+
+{
+  category:"Technical",
+  title:"Remote Sensing of Environmental Change (ReSEC)",
+  locations:[
+    {name:"Great Bear Lake", coords:[66,-121]},
+    {name:"Great Slave Lake", coords:[61,-114]}
+  ],
+  lakes:["Great Bear Lake","Great Slave Lake"],
+  short:"Climate change & lake ice",
+  long:"Used satellite data and Python workflows to analyze climate-driven lake ice changes."
+},
+
+{
+  category:"Research",
+  title:"ERA5-Land Thesis",
+  locations:[
+    {name:"Great Bear Lake", coords:[66,-121]},
+    {name:"Great Slave Lake", coords:[61,-114]},
+    {name:"Lake Athabasca", coords:[59,-109]},
+    {name:"Lake Winnipeg", coords:[52,-97]},
+    {name:"Lake Superior", coords:[47.7,-87.5]},
+    {name:"Lake Huron", coords:[45,-82.4]},
+    {name:"Lake Erie", coords:[42.2,-81.2]}
+  ],
+  lakes:["Great Bear Lake","Great Slave Lake","Lake Athabasca","Lake Winnipeg","Lake Superior","Lake Huron","Lake Erie"],
+  short:"ERA5-Land validation",
+  long:"Evaluated biases in lake ice fraction, timing, and temperature across 7 lakes.",
+  link:"https://uwspace.uwaterloo.ca/items/b983d97f-d2ec-4c1a-a6d0-82be963c476a"
+}
+
 ];
+
+// ADD MARKERS
+projects.forEach(project => {
+  project.locations.forEach(loc => {
+
+    let marker = L.circleMarker(loc.coords, {
+      radius:7,
+      fillColor:getColor(project.category),
+      color:"#000",
+      weight:1,
+      fillOpacity:0.8
+    });
+
+    let popup = `<b>${project.title}</b><br>${loc.name}`;
+    if(loc.link) popup += `<br><a href="${loc.link}" target="_blank">View</a>`;
+
+    marker.bindPopup(popup);
+
+    categoryLayers[project.category].addLayer(marker);
+
+  });
+});
 
 // BUILD SIDEBAR
 const list = document.getElementById("project-list");
@@ -261,7 +335,7 @@ projects.forEach(project => {
 
   let div = document.createElement("div");
   div.innerHTML = `<b style="cursor:pointer; text-decoration:underline;">${project.title}</b>`;
-  div.style.marginBottom = "10px";
+  div.style.marginBottom="10px";
 
   div.onclick = () => selectProject(project);
 
@@ -269,72 +343,47 @@ projects.forEach(project => {
 
 });
 
-// SELECT PROJECT FUNCTION 🔥
-function selectProject(project) {
+// SELECT PROJECT
+function selectProject(project){
 
   highlightLayer.clearLayers();
 
-  let bounds = [];
-
-  project.locations.forEach(loc => {
-
-    let lake = lakeLayers[loc];
-
-    if (lake) {
-
+  project.lakes.forEach(name => {
+    let lake = lakeLayers[name];
+    if(lake){
       lake.eachLayer(l => {
-
         let highlight = L.geoJSON(l.toGeoJSON(), {
-          style: {
-            color: "yellow",
-            weight: 3,
-            fillOpacity: 0
-          }
+          style:{color:"yellow", weight:3, fillOpacity:0}
         });
-
         highlightLayer.addLayer(highlight);
-
-        bounds.push(...l.getBounds().getSouthWest(), ...l.getBounds().getNorthEast());
-
       });
-
     }
-
   });
 
-  if (bounds.length > 0) {
+  if(highlightLayer.getLayers().length > 0){
     map.fitBounds(highlightLayer.getBounds());
   }
 
-  // INFO PANEL
   document.getElementById("info-panel").innerHTML = `
-
     <h3>${project.title}</h3>
 
-    <div style="background:#f5f5f5; padding:10px; margin-bottom:10px;">
-      ${project.locations.map(l => `<div>${l}</div>`).join("")}
+    <div style="background:#eee; padding:8px; margin-bottom:10px;">
+      ${project.locations.map(l=>l.name).join("<br>")}
     </div>
 
-    <table style="width:100%; border-collapse:collapse;">
-      <tr><td><b>Project Type</b></td><td>${project.category}</td></tr>
-      <tr><td><b>Start</b></td><td>${project.start}</td></tr>
-      <tr><td><b>End</b></td><td>${project.end}</td></tr>
-      <tr><td><b>Short</b></td><td>${project.short}</td></tr>
+    <table style="width:100%;">
+      <tr><td><b>Type</b></td><td>${project.category}</td></tr>
+      <tr><td><b>Summary</b></td><td>${project.short}</td></tr>
       <tr><td><b>Details</b></td><td>${project.long}</td></tr>
-      <tr><td><b>Link</b></td><td><a href="${project.link}" target="_blank">View</a></td></tr>
+      ${project.link ? `<tr><td><b>Link</b></td><td><a href="${project.link}" target="_blank">View</a></td></tr>`:""}
     </table>
-
   `;
-
 }
 
-// FILTER
-function toggleCategory(category) {
-  if (map.hasLayer(categoryLayers[category])) {
-    map.removeLayer(categoryLayers[category]);
-  } else {
-    map.addLayer(categoryLayers[category]);
-  }
+// SIDEBAR TOGGLE
+function toggleSidebar(){
+  let sb = document.getElementById("sidebar");
+  sb.style.width = sb.style.width === "0px" ? "300px" : "0px";
 }
 
 </script>
