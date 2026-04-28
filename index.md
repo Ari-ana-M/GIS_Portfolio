@@ -138,6 +138,9 @@ Workflow-oriented GIS: focusing on how data is acquired, processed, and transfor
 </div>
 
 <!-- MAP + SIDEBAR CONTAINER -->
+<!-- =========================
+FULL GIS PORTFOLIO DASHBOARD (RESTORED)
+========================= -->
 <div style="
   display:flex;
   height:780px;
@@ -147,7 +150,7 @@ Workflow-oriented GIS: focusing on how data is acquired, processed, and transfor
   overflow:hidden;
 ">
 
-  <!-- LEFT PANEL -->
+  <!-- LEFT PANEL (NARROW) -->
   <div id="leftPanel" style="
     width:160px;
     background:#fafafa;
@@ -163,7 +166,7 @@ Workflow-oriented GIS: focusing on how data is acquired, processed, and transfor
 
   </div>
 
-  <!-- MAP -->
+  <!-- MAP (MAXIMIZED) -->
   <div id="map" style="flex:1; min-width:0;"></div>
 
   <!-- RIGHT PANEL -->
@@ -191,13 +194,15 @@ Workflow-oriented GIS: focusing on how data is acquired, processed, and transfor
   color:#44BFC7;
   text-decoration:underline;
 }
-.project-link:hover{ color:#DE879D; }
+.project-link:hover{
+  color:#DE879D;
+}
 </style>
 
 <script>
 
 // =========================
-// MAP
+// MAP INIT
 // =========================
 var map = L.map('map').setView([52,-90],4);
 
@@ -206,18 +211,10 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
 }).addTo(map);
 
 // =========================
-// PANELS WIDTH (CRITICAL FIX FOR ZOOM)
+// UI AWARE ZOOM FIX (IMPORTANT)
 // =========================
 const LEFT_PANEL_WIDTH = 160;
 const RIGHT_PANEL_WIDTH = 360;
-
-// convert to approximate pixel offset correction
-function getHorizontalPadding(){
-  return [
-    LEFT_PANEL_WIDTH / 2,
-    RIGHT_PANEL_WIDTH / 2
-  ];
-}
 
 // =========================
 // LAYERS
@@ -229,19 +226,17 @@ const categoryLayers = {
 };
 
 const allMarkers = [];
-const lakeLayers = {}; // IMPORTANT: preserve polygons separately
+const lakeLayers = {}; // preserve polygons
 
 // =========================
 // RESET STYLE
 // =========================
 function resetHighlight(){
 
-  // markers
   allMarkers.forEach(m=>{
     m.setStyle({radius:8,color:"#000"});
   });
 
-  // lakes (CRITICAL RESTORE)
   Object.values(lakeLayers).forEach(l=>{
     l.setStyle({
       color:"#333",
@@ -252,7 +247,7 @@ function resetHighlight(){
 }
 
 // =========================
-// SELECT PROJECT (FIXED ZOOM LOGIC)
+// SELECT PROJECT (FIXED ZOOM + FULL RESTORE SUPPORT)
 // =========================
 function selectProject(project){
 
@@ -283,10 +278,10 @@ function selectProject(project){
     }
   });
 
-  // 🔥 FIX: padding accounts for panels
+  // FIX: account for UI panels blocking view
   map.fitBounds(group.getBounds(),{
-    paddingTopLeft: [LEFT_PANEL_WIDTH + 40, 40],
-    paddingBottomRight: [RIGHT_PANEL_WIDTH + 40, 40]
+    paddingTopLeft:[LEFT_PANEL_WIDTH + 40, 40],
+    paddingBottomRight:[RIGHT_PANEL_WIDTH + 40, 40]
   });
 
   openPanel(project);
@@ -305,7 +300,7 @@ function openPanel(project){
     <h2>${project.title}</h2>
     <ul>${locs}</ul>
     <p>${project.description}</p>
-    <a href="${project.link||'#'}" target="_blank">Open Link</a>
+    ${project.link ? `<a href="${project.link}" target="_blank">Open Link</a>` : ""}
   `;
 }
 
@@ -319,14 +314,65 @@ function toggleLeftPanel(){
 }
 
 // =========================
-// PROJECT DATA (UNCHANGED STRUCTURE)
+// FULL RESTORED PROJECT DATASET (UNCHANGED)
 // =========================
 const projects=[
 
 {
+title:"Field Research Assistant — Coastal & Environmental Monitoring",
+category:"Applied GIS",
+description:"Conducted GPS and RTK GNSS field data collection, QA/QC, and spatial integration for coastal analysis.",
+locations:[
+{name:"Sauble Beach",coords:[44.6296,-81.26508]},
+{name:"Burlington Beach",coords:[43.31523,-79.80701]},
+{name:"Wasaga Beach",coords:[44.52372,-80.0033]}
+]
+},
+
+{
+title:"Research Presenter — Invasive Species Monitoring",
+category:"Applied GIS",
+description:"Phragmites spatial analysis using ArcGIS and NDVI for ecological impact assessment.",
+link:"https://www.youtube.com/watch?v=5Io_79IMANw",
+locations:[
+{name:"Bernard Lake",coords:[45.72458,-79.3857]}
+]
+},
+
+{
+title:"Student Planner — Municipal Housing Policy",
+category:"Applied GIS",
+description:"Missing middle housing analysis using GIS and census data for municipal planning.",
+link:"https://www.cambridgetimes.ca/news/housing-affordability-is-a-human-rights-issue-wilfrid-laurier-students-exploring-housing-concerns-with-city/article_c289ca4b-507c-5777-b38d-90a1d676d692.html",
+locations:[
+{name:"Cambridge",coords:[43.40175,-80.32597]}
+]
+},
+
+{
+title:"Research Assistant — Environmental & Climate Data Analysis",
+category:"Technical",
+description:"Scoping review workflows using Covidence and spatial climate synthesis analysis.",
+link:"https://ecologyandsociety.org/vol29/iss3/art22/",
+locations:[
+{name:"Africa",coords:[0,20]}
+]
+},
+
+{
+title:"ReSEC Research Assistant — Remote Sensing of Climate Change",
+category:"Technical",
+description:"Python + GIS analysis of environmental and lake ice datasets.",
+locations:[
+{name:"Great Bear Lake",coords:[66,-121]},
+{name:"Great Slave Lake",coords:[61,-114]}
+]
+},
+
+{
 title:"ERA5-Land Lake Ice Thesis",
 category:"Research",
-description:"Lake ice evaluation across 7 Canadian lakes.",
+description:"20-year lake ice bias evaluation across 7 Canadian lakes using ERA5-Land vs satellite products.",
 link:"https://uwspace.uwaterloo.ca/items/b983d97f-d2ec-4c1a-a6d0-82be963c476a",
 locations:[
 {name:"Great Bear Lake",coords:[66,-121]},
@@ -342,7 +388,7 @@ locations:[
 ];
 
 // =========================
-// GEOJSON LAKES (RESTORED + PROTECTED)
+// GEOJSON LAKES (RESTORED FULL POLYGONS)
 // =========================
 const lakes={
   "Great Bear Lake":"data/GBL.geojson",
@@ -370,7 +416,7 @@ Object.entries(lakes).forEach(([name,path])=>{
 });
 
 // =========================
-// RENDER PROJECTS
+// RENDER PROJECT LIST
 // =========================
 const list=document.getElementById("project-list");
 
@@ -393,7 +439,7 @@ projects.forEach(project=>{
       color:"#000",
       weight:1,
       fillOpacity:0.8
-    }).addTo(categoryLayers[project.category||"Research"]);
+    }).addTo(categoryLayers[project.category]);
 
     project.layers.push(marker);
     allMarkers.push(marker);
