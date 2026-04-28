@@ -139,7 +139,7 @@ Workflow-oriented GIS: focusing on how data is acquired, processed, and transfor
 
 <!-- MAP + SIDEBAR CONTAINER -->
 <!-- =========================
-FULL GIS PORTFOLIO DASHBOARD (RESTORED)
+FULL GIS DASHBOARD LAYOUT
 ========================= -->
 <div style="
   display:flex;
@@ -150,7 +150,7 @@ FULL GIS PORTFOLIO DASHBOARD (RESTORED)
   overflow:hidden;
 ">
 
-  <!-- LEFT PANEL (NARROW) -->
+  <!-- LEFT PANEL -->
   <div id="leftPanel" style="
     width:160px;
     background:#fafafa;
@@ -161,17 +161,25 @@ FULL GIS PORTFOLIO DASHBOARD (RESTORED)
 
     <button onclick="toggleLeftPanel()" style="margin-bottom:10px;">☰</button>
 
+    <h4>Filter</h4>
+
+    <label><input type="checkbox" checked onchange="toggleCategory('Applied GIS')"> 🟢 Applied GIS</label><br>
+    <label><input type="checkbox" checked onchange="toggleCategory('Technical')"> 🟣 Technical</label><br>
+    <label><input type="checkbox" checked onchange="toggleCategory('Research')"> 🔵 Research</label>
+
+    <hr>
+
     <h4>Projects</h4>
     <div id="project-list"></div>
 
   </div>
 
-  <!-- MAP (MAXIMIZED) -->
+  <!-- MAP -->
   <div id="map" style="flex:1; min-width:0;"></div>
 
-  <!-- RIGHT PANEL -->
+  <!-- RIGHT PANEL (REDUCED SIZE FIX) -->
   <div id="infoPanel" style="
-    width:360px;
+    width:280px;
     background:white;
     border-left:2px solid #333;
     padding:16px;
@@ -193,6 +201,8 @@ FULL GIS PORTFOLIO DASHBOARD (RESTORED)
   font-weight:600;
   color:#44BFC7;
   text-decoration:underline;
+  display:inline-block;
+  margin-bottom:6px;
 }
 .project-link:hover{
   color:#DE879D;
@@ -211,12 +221,6 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
 }).addTo(map);
 
 // =========================
-// UI AWARE ZOOM FIX (IMPORTANT)
-// =========================
-const LEFT_PANEL_WIDTH = 160;
-const RIGHT_PANEL_WIDTH = 360;
-
-// =========================
 // LAYERS
 // =========================
 const categoryLayers = {
@@ -226,19 +230,23 @@ const categoryLayers = {
 };
 
 const allMarkers = [];
-const lakeLayers = {}; // preserve polygons
+const allPolygons = {}; // IMPORTANT: lakes stored here
 
 // =========================
-// RESET STYLE
+// RESET HIGHLIGHT
 // =========================
 function resetHighlight(){
 
   allMarkers.forEach(m=>{
-    m.setStyle({radius:8,color:"#000"});
+    m.setStyle({
+      radius:8,
+      color:"#000",
+      fillColor:m.options.fillColor
+    });
   });
 
-  Object.values(lakeLayers).forEach(l=>{
-    l.setStyle({
+  Object.values(allPolygons).forEach(p=>{
+    p.setStyle({
       color:"#333",
       weight:1,
       fillOpacity:0.3
@@ -247,7 +255,7 @@ function resetHighlight(){
 }
 
 // =========================
-// SELECT PROJECT (FIXED ZOOM + FULL RESTORE SUPPORT)
+// FIXED SELECT PROJECT (ARC GIS STYLE + ZOOM COMPENSATION)
 // =========================
 function selectProject(project){
 
@@ -259,36 +267,42 @@ function selectProject(project){
 
     group.addLayer(l);
 
-    if(l.setStyle){
+    // POINTS
+    if(l.getLatLng){
+
+      l.setStyle({
+        radius:12,
+        color:"yellow",
+        weight:3,
+        fillColor:"yellow",
+        fillOpacity:1
+      });
+
+    } 
+    // POLYGONS (LAKES)
+    else {
 
       l.setStyle({
         color:"yellow",
         weight:4,
         fillOpacity:0.25
       });
-
-    } else if(l.getLatLng){
-
-      l.setStyle({
-        radius:12,
-        color:"yellow",
-        weight:3
-      });
-
     }
   });
 
-  // FIX: account for UI panels blocking view
+  // =========================
+  // FIX: ACCOUNT FOR RIGHT PANEL OBSTRUCTION
+  // =========================
   map.fitBounds(group.getBounds(),{
-    paddingTopLeft:[LEFT_PANEL_WIDTH + 40, 40],
-    paddingBottomRight:[RIGHT_PANEL_WIDTH + 40, 40]
+    paddingTopLeft: [160 + 40, 40],   // left panel
+    paddingBottomRight: [280 + 40, 40] // right panel (FIXED SMALLER WIDTH)
   });
 
   openPanel(project);
 }
 
 // =========================
-// PANEL
+// RIGHT PANEL
 // =========================
 function openPanel(project){
 
@@ -298,9 +312,16 @@ function openPanel(project){
 
   document.getElementById("panelContent").innerHTML=`
     <h2>${project.title}</h2>
+
     <ul>${locs}</ul>
-    <p>${project.description}</p>
-    ${project.link ? `<a href="${project.link}" target="_blank">Open Link</a>` : ""}
+
+    <table style="width:100%; margin-top:10px;">
+      <tr><td><b>Category</b></td><td>${project.category}</td></tr>
+      <tr><td><b>Description</b></td><td>${project.description}</td></tr>
+      <tr><td><b>Link</b></td><td>
+        ${project.link ? `<a href="${project.link}" target="_blank">Open Project →</a>` : "-"}
+      </td></tr>
+    </table>
   `;
 }
 
@@ -308,20 +329,34 @@ function closePanel(){
   document.getElementById("infoPanel").style.display="none";
 }
 
+// =========================
+// LEFT PANEL
+// =========================
 function toggleLeftPanel(){
-  const p=document.getElementById("leftPanel");
-  p.style.width = p.style.width==="0px"?"160px":"0px";
+  const panel=document.getElementById("leftPanel");
+  panel.style.width = panel.style.width==="0px"?"160px":"0px";
 }
 
 // =========================
-// FULL RESTORED PROJECT DATASET (UNCHANGED)
+// FILTER
+// =========================
+function toggleCategory(cat){
+  if(map.hasLayer(categoryLayers[cat])){
+    map.removeLayer(categoryLayers[cat]);
+  } else {
+    map.addLayer(categoryLayers[cat]);
+  }
+}
+
+// =========================
+// PROJECT DATA (UNCHANGED)
 // =========================
 const projects=[
 
 {
 title:"Field Research Assistant — Coastal & Environmental Monitoring",
 category:"Applied GIS",
-description:"Conducted GPS and RTK GNSS field data collection, QA/QC, and spatial integration for coastal analysis.",
+description:"Field-based GPS and RTK GNSS coastal data collection, QA/QC, and spatial integration workflows.",
 locations:[
 {name:"Sauble Beach",coords:[44.6296,-81.26508]},
 {name:"Burlington Beach",coords:[43.31523,-79.80701]},
@@ -332,7 +367,7 @@ locations:[
 {
 title:"Research Presenter — Invasive Species Monitoring",
 category:"Applied GIS",
-description:"Phragmites spatial analysis using ArcGIS and NDVI for ecological impact assessment.",
+description:"Spatial + NDVI analysis of Phragmites spread in Lake Bernard.",
 link:"https://www.youtube.com/watch?v=5Io_79IMANw",
 locations:[
 {name:"Bernard Lake",coords:[45.72458,-79.3857]}
@@ -342,7 +377,7 @@ locations:[
 {
 title:"Student Planner — Municipal Housing Policy",
 category:"Applied GIS",
-description:"Missing middle housing analysis using GIS and census data for municipal planning.",
+description:"Missing middle housing analysis using GIS and census data.",
 link:"https://www.cambridgetimes.ca/news/housing-affordability-is-a-human-rights-issue-wilfrid-laurier-students-exploring-housing-concerns-with-city/article_c289ca4b-507c-5777-b38d-90a1d676d692.html",
 locations:[
 {name:"Cambridge",coords:[43.40175,-80.32597]}
@@ -352,7 +387,7 @@ locations:[
 {
 title:"Research Assistant — Environmental & Climate Data Analysis",
 category:"Technical",
-description:"Scoping review workflows using Covidence and spatial climate synthesis analysis.",
+description:"Scoping review + spatial climate synthesis workflows.",
 link:"https://ecologyandsociety.org/vol29/iss3/art22/",
 locations:[
 {name:"Africa",coords:[0,20]}
@@ -362,7 +397,7 @@ locations:[
 {
 title:"ReSEC Research Assistant — Remote Sensing of Climate Change",
 category:"Technical",
-description:"Python + GIS analysis of environmental and lake ice datasets.",
+description:"Python + GIS analysis of lake ice variability using satellite data.",
 locations:[
 {name:"Great Bear Lake",coords:[66,-121]},
 {name:"Great Slave Lake",coords:[61,-114]}
@@ -372,7 +407,7 @@ locations:[
 {
 title:"ERA5-Land Lake Ice Thesis",
 category:"Research",
-description:"20-year lake ice bias evaluation across 7 Canadian lakes using ERA5-Land vs satellite products.",
+description:"20-year lake ice bias evaluation across 7 Canadian lakes.",
 link:"https://uwspace.uwaterloo.ca/items/b983d97f-d2ec-4c1a-a6d0-82be963c476a",
 locations:[
 {name:"Great Bear Lake",coords:[66,-121]},
@@ -386,34 +421,6 @@ locations:[
 }
 
 ];
-
-// =========================
-// GEOJSON LAKES (RESTORED FULL POLYGONS)
-// =========================
-const lakes={
-  "Great Bear Lake":"data/GBL.geojson",
-  "Great Slave Lake":"data/GSL.geojson",
-  "Lake Athabasca":"data/Athabasca.geojson",
-  "Lake Winnipeg":"data/Winnipeg.geojson",
-  "Lake Superior":"data/Superior.geojson",
-  "Lake Huron":"data/Huron.geojson",
-  "Lake Erie":"data/Erie.geojson"
-};
-
-Object.entries(lakes).forEach(([name,path])=>{
-  fetch(path).then(r=>r.json()).then(data=>{
-
-    const layer=L.geoJSON(data,{
-      style:{
-        color:"#333",
-        weight:1,
-        fillOpacity:0.3
-      }
-    }).addTo(map);
-
-    lakeLayers[name]=layer;
-  });
-});
 
 // =========================
 // RENDER PROJECT LIST
@@ -435,11 +442,13 @@ projects.forEach(project=>{
 
     let marker=L.circleMarker(loc.coords,{
       radius:8,
-      fillColor:"blue",
+      fillColor:getColor ? getColor(project.category) : "blue",
       color:"#000",
       weight:1,
       fillOpacity:0.8
     }).addTo(categoryLayers[project.category]);
+
+    marker.on('click',()=>selectProject(project));
 
     project.layers.push(marker);
     allMarkers.push(marker);
