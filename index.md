@@ -385,8 +385,6 @@ projects.forEach(project=>{
 });
 
 </script>
-    }
-  });
 
 });
 
