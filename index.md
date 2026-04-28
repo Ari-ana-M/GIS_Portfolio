@@ -137,51 +137,51 @@ Workflow-oriented GIS: focusing on how data is acquired, processed, and transfor
 
 </div>
 
-<!-- MAP + SIDEBAR CONTAINER -->
 <!-- =========================
-LAYOUT CONTAINER
+FULL GIS DASHBOARD LAYOUT
 ========================= -->
-<div style="display:flex; height:780px; margin-top:40px; border:2px solid #333; border-radius:10px; overflow:hidden;">
+<div style="
+  display:flex;
+  height:780px;
+  margin-top:40px;
+  border:2px solid #333;
+  border-radius:10px;
+  overflow:hidden;
+">
 
-  <!-- =========================
-  LEFT PANEL (NARROW)
-  ========================== -->
+  <!-- LEFT PANEL -->
   <div id="leftPanel" style="
-    width:220px;
+    width:160px;
     background:#fafafa;
     border-right:1px solid #ccc;
-    padding:12px;
+    padding:10px;
     overflow-y:auto;
-    transition:0.3s;
   ">
 
     <button onclick="toggleLeftPanel()" style="margin-bottom:10px;">☰</button>
 
-    <h3>Filter</h3>
+    <h4>Filter</h4>
+
     <label><input type="checkbox" checked onchange="toggleCategory('Applied GIS')"> 🟢 Applied GIS</label><br>
     <label><input type="checkbox" checked onchange="toggleCategory('Technical')"> 🟣 Technical</label><br>
     <label><input type="checkbox" checked onchange="toggleCategory('Research')"> 🔵 Research</label>
 
     <hr>
 
-    <h3>Projects</h3>
+    <h4>Projects</h4>
     <div id="project-list"></div>
 
   </div>
 
-  <!-- =========================
-  MAP (WIDE)
-  ========================== -->
+  <!-- MAP -->
   <div id="map" style="flex:1; min-width:0;"></div>
 
-  <!-- =========================
-  RIGHT INFO PANEL (WIDE)
-  ========================== -->
+  <!-- RIGHT PANEL (FIXED SIZE) -->
   <div id="infoPanel" style="
-    width:420px;
+    width:260px;
     background:white;
     border-left:2px solid #333;
-    padding:18px;
+    padding:16px;
     overflow-y:auto;
     display:none;
   ">
@@ -191,27 +191,20 @@ LAYOUT CONTAINER
 
 </div>
 
-<!-- =========================
-MAP LIBRARY
-========================= -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
 <style>
-/* =========================
-PROJECT LINK STYLE
-========================= */
-.project-link {
-  cursor: pointer;
-  font-weight: 600;
-  color: #44BFC7;
-  text-decoration: underline;
-  display: inline-block;
-  margin-bottom: 6px;
+.project-link{
+  cursor:pointer;
+  font-weight:600;
+  color:#44BFC7;
+  text-decoration:underline;
+  display:inline-block;
+  margin-bottom:6px;
 }
-
-.project-link:hover {
-  color: #DE879D;
+.project-link:hover{
+  color:#DE879D;
 }
 </style>
 
@@ -220,20 +213,11 @@ PROJECT LINK STYLE
 // =========================
 // MAP INIT
 // =========================
-var map = L.map('map').setView([52, -90], 4);
+var map = L.map('map').setView([52,-90],4);
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '© OpenStreetMap'
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+  attribution:'© OpenStreetMap'
 }).addTo(map);
-
-// =========================
-// CATEGORY COLORS
-// =========================
-function getColor(cat){
-  if(cat === "Applied GIS") return "green";
-  if(cat === "Technical") return "purple";
-  return "blue";
-}
 
 // =========================
 // LAYERS
@@ -251,30 +235,63 @@ const allPolygons = {};
 // RESET HIGHLIGHT
 // =========================
 function resetHighlight(){
-  allMarkers.forEach(m => m.setStyle({radius:8, color:"#000"}));
-  Object.values(allPolygons).forEach(p => p.setStyle({color:"#333", weight:1}));
+
+  allMarkers.forEach(m=>{
+    m.setStyle({
+      radius:8,
+      color:"#000",
+      fillColor:m.options.fillColor
+    });
+  });
+
+  Object.values(allPolygons).forEach(p=>{
+    p.setStyle({
+      color:"#333",
+      weight:1.5,
+      fillOpacity:0.25,
+      fillColor:"#97D8CD"
+    });
+  });
 }
 
 // =========================
-// SELECT PROJECT
+// FIX: PROJECT SELECTION (POINTS + POLYGONS + ZOOM OFFSET)
 // =========================
 function selectProject(project){
 
   resetHighlight();
 
-  let bounds = [];
+  let group = L.featureGroup();
 
   project.layers.forEach(l => {
+
+    group.addLayer(l);
+
+    // POINTS
     if(l.getLatLng){
-      l.setStyle({radius:12, color:"yellow"});
-      bounds.push(l.getLatLng());
-    } else {
-      l.setStyle({color:"yellow", weight:3});
-      bounds.push(l.getBounds());
+      l.setStyle({
+        radius:12,
+        color:"yellow",
+        weight:3,
+        fillColor:"yellow",
+        fillOpacity:1
+      });
+    }
+    // POLYGONS
+    else {
+      l.setStyle({
+        color:"yellow",
+        weight:4,
+        fillOpacity:0.25,
+        fillColor:"#F5E8AD"
+      });
     }
   });
 
-  map.fitBounds(bounds);
+  map.fitBounds(group.getBounds(), {
+    paddingTopLeft: [170, 40],
+    paddingBottomRight: [280, 40]
+  });
 
   openPanel(project);
 }
@@ -284,13 +301,12 @@ function selectProject(project){
 // =========================
 function openPanel(project){
 
-  document.getElementById("infoPanel").style.display = "block";
+  document.getElementById("infoPanel").style.display="block";
 
-  let locs = project.locations.map(l => `<li>${l.name}</li>`).join("");
+  let locs = project.locations.map(l=>`<li>${l.name}</li>`).join("");
 
-  document.getElementById("panelContent").innerHTML = `
+  document.getElementById("panelContent").innerHTML=`
     <h2>${project.title}</h2>
-
     <ul>${locs}</ul>
 
     <table style="width:100%; margin-top:10px;">
@@ -304,15 +320,15 @@ function openPanel(project){
 }
 
 function closePanel(){
-  document.getElementById("infoPanel").style.display = "none";
+  document.getElementById("infoPanel").style.display="none";
 }
 
 // =========================
-// LEFT PANEL TOGGLE
+// LEFT PANEL
 // =========================
 function toggleLeftPanel(){
-  const panel = document.getElementById("leftPanel");
-  panel.style.width = panel.style.width === "0px" ? "220px" : "0px";
+  const panel=document.getElementById("leftPanel");
+  panel.style.width = panel.style.width==="0px"?"160px":"0px";
 }
 
 // =========================
@@ -327,39 +343,29 @@ function toggleCategory(cat){
 }
 
 // =========================
-// GEOJSON LAYERS
+// ATTACH POLYGONS TO PROJECTS (CRITICAL FIX)
 // =========================
-const lakes = {
-  "Great Bear Lake":"data/GBL.geojson",
-  "Great Slave Lake":"data/GSL.geojson",
-  "Lake Athabasca":"data/Athabasca.geojson",
-  "Lake Winnipeg":"data/Winnipeg.geojson",
-  "Lake Superior":"data/Superior.geojson",
-  "Lake Huron":"data/Huron.geojson",
-  "Lake Erie":"data/Erie.geojson",
-  "Bernard Lake":"data/Bernard.geojson"
-};
+function attachPolygonToProjects(name, layer){
 
-Object.entries(lakes).forEach(([name, path])=>{
-  fetch(path).then(r=>r.json()).then(data=>{
-    const layer = L.geoJSON(data,{
-      style:{color:"#333", weight:1, fillOpacity:0.3}
-    }).addTo(map);
-
-    allPolygons[name] = layer;
+  projects.forEach(project=>{
+    project.locations.forEach(loc=>{
+      if(loc.name === name){
+        project.layers.push(layer);
+      }
+    });
   });
-});
+
+}
 
 // =========================
-// PROJECT DATA (FULL)
+// PROJECT DATA
 // =========================
-const projects = [
+const projects=[
 
 {
 title:"Field Research Assistant — Coastal & Environmental Monitoring",
 category:"Applied GIS",
 description:"Field-based GPS and RTK GNSS coastal data collection, QA/QC, and spatial integration workflows.",
-link:null,
 locations:[
 {name:"Sauble Beach",coords:[44.6296,-81.26508]},
 {name:"Burlington Beach",coords:[43.31523,-79.80701]},
@@ -370,7 +376,7 @@ locations:[
 {
 title:"Research Presenter — Invasive Species Monitoring",
 category:"Applied GIS",
-description:"Spatial and remote sensing analysis of Phragmites distribution and ecological impacts.",
+description:"Spatial + NDVI analysis of Phragmites spread in Lake Bernard.",
 link:"https://www.youtube.com/watch?v=5Io_79IMANw",
 locations:[
 {name:"Bernard Lake",coords:[45.72458,-79.3857]}
@@ -380,7 +386,7 @@ locations:[
 {
 title:"Student Planner — Municipal Housing Policy",
 category:"Applied GIS",
-description:"Spatial and census-based analysis of missing middle housing and Ontario housing policy.",
+description:"Missing middle housing analysis using GIS and census data.",
 link:"https://www.cambridgetimes.ca/news/housing-affordability-is-a-human-rights-issue-wilfrid-laurier-students-exploring-housing-concerns-with-city/article_c289ca4b-507c-5777-b38d-90a1d676d692.html",
 locations:[
 {name:"Cambridge",coords:[43.40175,-80.32597]}
@@ -390,7 +396,7 @@ locations:[
 {
 title:"Research Assistant — Environmental & Climate Data Analysis",
 category:"Technical",
-description:"Scoping review workflows, spatial analysis, and climate research synthesis.",
+description:"Scoping review + spatial climate synthesis workflows.",
 link:"https://ecologyandsociety.org/vol29/iss3/art22/",
 locations:[
 {name:"Africa",coords:[0,20]}
@@ -400,8 +406,7 @@ locations:[
 {
 title:"ReSEC Research Assistant — Remote Sensing of Climate Change",
 category:"Technical",
-description:"Python and GIS-based analysis of lake ice variability using satellite datasets.",
-link:null,
+description:"Python + GIS analysis of lake ice variability using satellite data.",
 locations:[
 {name:"Great Bear Lake",coords:[66,-121]},
 {name:"Great Slave Lake",coords:[61,-114]}
@@ -411,7 +416,7 @@ locations:[
 {
 title:"ERA5-Land Lake Ice Thesis",
 category:"Research",
-description:"20-year evaluation of ERA5-Land lake ice bias across seven Canadian lakes.",
+description:"20-year lake ice bias evaluation across 7 Canadian lakes.",
 link:"https://uwspace.uwaterloo.ca/items/b983d97f-d2ec-4c1a-a6d0-82be963c476a",
 locations:[
 {name:"Great Bear Lake",coords:[66,-121]},
@@ -427,38 +432,38 @@ locations:[
 ];
 
 // =========================
-// RENDER PROJECT LIST
+// LOAD MARKERS + POLYGONS
 // =========================
-const list = document.getElementById("project-list");
+const list=document.getElementById("project-list");
 
-projects.forEach(project => {
+projects.forEach(project=>{
 
-  project.layers = [];
+  project.layers=[];
 
-  let div = document.createElement("div");
-  div.innerHTML = `<span class="project-link">${project.title}</span>`;
-  div.onclick = () => selectProject(project);
+  let div=document.createElement("div");
+  div.innerHTML=`<span class="project-link">${project.title}</span>`;
+  div.onclick=()=>selectProject(project);
   list.appendChild(div);
 
-  let ul = document.createElement("ul");
+  let ul=document.createElement("ul");
 
-  project.locations.forEach(loc => {
+  project.locations.forEach(loc=>{
 
-    let marker = L.circleMarker(loc.coords,{
+    let marker=L.circleMarker(loc.coords,{
       radius:8,
-      fillColor:getColor(project.category),
+      fillColor:"#44BFC7",
       color:"#000",
       weight:1,
       fillOpacity:0.8
     }).addTo(categoryLayers[project.category]);
 
-    marker.on('click', ()=>selectProject(project));
+    marker.on('click',()=>selectProject(project));
 
     project.layers.push(marker);
     allMarkers.push(marker);
 
-    let li = document.createElement("li");
-    li.innerText = loc.name;
+    let li=document.createElement("li");
+    li.innerText=loc.name;
     ul.appendChild(li);
 
   });
@@ -467,8 +472,11 @@ projects.forEach(project => {
 
 });
 
-</script>
-
+// =========================
+// LOAD POLYGONS (CRITICAL FIX HOOK)
+// =========================
+Object.entries(allPolygons).forEach(([name,layer])=>{
+  attachPolygonToProjects(name, layer);
 });
 
 </script>
