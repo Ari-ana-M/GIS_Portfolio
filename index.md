@@ -244,16 +244,15 @@ function resetHighlight(){
     });
   });
 
-Object.values(allPolygons).forEach(p=>{
-  if(p && p.setStyle){
+  Object.values(allPolygons).forEach(p=>{
     p.setStyle({
       color:"#333",
       weight:1.5,
       fillOpacity:0.25,
       fillColor:"#97D8CD"
     });
-  }
-});
+  });
+}
 
 // =========================
 // FIX: PROJECT SELECTION (POINTS + POLYGONS + ZOOM OFFSET)
@@ -262,13 +261,14 @@ function selectProject(project){
 
   resetHighlight();
 
-  let bounds = [];
+  let group = L.featureGroup();
 
   project.layers.forEach(l => {
 
-    // include BOTH markers + polygons
-    if(l.getLatLng){
+    group.addLayer(l);
 
+    // POINTS
+    if(l.getLatLng){
       l.setStyle({
         radius:12,
         color:"yellow",
@@ -276,50 +276,22 @@ function selectProject(project){
         fillColor:"yellow",
         fillOpacity:1
       });
-
-      bounds.push(l.getLatLng());
-
-    } else {
-
+    }
+    // POLYGONS
+    else {
       l.setStyle({
         color:"yellow",
         weight:4,
         fillOpacity:0.25,
         fillColor:"#F5E8AD"
       });
-
-      bounds.push(l.getBounds());
-
-    }
-
-  });
-
-  // FIX: handle polygon bounds properly
-  let fitBoundsArray = [];
-
-  bounds.forEach(b => {
-    if(b instanceof L.LatLng){
-      fitBoundsArray.push(b);
-    } else {
-      fitBoundsArray.push(b);
     }
   });
 
-const groupLayers = [...project.layers];
-
-// fallback: include polygon layers if they exist globally
-Object.values(allPolygons).forEach(poly => {
-  if(poly && poly.getBounds){
-    groupLayers.push(poly);
-  }
-});
-
-const group = L.featureGroup(groupLayers);
-
-map.fitBounds(group.getBounds(), {
-  paddingTopLeft: [160, 20],
-  paddingBottomRight: [260, 20]
-});
+  map.fitBounds(group.getBounds(), {
+    paddingTopLeft: [170, 40],
+    paddingBottomRight: [280, 40]
+  });
 
   openPanel(project);
 }
@@ -373,64 +345,17 @@ function toggleCategory(cat){
 // =========================
 // ATTACH POLYGONS TO PROJECTS (CRITICAL FIX)
 // =========================
-// =========================
-// FIXED POLYGON MAPPING (ROBUST + EXPLICIT)
-// =========================
+function attachPolygonToProjects(name, layer){
 
-// map lake name → actual project keywords
-const lakeProjectMap = {
-  "Great Bear Lake": "Great Bear Lake",
-  "Great Slave Lake": "Great Slave Lake",
-  "Lake Athabasca": "Lake Athabasca",
-  "Lake Winnipeg": "Lake Winnipeg",
-  "Lake Superior": "Lake Superior",
-  "Lake Huron": "Lake Huron",
-  "Lake Erie": "Lake Erie",
-  "Bernard Lake": "Bernard Lake"
-};
-
-// attach polygons AFTER they load
-function registerPolygon(name, layer){
-
-  allPolygons[name] = layer;
-
-  projects.forEach(project => {
-    const match = project.locations.some(loc =>
-      loc.name === lakeProjectMap[name]
-    );
-
-    if(match){
-      project.layers.push(layer);
-    }
-  });
-}
-
-const lakes = {
-  "Great Bear Lake":"data/GBL.geojson",
-  "Great Slave Lake":"data/GSL.geojson",
-  "Lake Athabasca":"data/Athabasca.geojson",
-  "Lake Winnipeg":"data/Winnipeg.geojson",
-  "Lake Superior":"data/Superior.geojson",
-  "Lake Huron":"data/Huron.geojson",
-  "Lake Erie":"data/Erie.geojson",
-  "Bernard Lake":"data/Bernard.geojson"
-};
-  
-// replace your fetch loop with THIS
-Object.entries(lakes).forEach(([name, path])=>{
-  fetch(path).then(r=>r.json()).then(data=>{
-    const layer = L.geoJSON(data,{
-      style:{
-        color:"#333",
-        weight:1.5,
-        fillOpacity:0.25,
-        fillColor:"#97D8CD"
+  projects.forEach(project=>{
+    project.locations.forEach(loc=>{
+      if(loc.name === name){
+        project.layers.push(layer);
       }
-    }).addTo(map);
-
-    registerPolygon(name, layer);
+    });
   });
-});
+
+}
 
 // =========================
 // PROJECT DATA
@@ -545,6 +470,13 @@ projects.forEach(project=>{
 
   list.appendChild(ul);
 
+});
+
+// =========================
+// LOAD POLYGONS (CRITICAL FIX HOOK)
+// =========================
+Object.entries(allPolygons).forEach(([name,layer])=>{
+  attachPolygonToProjects(name, layer);
 });
 
 </script>
