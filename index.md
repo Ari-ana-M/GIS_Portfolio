@@ -73,50 +73,85 @@
   </text>
 </svg>
 </div>
-
 </div>
 
 <!-- DASHBOARD -->
-<div style="display:flex; height:780px; margin-top:40px; border:2px solid #333; border-radius:10px; overflow:hidden;">
+<div style="display:flex; flex-direction:column; margin-top:40px; border:2px solid #333; border-radius:10px; overflow:hidden;">
 
-  <!-- LEFT PANEL -->
-  <div id="leftPanel" style="width:160px; background:#fafafa; border-right:1px solid #ccc; padding:10px; overflow-y:auto; flex-shrink:0;">
-    <button onclick="toggleLeftPanel()" style="margin-bottom:10px;">☰</button>
-    <h4>Filter</h4>
+  <!-- MAP ROW -->
+  <div style="display:flex; height:780px;">
 
-    <div style="margin-bottom:4px;">
-      <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px;">
-        <input type="checkbox" checked onchange="toggleCategory('Applied GIS')">
-        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#F19FB4;flex-shrink:0;"></span>
-        Applied GIS
-      </label>
-    </div>
-    <div style="margin-bottom:4px;">
-      <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px;">
-        <input type="checkbox" checked onchange="toggleCategory('Technical')">
-        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#90E2BF;flex-shrink:0;"></span>
-        Technical
-      </label>
-    </div>
-    <div style="margin-bottom:4px;">
-      <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px;">
-        <input type="checkbox" checked onchange="toggleCategory('Research')">
-        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#38C6D0;flex-shrink:0;"></span>
-        Research
-      </label>
+    <!-- LEFT PANEL -->
+    <div id="leftPanel" style="width:160px; background:#fafafa; border-right:1px solid #ccc; padding:10px; overflow-y:auto; flex-shrink:0;">
+      <button onclick="toggleLeftPanel()" style="margin-bottom:10px;">☰</button>
+      <h4>Filter</h4>
+
+      <div style="margin-bottom:4px;">
+        <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px;">
+          <input type="checkbox" checked onchange="toggleCategory('Applied GIS')">
+          <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#F19FB4;flex-shrink:0;"></span>
+          Applied GIS
+        </label>
+      </div>
+      <div style="margin-bottom:4px;">
+        <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px;">
+          <input type="checkbox" checked onchange="toggleCategory('Technical')">
+          <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#90E2BF;flex-shrink:0;"></span>
+          Technical
+        </label>
+      </div>
+      <div style="margin-bottom:4px;">
+        <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px;">
+          <input type="checkbox" checked onchange="toggleCategory('Research')">
+          <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#38C6D0;flex-shrink:0;"></span>
+          Research
+        </label>
+      </div>
+
+      <hr>
+      <h4>Projects</h4>
+      <div id="project-list"></div>
     </div>
 
-    <hr>
-    <h4>Projects</h4>
-    <div id="project-list"></div>
+    <!-- MAP -->
+    <div id="map" style="flex:1; min-width:0;"></div>
+
+    <!-- RIGHT PANEL -->
+    <div id="infoPanel" style="width:260px; background:white; border-left:2px solid #333; padding:0; overflow-y:auto; display:none; flex-shrink:0; font-family: Arial, sans-serif;">
+      <div id="panelContent"></div>
+    </div>
+
   </div>
 
-  <!-- MAP -->
-  <div id="map" style="flex:1; min-width:0;"></div>
+  <!-- WEB VIEWER ROW -->
+  <div id="webViewerPanel" style="display:none; border-top:2px solid #333; flex-direction:column; height:500px;">
 
-  <!-- RIGHT PANEL -->
-  <div id="infoPanel" style="width:260px; background:white; border-left:2px solid #333; padding:0; overflow-y:auto; display:none; flex-shrink:0; font-family: Arial, sans-serif;">
-    <div id="panelContent"></div>
+    <!-- Viewer toolbar -->
+    <div style="display:flex; align-items:center; gap:10px; padding:8px 12px; background:#4a4a4a; color:white; font-family:Arial,sans-serif; font-size:13px; flex-shrink:0;">
+      <span id="viewerLabel" style="flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Web Preview</span>
+      <a id="viewerOpenBtn" href="#" target="_blank" style="color:#90E2BF; text-decoration:none; white-space:nowrap; font-size:12px;">↗ Open in new tab</a>
+      <button onclick="closeViewer()" style="background:none; border:none; color:white; font-size:16px; cursor:pointer; padding:0; line-height:1;">✕</button>
+    </div>
+
+    <!-- Blocked-site fallback message (hidden by default) -->
+    <div id="viewerFallback" style="display:none; padding:24px; font-family:Arial,sans-serif; font-size:13px; color:#555; text-align:center; background:#f9f9f9; border-bottom:1px solid #ddd;">
+      <div style="font-size:28px; margin-bottom:10px;">🔒</div>
+      <p style="margin:0 0 6px;"><b>This site can't be previewed here.</b></p>
+      <p style="margin:0 0 14px; font-size:12px; color:#888;">Many sites block iframe embedding for security reasons.</p>
+      <a id="fallbackLink" href="#" target="_blank"
+         style="display:inline-block; background:#38C6D0; color:white; padding:8px 18px; border-radius:6px; text-decoration:none; font-size:13px; font-weight:bold;">
+        Open in New Tab →
+      </a>
+    </div>
+
+    <!-- The iframe -->
+    <iframe id="webViewerFrame"
+      src="about:blank"
+      style="flex:1; border:none; width:100%;"
+      sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+      title="Project preview">
+    </iframe>
+
   </div>
 
 </div>
@@ -137,11 +172,7 @@
 }
 .project-link:hover { color: #F19FB4; }
 
-/* ArcGIS-style popup table */
-.arcgis-popup {
-  font-family: Arial, sans-serif;
-  font-size: 13px;
-}
+.arcgis-popup { font-family: Arial, sans-serif; font-size: 13px; }
 .arcgis-popup-header {
   background: #4a4a4a;
   color: white;
@@ -150,20 +181,10 @@
   justify-content: space-between;
   align-items: center;
 }
-.arcgis-popup-header h3 {
-  margin: 0;
-  font-size: 13px;
-  font-weight: bold;
-  line-height: 1.3;
-}
+.arcgis-popup-header h3 { margin: 0; font-size: 13px; font-weight: bold; line-height: 1.3; }
 .arcgis-popup-header button {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-  padding: 0 0 0 8px;
-  line-height: 1;
+  background: none; border: none; color: white;
+  font-size: 16px; cursor: pointer; padding: 0 0 0 8px; line-height: 1;
 }
 .arcgis-popup-subheader {
   padding: 6px 12px;
@@ -173,11 +194,7 @@
   letter-spacing: 0.05em;
   color: white;
 }
-.arcgis-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 12px;
-}
+.arcgis-table { width: 100%; border-collapse: collapse; font-size: 12px; }
 .arcgis-table tr:nth-child(odd)  { background: #f5f5f5; }
 .arcgis-table tr:nth-child(even) { background: #ffffff; }
 .arcgis-table td {
@@ -185,15 +202,9 @@
   vertical-align: top;
   border-bottom: 1px solid #e0e0e0;
 }
-.arcgis-table td:first-child {
-  font-weight: bold;
-  color: #555;
-  width: 40%;
-  white-space: nowrap;
-}
-.arcgis-table td:last-child {
-  color: #222;
-}
+.arcgis-table td:first-child { font-weight: bold; color: #555; width: 40%; white-space: nowrap; }
+.arcgis-table td:last-child { color: #222; }
+
 .arcgis-popup-link {
   display: block;
   padding: 8px 12px;
@@ -203,23 +214,30 @@
   border-top: 1px solid #ddd;
 }
 .arcgis-popup-link:hover { text-decoration: underline; }
-.arcgis-locations {
-  padding: 6px 10px 2px;
+
+/* Preview button inside popup */
+.preview-btn {
+  display: block;
+  margin: 10px 12px 12px;
+  padding: 7px 12px;
+  background: #38C6D0;
+  color: white;
+  border: none;
+  border-radius: 5px;
   font-size: 12px;
-  color: #333;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  width: calc(100% - 24px);
 }
-.arcgis-locations ul {
-  margin: 4px 0 0;
-  padding-left: 1.2em;
-}
-.arcgis-locations li { margin-bottom: 2px; }
+.preview-btn:hover { background: #2fb0ba; }
 </style>
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 try {
 
-const mapDiv = document.getElementById("map");
+const mapDiv  = document.getElementById("map");
 const listDiv = document.getElementById("project-list");
 if (!mapDiv || !listDiv) { console.error("Missing DOM elements"); return; }
 
@@ -234,7 +252,6 @@ const POLYGON_LAKES = new Set([
   "Lake Athabasca", "Great Bear Lake", "Great Slave Lake", "Bernard Lake"
 ]);
 
-// ── Map (CartoDB Positron greyscale basemap) ───────────────
 var map = L.map('map').setView([52, -90], 4);
 L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
   attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> © <a href="https://carto.com/">CARTO</a>',
@@ -242,17 +259,15 @@ L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
   maxZoom: 19
 }).addTo(map);
 
-// ── One layerGroup per category (holds BOTH markers & polygons) ──
 const categoryLayers = {
   "Applied GIS": L.layerGroup().addTo(map),
   "Technical":   L.layerGroup().addTo(map),
   "Research":    L.layerGroup().addTo(map)
 };
 
-const allMarkers = [];
-// polygonInstances[lakeName] = [ {poly, project}, ... ]
-// Each project gets its OWN polygon instance so they stack & blend
+const allMarkers       = [];
 const polygonInstances = {};
+const geojsonCache     = {};
 
 const lakeFiles = {
   "Lake Superior":   "data/Superior.geojson",
@@ -265,9 +280,6 @@ const lakeFiles = {
   "Bernard Lake":    "data/Bernard.geojson"
 };
 
-// Cache raw GeoJSON so we can instantiate one polygon per project
-const geojsonCache = {};
-
 Object.entries(lakeFiles).forEach(([name, path]) => {
   fetch(path)
     .then(res => { if (!res.ok) throw new Error("Missing"); return res.json(); })
@@ -275,7 +287,6 @@ Object.entries(lakeFiles).forEach(([name, path]) => {
     .catch(() => console.warn("Skipping polygon:", name));
 });
 
-// ── Projects ───────────────────────────────────────────────
 const projects = [
 {
   title: "Field Research Assistant — Coastal & Environmental Monitoring",
@@ -334,47 +345,33 @@ const projects = [
 }
 ];
 
-// ── Create one polygon instance per project per lake ───────
 function applyPolygonsFromCache() {
   projects.forEach(project => {
     const color = CATEGORY_COLORS[project.category];
     project.locations.forEach(loc => {
-      if (!POLYGON_LAKES.has(loc.name)) return;
-      if (!geojsonCache[loc.name]) return;
-
-      // Skip if this project already has a poly for this lake
+      if (!POLYGON_LAKES.has(loc.name) || !geojsonCache[loc.name]) return;
       const existing = (polygonInstances[loc.name] || []).find(e => e.project === project);
       if (existing) return;
 
       const poly = L.geoJSON(geojsonCache[loc.name], {
-        style: {
-          color: "#555",
-          weight: 1.2,
-          fillColor: color,
-          fillOpacity: 0.35
-        }
+        style: { color: "#555", weight: 1.2, fillColor: color, fillOpacity: 0.35 }
       });
 
-      // Add to the category's layer group (so toggling works)
       poly.addTo(categoryLayers[project.category]);
-
       poly.on("click", () => selectProject(project));
 
       if (!polygonInstances[loc.name]) polygonInstances[loc.name] = [];
       polygonInstances[loc.name].push({ poly, project });
 
-      // Keep reference on project too for fitBounds
       if (!project.polygons) project.polygons = [];
       project.polygons.push(poly);
     });
   });
 }
 
-// ── Render sidebar + markers ───────────────────────────────
 projects.forEach(project => {
-  project.layers   = [];   // circle markers
-  project.polygons = [];   // polygon layers
-
+  project.layers   = [];
+  project.polygons = [];
   const color = CATEGORY_COLORS[project.category];
 
   const div = document.createElement("div");
@@ -388,19 +385,13 @@ projects.forEach(project => {
   project.locations.forEach(loc => {
     if (!POLYGON_LAKES.has(loc.name)) {
       const marker = L.circleMarker(loc.coords, {
-        radius: 8,
-        fillColor: color,
-        color: "#fff",
-        weight: 1.5,
-        fillOpacity: 0.9
+        radius: 8, fillColor: color, color: "#fff", weight: 1.5, fillOpacity: 0.9
       }).addTo(categoryLayers[project.category]);
-
       marker._projectCategory = project.category;
       marker.on("click", () => selectProject(project));
       project.layers.push(marker);
       allMarkers.push(marker);
     }
-
     const li = document.createElement("li");
     li.innerText = loc.name;
     ul.appendChild(li);
@@ -409,42 +400,26 @@ projects.forEach(project => {
   listDiv.appendChild(ul);
 });
 
-// ── Highlight reset ────────────────────────────────────────
 function resetHighlight() {
   allMarkers.forEach(m => {
-    m.setStyle({
-      radius: 8,
-      color: "#fff",
-      weight: 1.5,
-      fillColor: CATEGORY_COLORS[m._projectCategory],
-      fillOpacity: 0.9
-    });
+    m.setStyle({ radius: 8, color: "#fff", weight: 1.5, fillColor: CATEGORY_COLORS[m._projectCategory], fillOpacity: 0.9 });
   });
-
   Object.values(polygonInstances).forEach(arr => {
     arr.forEach(({ poly, project }) => {
-      poly.setStyle({
-        color: "#555",
-        weight: 1.2,
-        fillColor: CATEGORY_COLORS[project.category],
-        fillOpacity: 0.35
-      });
+      poly.setStyle({ color: "#555", weight: 1.2, fillColor: CATEGORY_COLORS[project.category], fillOpacity: 0.35 });
     });
   });
 }
 
-// ── Select project ─────────────────────────────────────────
 function selectProject(project) {
   resetHighlight();
   const groupLayers = [];
 
-  // Highlight markers
   project.layers.forEach(m => {
     m.setStyle({ radius: 11, color: "#FFD700", weight: 2.5, fillColor: "#FFD700", fillOpacity: 1 });
     groupLayers.push(m);
   });
 
-  // Highlight this project's polygons
   (project.polygons || []).forEach(poly => {
     poly.setStyle({ color: "#FFD700", weight: 3, fillColor: "#FFD700", fillOpacity: 0.45 });
     groupLayers.push(poly);
@@ -453,26 +428,25 @@ function selectProject(project) {
   if (groupLayers.length > 0) {
     try {
       const group = L.featureGroup(groupLayers);
-      map.fitBounds(group.getBounds(), {
-        paddingTopLeft: [20, 20],
-        paddingBottomRight: [280, 20]
-      });
+      map.fitBounds(group.getBounds(), { paddingTopLeft: [20, 20], paddingBottomRight: [280, 20] });
     } catch(e) {}
   }
 
   openPanel(project);
 }
 
-// ── ArcGIS-style popup panel ───────────────────────────────
+// ── ArcGIS-style popup ─────────────────────────────────────
 function openPanel(project) {
   document.getElementById("infoPanel").style.display = "block";
-  const color = CATEGORY_COLORS[project.category];
-
-  const locList = project.locations.map(l => `<li>${l.name}</li>`).join("");
+  const color    = CATEGORY_COLORS[project.category];
+  const locList  = project.locations.map(l => `<li>${l.name}</li>`).join("");
 
   const linkRow = project.link
-    ? `<a class="arcgis-popup-link" href="${project.link}" target="_blank">🔗 Open Project →</a>`
-    : "";
+    ? `<a class="arcgis-popup-link" href="${project.link}" target="_blank">🔗 View Source →</a>
+       <button class="preview-btn" onclick="openViewer('${project.link}', '${project.title.replace(/'/g,"\\'")}')">
+         ▶ Preview Below
+       </button>`
+    : `<p style="padding:10px 12px; font-size:12px; color:#888; margin:0;">No link available for this project.</p>`;
 
   document.getElementById("panelContent").innerHTML = `
     <div class="arcgis-popup">
@@ -480,30 +454,15 @@ function openPanel(project) {
         <h3>${project.title}</h3>
         <button onclick="closePanel()">✕</button>
       </div>
-
-      <div class="arcgis-popup-subheader" style="background:${color};">
-        ${project.category}
-      </div>
-
+      <div class="arcgis-popup-subheader" style="background:${color};">${project.category}</div>
       <table class="arcgis-table">
-        <tr>
-          <td>Category</td>
-          <td>${project.category}</td>
-        </tr>
-        <tr>
-          <td>Description</td>
-          <td>${project.description}</td>
-        </tr>
+        <tr><td>Category</td><td>${project.category}</td></tr>
+        <tr><td>Description</td><td>${project.description}</td></tr>
         <tr>
           <td>Locations</td>
-          <td>
-            <ul style="margin:0; padding-left:1.2em;">
-              ${locList}
-            </ul>
-          </td>
+          <td><ul style="margin:0; padding-left:1.2em;">${locList}</ul></td>
         </tr>
       </table>
-
       ${linkRow}
     </div>
   `;
@@ -514,7 +473,58 @@ function closePanel() {
   resetHighlight();
 }
 
-// ── UI controls ────────────────────────────────────────────
+// ── Web viewer ─────────────────────────────────────────────
+window.openViewer = function(url, title) {
+  const panel    = document.getElementById("webViewerPanel");
+  const frame    = document.getElementById("webViewerFrame");
+  const fallback = document.getElementById("viewerFallback");
+  const label    = document.getElementById("viewerLabel");
+  const openBtn  = document.getElementById("viewerOpenBtn");
+  const fbLink   = document.getElementById("fallbackLink");
+
+  panel.style.display    = "flex";
+  label.textContent      = title;
+  openBtn.href           = url;
+  fbLink.href            = url;
+  fallback.style.display = "none";
+  frame.style.display    = "block";
+  frame.src              = url;
+
+  // Scroll down to the viewer
+  panel.scrollIntoView({ behavior: "smooth", block: "start" });
+
+  // Detect if iframe was blocked (load fires but content is empty / refused)
+  frame.onload = function() {
+    try {
+      // If we can access contentDocument it loaded fine (same-origin)
+      const doc = frame.contentDocument || frame.contentWindow.document;
+      if (!doc || doc.body === null || doc.body.innerHTML.trim() === "") {
+        showFallback(url);
+      }
+    } catch(e) {
+      // Cross-origin: we can't inspect — assume it loaded
+      // Most blocking happens silently; user will see a blank iframe
+    }
+  };
+
+  frame.onerror = function() { showFallback(url); };
+};
+
+function showFallback(url) {
+  const frame    = document.getElementById("webViewerFrame");
+  const fallback = document.getElementById("viewerFallback");
+  frame.style.display    = "none";
+  fallback.style.display = "block";
+  document.getElementById("fallbackLink").href = url;
+}
+
+window.closeViewer = function() {
+  const panel = document.getElementById("webViewerPanel");
+  const frame = document.getElementById("webViewerFrame");
+  panel.style.display = "none";
+  frame.src = "about:blank";
+};
+
 window.toggleLeftPanel = function () {
   const panel = document.getElementById("leftPanel");
   panel.style.width = (panel.style.width === "0px") ? "160px" : "0px";
