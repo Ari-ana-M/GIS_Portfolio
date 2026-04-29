@@ -241,8 +241,33 @@ const categoryLayers = {
 };
 
 const allMarkers = [];
-const allPolygons = {};
+const s = {};
 
+// =========================
+// LOAD LAKE POLYGONS
+// =========================
+Object.entries(lakeFiles).forEach(([name, path]) => {
+
+  fetch(path)
+    .then(res => res.json())
+    .then(data => {
+
+      const polygon = L.geoJSON(data, {
+        style: {
+          color: "#333",
+          weight: 1.5,
+          fillColor: "#97D8CD",
+          fillOpacity: 0.25
+        }
+      }).addTo(map);
+
+      allPolygons[name] = polygon;
+
+    })
+    .catch(err => console.error("GeoJSON load error:", name, err));
+
+});
+  
 // =========================
 // RESET HIGHLIGHT (FIXED)
 // =========================
@@ -268,6 +293,19 @@ function resetHighlight() {
     }
   });
 }
+  // =========================
+// GEOJSON SOURCES
+// =========================
+const lakeFiles = {
+  "Lake Superior": "data/superior.geojson",
+  "Lake Huron": "data/huron.geojson",
+  "Lake Erie": "data/erie.geojson",
+  "Lake Winnipeg": "data/winnipeg.geojson",
+  "Lake Athabasca": "data/athabasca.geojson",
+  "Great Bear Lake": "data/great_bear.geojson",
+  "Great Slave Lake": "data/great_slave.geojson",
+  "Bernard Lake": "data/bernard.geojson"
+};
 
 // =========================
 // SELECT PROJECT
@@ -276,9 +314,40 @@ function selectProject(project) {
 
   resetHighlight();
 
-  const group = L.featureGroup(project.layers || []);
+  const groupLayers = [...(project.layers || [])];
 
-  if ((project.layers || []).length > 0) {
+  // Highlight markers (YELLOW)
+  (project.layers || []).forEach(m => {
+    if (m.setStyle) {
+      m.setStyle({
+        radius: 10,
+        color: "#FFD700",
+        fillColor: "#FFD700"
+      });
+    }
+  });
+
+  // Highlight matching polygons
+  (project.locations || []).forEach(loc => {
+
+    const poly = allPolygons[loc.name];
+
+    if (poly) {
+      poly.setStyle({
+        color: "#FFD700",
+        weight: 3,
+        fillOpacity: 0.3,
+        fillColor: "#FFD700"
+      });
+
+      groupLayers.push(poly);
+    }
+
+  });
+
+  const group = L.featureGroup(groupLayers);
+
+  if (groupLayers.length > 0) {
     map.fitBounds(group.getBounds(), {
       paddingTopLeft: [160, 20],
       paddingBottomRight: [260, 20]
