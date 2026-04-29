@@ -1,14 +1,10 @@
 <div style="display:flex; gap:40px; align-items:center; border:2px solid #333; padding:30px; border-radius:10px; margin-top:20px;">
 
-<!-- LEFT TEXT CONTENT -->
 <div style="flex:1; min-width:280px;">
-
 <h1 style="margin-bottom:5px;">GIS & Spatial Data Portfolio</h1>
-
 <p style="margin-top:0;"><b>Geospatial Analyst | Data-Driven Workflows | Environmental Systems</b></p>
 
 <h3>Education</h3>
-
 <ul style="list-style-type: disc; padding-left: 0;">
   <li>
     <b>Honors BA Environmental Studies</b> – Wilfrid Laurier University
@@ -38,10 +34,8 @@
 <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">Remote Sensing</span>
 <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">Spatial Analysis</span>
 </p>
-
 </div>
 
-<!-- RIGHT SVG -->
 <div style="flex:1; display:flex; justify-content:center;">
 <svg width="520" height="475" viewBox="0 0 520 440">
 <rect x="10" y="60" width="500" height="395" fill="none" stroke="#333" stroke-width="1" rx="10"/>
@@ -83,26 +77,11 @@
 </div>
 
 <!-- DASHBOARD -->
-<div style="
-  display:flex;
-  height:780px;
-  margin-top:40px;
-  border:2px solid #333;
-  border-radius:10px;
-  overflow:hidden;
-">
+<div style="display:flex; height:780px; margin-top:40px; border:2px solid #333; border-radius:10px; overflow:hidden;">
 
   <!-- LEFT PANEL -->
-  <div id="leftPanel" style="
-    width:160px;
-    background:#fafafa;
-    border-right:1px solid #ccc;
-    padding:10px;
-    overflow-y:auto;
-    flex-shrink:0;
-  ">
+  <div id="leftPanel" style="width:160px; background:#fafafa; border-right:1px solid #ccc; padding:10px; overflow-y:auto; flex-shrink:0;">
     <button onclick="toggleLeftPanel()" style="margin-bottom:10px;">☰</button>
-
     <h4>Filter</h4>
 
     <div style="margin-bottom:4px;">
@@ -136,16 +115,7 @@
   <div id="map" style="flex:1; min-width:0;"></div>
 
   <!-- RIGHT PANEL -->
-  <div id="infoPanel" style="
-    width:260px;
-    background:white;
-    border-left:2px solid #333;
-    padding:16px;
-    overflow-y:auto;
-    display:none;
-    flex-shrink:0;
-  ">
-    <button onclick="closePanel()">✕ Close</button>
+  <div id="infoPanel" style="width:260px; background:white; border-left:2px solid #333; padding:0; overflow-y:auto; display:none; flex-shrink:0; font-family: Arial, sans-serif;">
     <div id="panelContent"></div>
   </div>
 
@@ -166,6 +136,83 @@
   line-height: 1.4;
 }
 .project-link:hover { color: #F19FB4; }
+
+/* ArcGIS-style popup table */
+.arcgis-popup {
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+}
+.arcgis-popup-header {
+  background: #4a4a4a;
+  color: white;
+  padding: 10px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.arcgis-popup-header h3 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: bold;
+  line-height: 1.3;
+}
+.arcgis-popup-header button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0 0 0 8px;
+  line-height: 1;
+}
+.arcgis-popup-subheader {
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: white;
+}
+.arcgis-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+.arcgis-table tr:nth-child(odd)  { background: #f5f5f5; }
+.arcgis-table tr:nth-child(even) { background: #ffffff; }
+.arcgis-table td {
+  padding: 6px 10px;
+  vertical-align: top;
+  border-bottom: 1px solid #e0e0e0;
+}
+.arcgis-table td:first-child {
+  font-weight: bold;
+  color: #555;
+  width: 40%;
+  white-space: nowrap;
+}
+.arcgis-table td:last-child {
+  color: #222;
+}
+.arcgis-popup-link {
+  display: block;
+  padding: 8px 12px;
+  font-size: 12px;
+  color: #0079c1;
+  text-decoration: none;
+  border-top: 1px solid #ddd;
+}
+.arcgis-popup-link:hover { text-decoration: underline; }
+.arcgis-locations {
+  padding: 6px 10px 2px;
+  font-size: 12px;
+  color: #333;
+}
+.arcgis-locations ul {
+  margin: 4px 0 0;
+  padding-left: 1.2em;
+}
+.arcgis-locations li { margin-bottom: 2px; }
 </style>
 
 <script>
@@ -176,39 +223,37 @@ const mapDiv = document.getElementById("map");
 const listDiv = document.getElementById("project-list");
 if (!mapDiv || !listDiv) { console.error("Missing DOM elements"); return; }
 
-// ── Color scheme ──────────────────────────────────────────
 const CATEGORY_COLORS = {
   "Research":    "#38C6D0",
   "Technical":   "#90E2BF",
   "Applied GIS": "#F19FB4"
 };
 
-// Lakes that have GeoJSON polygons — skip point markers for these
 const POLYGON_LAKES = new Set([
   "Lake Superior", "Lake Huron", "Lake Erie", "Lake Winnipeg",
   "Lake Athabasca", "Great Bear Lake", "Great Slave Lake", "Bernard Lake"
 ]);
 
-// ── Map init (CartoDB Positron = greyscale basemap) ────────
+// ── Map (CartoDB Positron greyscale basemap) ───────────────
 var map = L.map('map').setView([52, -90], 4);
-
 L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
   attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> © <a href="https://carto.com/">CARTO</a>',
   subdomains: 'abcd',
   maxZoom: 19
 }).addTo(map);
 
-// ── Layer groups per category ──────────────────────────────
+// ── One layerGroup per category (holds BOTH markers & polygons) ──
 const categoryLayers = {
   "Applied GIS": L.layerGroup().addTo(map),
   "Technical":   L.layerGroup().addTo(map),
   "Research":    L.layerGroup().addTo(map)
 };
 
-const allMarkers  = [];
-const allPolygons = {};
+const allMarkers = [];
+// polygonInstances[lakeName] = [ {poly, project}, ... ]
+// Each project gets its OWN polygon instance so they stack & blend
+const polygonInstances = {};
 
-// ── Load GeoJSON polygons ──────────────────────────────────
 const lakeFiles = {
   "Lake Superior":   "data/Superior.geojson",
   "Lake Huron":      "data/Huron.geojson",
@@ -220,100 +265,17 @@ const lakeFiles = {
   "Bernard Lake":    "data/Bernard.geojson"
 };
 
+// Cache raw GeoJSON so we can instantiate one polygon per project
+const geojsonCache = {};
+
 Object.entries(lakeFiles).forEach(([name, path]) => {
   fetch(path)
     .then(res => { if (!res.ok) throw new Error("Missing"); return res.json(); })
-    .then(data => {
-      // Default neutral style until projects are rendered
-      const poly = L.geoJSON(data, {
-        style: { color: "#555", weight: 1.2, fillColor: "#aaa", fillOpacity: 0.18 }
-      }).addTo(map);
-      allPolygons[name] = poly;
-    })
+    .then(data => { geojsonCache[name] = data; applyPolygonsFromCache(); })
     .catch(() => console.warn("Skipping polygon:", name));
 });
 
-// ── Highlight reset ────────────────────────────────────────
-function resetHighlight() {
-  allMarkers.forEach(m => {
-    const cat = m._projectCategory;
-    m.setStyle({
-      radius: 8,
-      color: "#fff",
-      weight: 1.5,
-      fillColor: CATEGORY_COLORS[cat],
-      fillOpacity: 0.9
-    });
-  });
-
-  // Re-apply per-lake colors (may have multiple projects)
-  Object.entries(allPolygons).forEach(([name, poly]) => {
-    const color = poly._assignedColor || "#aaa";
-    poly.setStyle({ color: "#555", weight: 1.2, fillColor: color, fillOpacity: 0.35 });
-  });
-}
-
-// ── Select project ─────────────────────────────────────────
-function selectProject(project) {
-  resetHighlight();
-  const groupLayers = [...project.layers];
-
-  project.layers.forEach(m => {
-    m.setStyle({ radius: 11, color: "#FFD700", weight: 2.5, fillColor: "#FFD700", fillOpacity: 1 });
-  });
-
-  project.locations.forEach(loc => {
-    const poly = allPolygons[loc.name];
-    if (poly) {
-      poly.setStyle({ color: "#FFD700", weight: 3, fillColor: "#FFD700", fillOpacity: 0.45 });
-      groupLayers.push(poly);
-    }
-  });
-
-  if (groupLayers.length > 0) {
-    try {
-      const group = L.featureGroup(groupLayers);
-      map.fitBounds(group.getBounds(), {
-        paddingTopLeft: [20, 20],
-        paddingBottomRight: [280, 20]
-      });
-    } catch(e) {}
-  }
-
-  openPanel(project);
-}
-
-// ── Info panel ─────────────────────────────────────────────
-function openPanel(project) {
-  document.getElementById("infoPanel").style.display = "block";
-  const locs = project.locations.map(l => `<li style="font-size:13px;">${l.name}</li>`).join("");
-  const catColor = CATEGORY_COLORS[project.category];
-  document.getElementById("panelContent").innerHTML = `
-    <h2 style="font-size:15px; margin-bottom:8px;">${project.title}</h2>
-    <span style="background:${catColor}; color:#333; padding:2px 8px; border-radius:12px; font-size:11px; font-weight:600;">${project.category}</span>
-    <ul style="margin-top:10px; padding-left:1.2em;">${locs}</ul>
-    <p style="font-size:13px; color:#555; margin-top:8px;">${project.description}</p>
-    ${project.link ? `<a href="${project.link}" target="_blank" style="font-size:13px; color:#38C6D0;">Open project →</a>` : ""}
-  `;
-}
-
-function closePanel() {
-  document.getElementById("infoPanel").style.display = "none";
-  resetHighlight();
-}
-
-// ── UI controls ────────────────────────────────────────────
-window.toggleLeftPanel = function () {
-  const panel = document.getElementById("leftPanel");
-  panel.style.width = (panel.style.width === "0px") ? "160px" : "0px";
-};
-
-window.toggleCategory = function (cat) {
-  if (map.hasLayer(categoryLayers[cat])) map.removeLayer(categoryLayers[cat]);
-  else map.addLayer(categoryLayers[cat]);
-};
-
-// ── Project data ───────────────────────────────────────────
+// ── Projects ───────────────────────────────────────────────
 const projects = [
 {
   title: "Field Research Assistant — Coastal & Environmental Monitoring",
@@ -372,9 +334,47 @@ const projects = [
 }
 ];
 
-// ── Render projects ────────────────────────────────────────
+// ── Create one polygon instance per project per lake ───────
+function applyPolygonsFromCache() {
+  projects.forEach(project => {
+    const color = CATEGORY_COLORS[project.category];
+    project.locations.forEach(loc => {
+      if (!POLYGON_LAKES.has(loc.name)) return;
+      if (!geojsonCache[loc.name]) return;
+
+      // Skip if this project already has a poly for this lake
+      const existing = (polygonInstances[loc.name] || []).find(e => e.project === project);
+      if (existing) return;
+
+      const poly = L.geoJSON(geojsonCache[loc.name], {
+        style: {
+          color: "#555",
+          weight: 1.2,
+          fillColor: color,
+          fillOpacity: 0.35
+        }
+      });
+
+      // Add to the category's layer group (so toggling works)
+      poly.addTo(categoryLayers[project.category]);
+
+      poly.on("click", () => selectProject(project));
+
+      if (!polygonInstances[loc.name]) polygonInstances[loc.name] = [];
+      polygonInstances[loc.name].push({ poly, project });
+
+      // Keep reference on project too for fitBounds
+      if (!project.polygons) project.polygons = [];
+      project.polygons.push(poly);
+    });
+  });
+}
+
+// ── Render sidebar + markers ───────────────────────────────
 projects.forEach(project => {
-  project.layers = [];
+  project.layers   = [];   // circle markers
+  project.polygons = [];   // polygon layers
+
   const color = CATEGORY_COLORS[project.category];
 
   const div = document.createElement("div");
@@ -383,16 +383,10 @@ projects.forEach(project => {
   listDiv.appendChild(div);
 
   const ul = document.createElement("ul");
-  ul.style.fontSize = "11px";
-  ul.style.color = "#666";
-  ul.style.margin = "0 0 8px";
-  ul.style.paddingLeft = "1em";
+  ul.style.cssText = "font-size:11px;color:#666;margin:0 0 8px;padding-left:1em;";
 
   project.locations.forEach(loc => {
-    const hasPolygon = POLYGON_LAKES.has(loc.name);
-
-    if (!hasPolygon) {
-      // Only create a point marker if there is no polygon for this location
+    if (!POLYGON_LAKES.has(loc.name)) {
       const marker = L.circleMarker(loc.coords, {
         radius: 8,
         fillColor: color,
@@ -415,24 +409,121 @@ projects.forEach(project => {
   listDiv.appendChild(ul);
 });
 
-// ── Apply category colors to polygons after GeoJSON loads ──
-// Uses a short delay to allow fetch calls to complete
-setTimeout(() => {
-  projects.forEach(project => {
-    const color = CATEGORY_COLORS[project.category];
-    project.locations.forEach(loc => {
-      const poly = allPolygons[loc.name];
-      if (poly) {
-        // Track assigned color so resetHighlight can restore it
-        // If two projects share a lake, the last one wins for color
-        // but both polygons stack at 0.35 opacity creating a blend
-        poly._assignedColor = color;
-        poly.setStyle({ color: "#555", weight: 1.2, fillColor: color, fillOpacity: 0.35 });
-        poly.on("click", () => selectProject(project));
-      }
+// ── Highlight reset ────────────────────────────────────────
+function resetHighlight() {
+  allMarkers.forEach(m => {
+    m.setStyle({
+      radius: 8,
+      color: "#fff",
+      weight: 1.5,
+      fillColor: CATEGORY_COLORS[m._projectCategory],
+      fillOpacity: 0.9
     });
   });
-}, 2000);
+
+  Object.values(polygonInstances).forEach(arr => {
+    arr.forEach(({ poly, project }) => {
+      poly.setStyle({
+        color: "#555",
+        weight: 1.2,
+        fillColor: CATEGORY_COLORS[project.category],
+        fillOpacity: 0.35
+      });
+    });
+  });
+}
+
+// ── Select project ─────────────────────────────────────────
+function selectProject(project) {
+  resetHighlight();
+  const groupLayers = [];
+
+  // Highlight markers
+  project.layers.forEach(m => {
+    m.setStyle({ radius: 11, color: "#FFD700", weight: 2.5, fillColor: "#FFD700", fillOpacity: 1 });
+    groupLayers.push(m);
+  });
+
+  // Highlight this project's polygons
+  (project.polygons || []).forEach(poly => {
+    poly.setStyle({ color: "#FFD700", weight: 3, fillColor: "#FFD700", fillOpacity: 0.45 });
+    groupLayers.push(poly);
+  });
+
+  if (groupLayers.length > 0) {
+    try {
+      const group = L.featureGroup(groupLayers);
+      map.fitBounds(group.getBounds(), {
+        paddingTopLeft: [20, 20],
+        paddingBottomRight: [280, 20]
+      });
+    } catch(e) {}
+  }
+
+  openPanel(project);
+}
+
+// ── ArcGIS-style popup panel ───────────────────────────────
+function openPanel(project) {
+  document.getElementById("infoPanel").style.display = "block";
+  const color = CATEGORY_COLORS[project.category];
+
+  const locList = project.locations.map(l => `<li>${l.name}</li>`).join("");
+
+  const linkRow = project.link
+    ? `<a class="arcgis-popup-link" href="${project.link}" target="_blank">🔗 Open Project →</a>`
+    : "";
+
+  document.getElementById("panelContent").innerHTML = `
+    <div class="arcgis-popup">
+      <div class="arcgis-popup-header">
+        <h3>${project.title}</h3>
+        <button onclick="closePanel()">✕</button>
+      </div>
+
+      <div class="arcgis-popup-subheader" style="background:${color};">
+        ${project.category}
+      </div>
+
+      <table class="arcgis-table">
+        <tr>
+          <td>Category</td>
+          <td>${project.category}</td>
+        </tr>
+        <tr>
+          <td>Description</td>
+          <td>${project.description}</td>
+        </tr>
+        <tr>
+          <td>Locations</td>
+          <td>
+            <ul style="margin:0; padding-left:1.2em;">
+              ${locList}
+            </ul>
+          </td>
+        </tr>
+      </table>
+
+      ${linkRow}
+    </div>
+  `;
+}
+
+function closePanel() {
+  document.getElementById("infoPanel").style.display = "none";
+  resetHighlight();
+}
+
+// ── UI controls ────────────────────────────────────────────
+window.toggleLeftPanel = function () {
+  const panel = document.getElementById("leftPanel");
+  panel.style.width = (panel.style.width === "0px") ? "160px" : "0px";
+};
+
+window.toggleCategory = function (cat) {
+  if (map.hasLayer(categoryLayers[cat])) map.removeLayer(categoryLayers[cat]);
+  else map.addLayer(categoryLayers[cat]);
+};
 
 } catch(err) { console.error("App error:", err); }
 });
