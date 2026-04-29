@@ -213,32 +213,39 @@ document.addEventListener("DOMContentLoaded", function () {
 
 try {
 
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+try {
+
 // =========================
 // SAFETY CHECKS
 // =========================
 const mapDiv = document.getElementById("map");
 const listDiv = document.getElementById("project-list");
 
-if (!mapDiv || !listDiv) return;
+if (!mapDiv || !listDiv) {
+  console.error("Missing required DOM elements");
+  return;
+}
 
 // =========================
-// BLACK & WHITE BASEMAP
+// COLOR SCHEME
 // =========================
-var map = L.map('map').setView([52, -90], 4);
-
-// B&W CARTO BASEMAP
-L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-  attribution: '© OpenStreetMap © CARTO'
-}).addTo(map);
-
-// =========================
-// COLOR SCHEME (YOUR REQUEST)
-// =========================
-const COLORS = {
+const CATEGORY_COLORS = {
   "Research": "#38C6D0",
   "Technical": "#90E2BF",
   "Applied GIS": "#F19FB4"
 };
+
+// =========================
+// MAP INIT
+// =========================
+var map = L.map('map').setView([52, -90], 4);
+
+// Black-and-white basemap
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+  attribution: '© OpenStreetMap © CARTO'
+}).addTo(map);
 
 // =========================
 // LAYERS
@@ -253,66 +260,54 @@ const allMarkers = [];
 const allPolygons = {};
 
 // =========================
-// POLYGON-ONLY EXCLUSION LIST
-// (prevents duplicate points)
-// =========================
-const polygonOnly = new Set([
-  "Lake Superior",
-  "Lake Huron",
-  "Lake Erie",
-  "Lake Winnipeg",
-  "Lake Athabasca",
-  "Great Bear Lake",
-  "Great Slave Lake",
-  "Bernard Lake"
-]);
-
-// =========================
-// GEOJSON LAYERS
+// GEOJSON FILES
 // =========================
 const lakeFiles = {
-  "Lake Superior": "data/superior.geojson",
-  "Lake Huron": "data/huron.geojson",
-  "Lake Erie": "data/erie.geojson",
-  "Lake Winnipeg": "data/winnipeg.geojson",
-  "Lake Athabasca": "data/athabasca.geojson",
-  "Great Bear Lake": "data/great_bear.geojson",
-  "Great Slave Lake": "data/great_slave.geojson",
-  "Bernard Lake": "data/bernard.geojson"
+  "Lake Superior": "data/Superior.geojson",
+  "Lake Huron": "data/Huron.geojson",
+  "Lake Erie": "data/Erie.geojson",
+  "Lake Winnipeg": "data/Winnipeg.geojson",
+  "Lake Athabasca": "data/Athabasca.geojson",
+  "Great Bear Lake": "data/GBL.geojson",
+  "Great Slave Lake": "data/GSL.geojson",
+  "Bernard Lake": "data/Bernard.geojson"
 };
 
+const POLYGON_NAMES = new Set(Object.keys(lakeFiles));
+
 Object.entries(lakeFiles).forEach(([name, path]) => {
-
   fetch(path)
-    .then(r => r.json())
+    .then(res => {
+      if (!res.ok) throw new Error("Missing file");
+      return res.json();
+    })
     .then(data => {
-
       const poly = L.geoJSON(data, {
         style: {
-          color: COLORS["Research"],   // default stroke
-          weight: 2,
-          fillColor: COLORS["Research"],
-          fillOpacity: 0.25            // IMPORTANT: overlap blending
+          color: CATEGORY_COLORS["Research"],
+          weight: 1.2,
+          fillColor: CATEGORY_COLORS["Research"],
+          fillOpacity: 0.18
         }
       }).addTo(map);
 
       allPolygons[name] = poly;
     })
-    .catch(() => console.warn("Missing:", name));
-
+    .catch(() => {
+      console.warn("Skipping polygon:", name);
+    });
 });
 
 // =========================
-// RESET STYLE
+// RESET
 // =========================
 function resetHighlight() {
-
   allMarkers.forEach(m => {
     const cat = m.options.category;
     m.setStyle({
       radius: 7,
       color: "#111",
-      fillColor: COLORS[cat],
+      fillColor: CATEGORY_COLORS[cat] || "#999",
       fillOpacity: 0.9
     });
   });
@@ -320,23 +315,22 @@ function resetHighlight() {
   Object.values(allPolygons).forEach(p => {
     p.setStyle({
       color: "#444",
-      weight: 1.5,
-      fillColor: COLORS["Research"],
-      fillOpacity: 0.25
+      weight: 1.2,
+      fillColor: CATEGORY_COLORS["Research"],
+      fillOpacity: 0.18
     });
   });
 }
 
 // =========================
-// PROJECT SELECT
+// SELECT PROJECT
 // =========================
 function selectProject(project) {
-
   resetHighlight();
 
   const groupLayers = [...project.layers];
 
-  // highlight markers
+  // Highlight markers
   project.layers.forEach(m => {
     m.setStyle({
       radius: 10,
@@ -346,24 +340,21 @@ function selectProject(project) {
     });
   });
 
-  // highlight polygons
+  // Highlight polygons
   project.locations.forEach(loc => {
-
     const poly = allPolygons[loc.name];
-
     if (poly) {
       poly.setStyle({
         color: "#FFD700",
         weight: 3,
         fillColor: "#FFD700",
-        fillOpacity: 0.3
+        fillOpacity: 0.28
       });
-
       groupLayers.push(poly);
     }
   });
 
-  if (groupLayers.length) {
+  if (groupLayers.length > 0) {
     const group = L.featureGroup(groupLayers);
     map.fitBounds(group.getBounds(), {
       paddingTopLeft: [160, 20],
@@ -375,10 +366,9 @@ function selectProject(project) {
 }
 
 // =========================
-// PANEL (UNCHANGED)
+// PANEL
 // =========================
 function openPanel(project) {
-
   document.getElementById("infoPanel").style.display = "block";
 
   const locs = project.locations.map(l => `<li>${l.name}</li>`).join("");
@@ -402,13 +392,16 @@ function closePanel() {
 }
 
 // =========================
-// UI FUNCTIONS
+// LEFT PANEL TOGGLE
 // =========================
 window.toggleLeftPanel = function () {
   const panel = document.getElementById("leftPanel");
   panel.style.width = panel.style.width === "0px" ? "160px" : "0px";
 };
 
+// =========================
+// FILTER
+// =========================
 window.toggleCategory = function (cat) {
   if (map.hasLayer(categoryLayers[cat])) {
     map.removeLayer(categoryLayers[cat]);
@@ -418,34 +411,77 @@ window.toggleCategory = function (cat) {
 };
 
 // =========================
-// PROJECT DATA (UNCHANGED)
+// PROJECT DATA
+// Keep your existing full project list here unchanged
 // =========================
 const projects = [
-{
-  title: "Field Research Assistant — Coastal & Environmental Monitoring",
-  category: "Applied GIS",
-  description: "Field-based GPS and RTK GNSS coastal data collection.",
-  locations: [
-    { name: "Sauble Beach", coords: [44.6296, -81.26508] },
-    { name: "Burlington Beach", coords: [43.31523, -79.80701] },
-    { name: "Wasaga Beach", coords: [44.52372, -80.0033] }
-  ]
-},
-{
-  title: "Research Assistant — Climate Analysis",
-  category: "Technical",
-  description: "Spatial climate workflows.",
-  locations: [
-    { name: "Great Bear Lake", coords: [66, -121] }
-  ]
-}
+  {
+    title: "Field Research Assistant — Coastal & Environmental Monitoring",
+    category: "Applied GIS",
+    description: "Field-based GPS and RTK GNSS coastal data collection, QA/QC, and spatial integration workflows.",
+    locations: [
+      { name: "Sauble Beach", coords: [44.6296, -81.26508] },
+      { name: "Burlington Beach", coords: [43.31523, -79.80701] },
+      { name: "Wasaga Beach", coords: [44.52372, -80.0033] }
+    ]
+  },
+  {
+    title: "Research Presenter — Invasive Species Monitoring",
+    category: "Applied GIS",
+    description: "Spatial + NDVI analysis of Phragmites spread in Lake Bernard.",
+    link: "https://www.youtube.com/watch?v=5Io_79IMANw",
+    locations: [
+      { name: "Bernard Lake", coords: [45.72458, -79.3857] }
+    ]
+  },
+  {
+    title: "Student Planner — Municipal Housing Policy",
+    category: "Applied GIS",
+    description: "Missing middle housing analysis using GIS and census data.",
+    link: "https://www.cambridgetimes.ca/news/housing-affordability-is-a-human-rights-issue-wilfrid-laurier-students-exploring-housing-concerns-with-city/article_c289ca4b-507c-5777-b38d-90a1d676d692.html",
+    locations: [
+      { name: "Cambridge", coords: [43.40175, -80.32597] }
+    ]
+  },
+  {
+    title: "Research Assistant — Environmental & Climate Data Analysis",
+    category: "Technical",
+    description: "Scoping review + spatial climate synthesis workflows.",
+    link: "https://ecologyandsociety.org/vol29/iss3/art22/",
+    locations: [
+      { name: "Africa", coords: [0, 20] }
+    ]
+  },
+  {
+    title: "ReSEC Research Assistant — Remote Sensing of Climate Change",
+    category: "Technical",
+    description: "Python + GIS analysis of lake ice variability using satellite data.",
+    locations: [
+      { name: "Great Bear Lake", coords: [66, -121] },
+      { name: "Great Slave Lake", coords: [61, -114] }
+    ]
+  },
+  {
+    title: "ERA5-Land Lake Ice Thesis",
+    category: "Research",
+    description: "20-year lake ice bias evaluation across 7 Canadian lakes.",
+    link: "https://uwspace.uwaterloo.ca/items/b983d97f-d2ec-4c1a-a6d0-82be963c476a",
+    locations: [
+      { name: "Great Bear Lake", coords: [66, -121] },
+      { name: "Great Slave Lake", coords: [61, -114] },
+      { name: "Lake Athabasca", coords: [59, -109] },
+      { name: "Lake Winnipeg", coords: [52, -97] },
+      { name: "Lake Superior", coords: [47.7, -87.5] },
+      { name: "Lake Huron", coords: [45, -82.4] },
+      { name: "Lake Erie", coords: [42.2, -81.2] }
+    ]
+  }
 ];
 
 // =========================
-// RENDER PROJECT LIST + MARKERS
+// RENDER
 // =========================
 projects.forEach(project => {
-
   project.layers = [];
 
   const div = document.createElement("div");
@@ -456,20 +492,18 @@ projects.forEach(project => {
   const ul = document.createElement("ul");
 
   project.locations.forEach(loc => {
-
-    // 🚫 SKIP MARKERS FOR POLYGON FEATURES
-    if (polygonOnly.has(loc.name)) return;
+    // Do not create a point if a polygon exists for that location
+    if (POLYGON_NAMES.has(loc.name)) return;
 
     const marker = L.circleMarker(loc.coords, {
       radius: 7,
-      fillColor: COLORS[project.category],
-      color: "#000",
+      fillColor: CATEGORY_COLORS[project.category] || "#999",
+      color: "#111",
       weight: 1,
       fillOpacity: 0.9
     }).addTo(categoryLayers[project.category]);
 
     marker.options.category = project.category;
-
     marker.on("click", () => selectProject(project));
 
     project.layers.push(marker);
@@ -484,8 +518,7 @@ projects.forEach(project => {
 });
 
 } catch (err) {
-  console.error(err);
+  console.error("App crashed:", err);
 }
-
 });
 </script>
