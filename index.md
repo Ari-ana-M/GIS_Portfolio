@@ -249,14 +249,14 @@ const allPolygons = {};
 // GEOJSON FILES (SAFE LOAD)
 // =========================
 const lakeFiles = {
-  "Lake Superior": "data/superior.geojson",
-  "Lake Huron": "data/huron.geojson",
-  "Lake Erie": "data/erie.geojson",
-  "Lake Winnipeg": "data/winnipeg.geojson",
-  "Lake Athabasca": "data/athabasca.geojson",
-  "Great Bear Lake": "data/great_bear.geojson",
-  "Great Slave Lake": "data/great_slave.geojson",
-  "Bernard Lake": "data/bernard.geojson"
+  "Lake Superior": "data/Superior.geojson",
+  "Lake Huron": "data/Huron.geojson",
+  "Lake Erie": "data/Erie.geojson",
+  "Lake Winnipeg": "data/Winnipeg.geojson",
+  "Lake Athabasca": "data/Athabasca.geojson",
+  "Great Bear Lake": "data/GBL.geojson",
+  "Great Slave Lake": "data/GSL.geojson",
+  "Bernard Lake": "data/Bernard.geojson"
 };
 
 Object.entries(lakeFiles).forEach(([name, path]) => {
@@ -402,7 +402,7 @@ const projects = [
 {
   title: "Field Research Assistant — Coastal & Environmental Monitoring",
   category: "Applied GIS",
-  description: "Field-based GPS and RTK GNSS coastal workflows.",
+  description: "Field-based GPS and RTK GNSS coastal data collection, QA/QC, and spatial integration workflows.",
   locations: [
     { name: "Sauble Beach", coords: [44.6296, -81.26508] },
     { name: "Burlington Beach", coords: [43.31523, -79.80701] },
@@ -410,12 +410,54 @@ const projects = [
   ]
 },
 {
-  title: "ERA5-Land Lake Ice Thesis",
-  category: "Research",
-  description: "20-year lake ice bias evaluation.",
+  title: "Research Presenter — Invasive Species Monitoring",
+  category: "Applied GIS",
+  description: "Spatial + NDVI analysis of Phragmites spread in Lake Bernard.",
+  link: "https://www.youtube.com/watch?v=5Io_79IMANw",
+  locations: [
+    { name: "Bernard Lake", coords: [45.72458, -79.3857] }
+  ]
+},
+{
+  title: "Student Planner — Municipal Housing Policy",
+  category: "Applied GIS",
+  description: "Missing middle housing analysis using GIS and census data.",
+  link: "https://www.cambridgetimes.ca/news/housing-affordability-is-a-human-rights-issue-wilfrid-laurier-students-exploring-housing-concerns-with-city/article_c289ca4b-507c-5777-b38d-90a1d676d692.html",
+  locations: [
+    { name: "Cambridge", coords: [43.40175, -80.32597] }
+  ]
+},
+{
+  title: "Research Assistant — Environmental & Climate Data Analysis",
+  category: "Technical",
+  description: "Scoping review + spatial climate synthesis workflows.",
+  link: "https://ecologyandsociety.org/vol29/iss3/art22/",
+  locations: [
+    { name: "Africa", coords: [0, 20] }
+  ]
+},
+{
+  title: "ReSEC Research Assistant — Remote Sensing of Climate Change",
+  category: "Technical",
+  description: "Python + GIS analysis of lake ice variability using satellite data.",
   locations: [
     { name: "Great Bear Lake", coords: [66, -121] },
-    { name: "Lake Superior", coords: [47.7, -87.5] }
+    { name: "Great Slave Lake", coords: [61, -114] }
+  ]
+},
+{
+  title: "ERA5-Land Lake Ice Thesis",
+  category: "Research",
+  description: "20-year lake ice bias evaluation across 7 Canadian lakes.",
+  link: "https://uwspace.uwaterloo.ca/items/b983d97f-d2ec-4c1a-a6d0-82be963c476a",
+  locations: [
+    { name: "Great Bear Lake", coords: [66, -121] },
+    { name: "Great Slave Lake", coords: [61, -114] },
+    { name: "Lake Athabasca", coords: [59, -109] },
+    { name: "Lake Winnipeg", coords: [52, -97] },
+    { name: "Lake Superior", coords: [47.7, -87.5] },
+    { name: "Lake Huron", coords: [45, -82.4] },
+    { name: "Lake Erie", coords: [42.2, -81.2] }
   ]
 }
 ];
