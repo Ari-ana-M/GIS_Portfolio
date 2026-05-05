@@ -474,12 +474,31 @@ function selectProject(project) {
 }
 
 // ── ArcGIS-style popup ─────────────────────────────────────
+const AFRICA_COUNTRIES = [
+  "Burkina Faso",
+  "Congo",
+  "Ethiopia",
+  "Gambia",
+  "Ghana",
+  "Kenya",
+  "Mali",
+  "Mozambique",
+  "Niger",
+  "Nigeria",
+  "Senegal",
+  "South Africa",
+  "Uganda",
+  "Zambia",
+  "Zimbabwe",
+  "Rwanda"
+];
+  
 function openPanel(project) {
   document.getElementById("infoPanel").style.display = "block";
   const color    = CATEGORY_COLORS[project.category];
   const locList = project.locations.map(l => {
     if (l.name === "Africa") {
-      return `<li>Africa: Burkina Faso, Congo, Ethiopia, Gambia, Ghana, Kenya, Mali, Mozambique, Niger, Nigeria, Senegal, South Africa, Uganda, Zambia, Zimbabwe, Rwanda</li>`;
+      return AFRICA_COUNTRIES.map(c => `<li>${c}</li>`).join("");
     }
     return `<li>${l.name}</li>`;
   }).join("");
