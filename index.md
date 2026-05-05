@@ -1,78 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>GIS & Spatial Data Portfolio</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<style>
+.project-link {
+  cursor: pointer; font-weight: 600; font-size: 12px; color: #38C6D0;
+  text-decoration: underline; display: inline-block; margin-bottom: 6px; line-height: 1.4;
+}
+.project-link:hover { color: #F19FB4; }
+.arcgis-popup { font-family: Arial, sans-serif; font-size: 13px; }
+.arcgis-popup-header {
+  background: #4a4a4a; color: white; padding: 10px 12px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.arcgis-popup-header h3 { margin: 0; font-size: 13px; font-weight: bold; line-height: 1.3; }
+.arcgis-popup-header button {
+  background: none; border: none; color: white;
+  font-size: 16px; cursor: pointer; padding: 0 0 0 8px; line-height: 1;
+}
+.arcgis-popup-subheader {
+  padding: 6px 12px; font-size: 11px; font-weight: bold;
+  text-transform: uppercase; letter-spacing: 0.05em; color: white;
+}
+.arcgis-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.arcgis-table tr:nth-child(odd)  { background: #f5f5f5; }
+.arcgis-table tr:nth-child(even) { background: #ffffff; }
+.arcgis-table td { padding: 6px 10px; vertical-align: top; border-bottom: 1px solid #e0e0e0; }
+.arcgis-table td:first-child { font-weight: bold; color: #555; width: 40%; white-space: nowrap; }
+.arcgis-table td:last-child { color: #222; }
+.arcgis-popup-link {
+  display: block; padding: 8px 12px; font-size: 12px;
+  color: #0079c1; text-decoration: none; border-top: 1px solid #ddd;
+}
+.arcgis-popup-link:hover { text-decoration: underline; }
+.preview-btn {
+  display: block; margin: 10px 12px 12px; padding: 7px 12px;
+  background: #38C6D0; color: white; border: none; border-radius: 5px;
+  font-size: 12px; font-weight: bold; cursor: pointer; text-align: center;
+  width: calc(100% - 24px);
+}
+.preview-btn:hover { background: #2fb0ba; }
+</style>
+</head>
+<body>
+
 <div style="display:flex; gap:40px; align-items:center; border:2px solid #333; padding:30px; border-radius:10px; margin-top:20px;">
-
-<div style="flex:1; min-width:280px;">
-<h1 style="margin-bottom:5px;">GIS & Spatial Data Portfolio</h1>
-<p style="margin-top:0;"><b>Geospatial Analyst | Data-Driven Workflows | Environmental Systems</b></p>
-
-<h3>Education</h3>
-<ul style="list-style-type: disc; padding-left: 0;">
-  <li>
-    <b>Honors BA Environmental Studies</b> – Wilfrid Laurier University
-    <ul style="list-style-type: circle; margin-top: 5px; margin-bottom: 10px; padding-left: 20px;">
-      <li>Option in Geomatics and Minor in Sociology</li>
-      <li>GPA: 3.8</li>
+  <div style="flex:1; min-width:280px;">
+    <h1 style="margin-bottom:5px;">GIS & Spatial Data Portfolio</h1>
+    <p style="margin-top:0;"><b>Geospatial Analyst | Data-Driven Workflows | Environmental Systems</b></p>
+    <h3>Education</h3>
+    <ul style="list-style-type: disc; padding-left: 0;">
+      <li>
+        <b>Honors BA Environmental Studies</b> – Wilfrid Laurier University
+        <ul style="list-style-type: circle; margin-top: 5px; margin-bottom: 10px; padding-left: 20px;">
+          <li>Option in Geomatics and Minor in Sociology</li>
+          <li>GPA: 3.8</li>
+        </ul>
+      </li>
+      <li>
+        <b>MSc Geography</b> – University of Waterloo
+        <ul style="list-style-type: circle; margin-top: 5px; margin-bottom: 10px; padding-left: 20px;">
+          <li>Focus: Climate data & lake ice systems</li>
+          <li>GPA: 3.8</li>
+        </ul>
+      </li>
     </ul>
-  </li>
-  <li>
-    <b>MSc Geography</b> – University of Waterloo
-    <ul style="list-style-type: circle; margin-top: 5px; margin-bottom: 10px; padding-left: 20px;">
-      <li>Focus: Climate data & lake ice systems</li>
-      <li>GPA: 3.8</li>
-    </ul>
-  </li>
-</ul>
+    <h3>Approach</h3>
+    <p>Workflow-oriented GIS: focusing on how data is acquired, processed, and transformed into usable insight.</p>
+    <h3>Tools & Technologies</h3>
+    <p>
+      <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">ArcGIS Pro</span>
+      <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">QGIS</span>
+      <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">Python</span>
+      <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">SQL</span>
+      <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">Remote Sensing</span>
+      <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">Spatial Analysis</span>
+    </p>
+  </div>
 
-<h3>Approach</h3>
-<p>Workflow-oriented GIS: focusing on how data is acquired, processed, and transformed into usable insight.</p>
-
-<h3>Tools & Technologies</h3>
-<p>
-<span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">ArcGIS Pro</span>
-<span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">QGIS</span>
-<span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">Python</span>
-<span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">SQL</span>
-<span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">Remote Sensing</span>
-<span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">Spatial Analysis</span>
-</p>
-</div>
-
-<div style="flex:1; display:flex; justify-content:center;">
-<svg width="520" height="475" viewBox="0 0 520 440">
-<rect x="10" y="60" width="500" height="395" fill="none" stroke="#333" stroke-width="1" rx="10"/>
-  <text x="260" y="25" text-anchor="middle" font-size="18" font-weight="bold">Communication & Translation</text>
-  <text x="260" y="45" text-anchor="middle" font-size="12">Presenting to stakeholders • Interdisciplinary collaboration • Reporting</text>
-  <circle cx="170" cy="210" r="110" fill="#38C6D0" fill-opacity="0.7"/>
-  <circle cx="350" cy="210" r="110" fill="#90E2BF" fill-opacity="0.6"/>
-  <circle cx="260" cy="320" r="110" fill="#F19FB4" fill-opacity="0.7"/>
-  <text x="150" y="95" text-anchor="middle" font-size="14" font-weight="bold">Data Acquisition</text>
-  <text x="370" y="95" text-anchor="middle" font-size="14" font-weight="bold">Geospatial Analysis & Modeling</text>
-  <text x="260" y="445" text-anchor="middle" font-size="14" font-weight="bold">Applied Systems</text>
-  <text x="170" y="160" text-anchor="middle" font-size="13">
-    <tspan x="170" dy="0">Field Surveying</tspan>
-    <tspan x="170" dy="16">Remote Sensing</tspan>
-    <tspan x="170" dy="16">Data Sourcing</tspan>
-  </text>
-  <text x="350" y="150" text-anchor="middle" font-size="13">
-    <tspan x="350" dy="0">GIS (ArcGIS, QGIS)</tspan>
-    <tspan x="350" dy="16">Python</tspan>
-    <tspan x="350" dy="16">Spatial Analysis</tspan>
-    <tspan x="350" dy="16">Climate modelling</tspan>
-    <tspan x="350" dy="16">workflows</tspan>
-  </text>
-  <text x="260" y="315" text-anchor="middle" font-size="13">
-    <tspan x="260" dy="0">Policy</tspan>
-    <tspan x="260" dy="16">Planning</tspan>
-    <tspan x="260" dy="16">Environmental Systems</tspan>
-    <tspan x="260" dy="16">Infrastructure Applications</tspan>
-  </text>
-  <rect x="210" y="230" width="100" height="45" rx="8" fill="white" opacity="0.40"/>
-  <text x="260" y="245" text-anchor="middle" font-size="11" font-weight="bold">
-    <tspan x="260" dy="0">End-to-End</tspan>
-    <tspan x="260" dy="13">Geospatial</tspan>
-    <tspan x="260" dy="13">Workflows</tspan>
-  </text>
-</svg>
-</div>
+  <div style="flex:1; display:flex; justify-content:center;">
+    <svg width="520" height="475" viewBox="0 0 520 440">
+      <rect x="10" y="60" width="500" height="395" fill="none" stroke="#333" stroke-width="1" rx="10"/>
+      <text x="260" y="25" text-anchor="middle" font-size="18" font-weight="bold">Communication & Translation</text>
+      <text x="260" y="45" text-anchor="middle" font-size="12">Presenting to stakeholders • Interdisciplinary collaboration • Reporting</text>
+      <circle cx="170" cy="210" r="110" fill="#38C6D0" fill-opacity="0.7"/>
+      <circle cx="350" cy="210" r="110" fill="#90E2BF" fill-opacity="0.6"/>
+      <circle cx="260" cy="320" r="110" fill="#F19FB4" fill-opacity="0.7"/>
+      <text x="150" y="95" text-anchor="middle" font-size="14" font-weight="bold">Data Acquisition</text>
+      <text x="370" y="95" text-anchor="middle" font-size="14" font-weight="bold">Geospatial Analysis &amp; Modeling</text>
+      <text x="260" y="445" text-anchor="middle" font-size="14" font-weight="bold">Applied Systems</text>
+      <text x="170" y="160" text-anchor="middle" font-size="13">
+        <tspan x="170" dy="0">Field Surveying</tspan>
+        <tspan x="170" dy="16">Remote Sensing</tspan>
+        <tspan x="170" dy="16">Data Sourcing</tspan>
+      </text>
+      <text x="350" y="150" text-anchor="middle" font-size="13">
+        <tspan x="350" dy="0">GIS (ArcGIS, QGIS)</tspan>
+        <tspan x="350" dy="16">Python</tspan>
+        <tspan x="350" dy="16">Spatial Analysis</tspan>
+        <tspan x="350" dy="16">Climate modelling</tspan>
+        <tspan x="350" dy="16">workflows</tspan>
+      </text>
+      <text x="260" y="315" text-anchor="middle" font-size="13">
+        <tspan x="260" dy="0">Policy</tspan>
+        <tspan x="260" dy="16">Planning</tspan>
+        <tspan x="260" dy="16">Environmental Systems</tspan>
+        <tspan x="260" dy="16">Infrastructure Applications</tspan>
+      </text>
+      <rect x="210" y="230" width="100" height="45" rx="8" fill="white" opacity="0.40"/>
+      <text x="260" y="245" text-anchor="middle" font-size="11" font-weight="bold">
+        <tspan x="260" dy="0">End-to-End</tspan>
+        <tspan x="260" dy="13">Geospatial</tspan>
+        <tspan x="260" dy="13">Workflows</tspan>
+      </text>
+    </svg>
+  </div>
 </div>
 
 <!-- DASHBOARD -->
@@ -85,7 +127,6 @@
     <div id="leftPanel" style="width:160px; background:#fafafa; border-right:1px solid #ccc; padding:10px; overflow-y:auto; flex-shrink:0;">
       <button onclick="toggleLeftPanel()" style="margin-bottom:10px;">☰</button>
       <h4>Filter</h4>
-
       <div style="margin-bottom:4px;">
         <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px;">
           <input type="checkbox" checked onchange="toggleCategory('Applied GIS')">
@@ -107,7 +148,6 @@
           Research
         </label>
       </div>
-
       <hr>
       <h4>Projects</h4>
       <div id="project-list"></div>
@@ -125,15 +165,11 @@
 
   <!-- WEB VIEWER ROW -->
   <div id="webViewerPanel" style="display:none; border-top:2px solid #333; flex-direction:column; height:500px;">
-
-    <!-- Viewer toolbar -->
     <div style="display:flex; align-items:center; gap:10px; padding:8px 12px; background:#4a4a4a; color:white; font-family:Arial,sans-serif; font-size:13px; flex-shrink:0;">
       <span id="viewerLabel" style="flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Web Preview</span>
       <a id="viewerOpenBtn" href="#" target="_blank" style="color:#90E2BF; text-decoration:none; white-space:nowrap; font-size:12px;">↗ Open in new tab</a>
       <button onclick="closeViewer()" style="background:none; border:none; color:white; font-size:16px; cursor:pointer; padding:0; line-height:1;">✕</button>
     </div>
-
-    <!-- Blocked-site fallback message (hidden by default) -->
     <div id="viewerFallback" style="display:none; padding:24px; font-family:Arial,sans-serif; font-size:13px; color:#555; text-align:center; background:#f9f9f9; border-bottom:1px solid #ddd;">
       <div style="font-size:28px; margin-bottom:10px;">🔒</div>
       <p style="margin:0 0 6px;"><b>This site can't be previewed here.</b></p>
@@ -143,97 +179,16 @@
         Open in New Tab →
       </a>
     </div>
-
-    <!-- The iframe -->
-    <iframe id="webViewerFrame"
-      src="about:blank"
+    <iframe id="webViewerFrame" src="about:blank"
       style="flex:1; border:none; width:100%;"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-      allowfullscreen
-      title="Project preview">
+      allowfullscreen title="Project preview">
     </iframe>
-
   </div>
 
 </div>
 
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
-<style>
-.project-link {
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 12px;
-  color: #38C6D0;
-  text-decoration: underline;
-  display: inline-block;
-  margin-bottom: 6px;
-  line-height: 1.4;
-}
-.project-link:hover { color: #F19FB4; }
-
-.arcgis-popup { font-family: Arial, sans-serif; font-size: 13px; }
-.arcgis-popup-header {
-  background: #4a4a4a;
-  color: white;
-  padding: 10px 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.arcgis-popup-header h3 { margin: 0; font-size: 13px; font-weight: bold; line-height: 1.3; }
-.arcgis-popup-header button {
-  background: none; border: none; color: white;
-  font-size: 16px; cursor: pointer; padding: 0 0 0 8px; line-height: 1;
-}
-.arcgis-popup-subheader {
-  padding: 6px 12px;
-  font-size: 11px;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: white;
-}
-.arcgis-table { width: 100%; border-collapse: collapse; font-size: 12px; }
-.arcgis-table tr:nth-child(odd)  { background: #f5f5f5; }
-.arcgis-table tr:nth-child(even) { background: #ffffff; }
-.arcgis-table td {
-  padding: 6px 10px;
-  vertical-align: top;
-  border-bottom: 1px solid #e0e0e0;
-}
-.arcgis-table td:first-child { font-weight: bold; color: #555; width: 40%; white-space: nowrap; }
-.arcgis-table td:last-child { color: #222; }
-
-.arcgis-popup-link {
-  display: block;
-  padding: 8px 12px;
-  font-size: 12px;
-  color: #0079c1;
-  text-decoration: none;
-  border-top: 1px solid #ddd;
-}
-.arcgis-popup-link:hover { text-decoration: underline; }
-
-/* Preview button inside popup */
-.preview-btn {
-  display: block;
-  margin: 10px 12px 12px;
-  padding: 7px 12px;
-  background: #38C6D0;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 12px;
-  font-weight: bold;
-  cursor: pointer;
-  text-align: center;
-  width: calc(100% - 24px);
-}
-.preview-btn:hover { background: #2fb0ba; }
-</style>
-
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 try {
@@ -243,22 +198,11 @@ const listDiv = document.getElementById("project-list");
 if (!mapDiv || !listDiv) { console.error("Missing DOM elements"); return; }
 
 const CATEGORY_COLORS = {
-  "Research": {
-    color: "#38C6D0",
-    fillOpacity: 0.25,
-    weight: 1.2
-  },
-  "Technical": {
-    color: "#90E2BF",
-    fillOpacity: 0.45,
-    weight: 1.5
-  },
-  "Applied GIS": {
-    color: "#F19FB4",
-    fillOpacity: 0.35,
-    weight: 1.2
-  }
+  "Research":    { color: "#38C6D0", fillOpacity: 0.25, weight: 1.2 },
+  "Technical":   { color: "#90E2BF", fillOpacity: 0.45, weight: 1.5 },
+  "Applied GIS": { color: "#F19FB4", fillOpacity: 0.35, weight: 1.2 }
 };
+
 const POLYGON_LAKES = new Set([
   "Lake Superior", "Lake Huron", "Lake Erie", "Lake Winnipeg",
   "Lake Athabasca", "Great Bear Lake", "Great Slave Lake", "Bernard Lake",
@@ -280,7 +224,9 @@ const categoryLayers = {
 
 const allMarkers       = [];
 const polygonInstances = {};
-const geojsonCache     = {};
+
+// FIX 1: Single declaration of geojsonCache (was declared twice)
+const geojsonCache = {};
 
 const lakeFiles = {
   "Lake Superior":   "data/Superior.geojson",
@@ -291,8 +237,12 @@ const lakeFiles = {
   "Great Bear Lake": "data/GBL.geojson",
   "Great Slave Lake":"data/GSL.geojson",
   "Bernard Lake":    "data/Bernard.geojson",
-  "Africa": "data/afr_focus_FeaturesToJSON.geojson"
+  "Africa":          "data/afr_focus_FeaturesToJSON.geojson"
 };
+
+// FIX 2: Single declaration of loadedCount / totalFiles + single fetch loop (both were duplicated)
+let loadedCount = 0;
+const totalFiles = Object.keys(lakeFiles).length;
 
 Object.entries(lakeFiles).forEach(([name, path]) => {
   fetch(path)
@@ -303,145 +253,116 @@ Object.entries(lakeFiles).forEach(([name, path]) => {
     .then(data => {
       geojsonCache[name] = data;
     })
-    .catch(() => console.warn("Skipping polygon:", name));
+    .catch(() => {
+      console.warn("Skipping polygon:", name);
+    })
+    .finally(() => {
+      loadedCount++;
+      if (loadedCount === totalFiles) applyPolygonsFromCache();
+    });
 });
 
-// ✅ THIS LINE MUST BE OUTSIDE the loop
-function maybeInitPolygons() {
-  if (Object.keys(geojsonCache).length === Object.keys(lakeFiles).length) {
-    if (Object.keys(geojsonCache).length === Object.keys(lakeFiles).length) {
-  applyPolygonsFromCache();
-}
-    
 const projects = [
-
-{
-  title: "ERA5-Land Lake Ice Thesis",
-  category: "Research",
-  description: "20-year lake ice bias evaluation across 7 Canadian lakes.",
-  links: [
-    {
-      url: "https://uwspace.uwaterloo.ca/items/b983d97f-d2ec-4c1a-a6d0-82be963c476a",
-      label: "Thesis (UW Space)"
-    },
-    {
-      url: "https://ari-ana-m.github.io/lake-ice-animations/",
-      label: "Supplementary Animations"
-    }
-  ],
-  locations: [
-    { name: "Great Bear Lake",  coords: [66, -121] },
-    { name: "Great Slave Lake", coords: [61, -114] },
-    { name: "Lake Athabasca",   coords: [59, -109] },
-    { name: "Lake Winnipeg",    coords: [52, -97] },
-    { name: "Lake Superior",    coords: [47.7, -87.5] },
-    { name: "Lake Huron",       coords: [45, -82.4] },
-    { name: "Lake Erie",        coords: [42.2, -81.2] }
-  ]
-},
-
-{
-  title: "Research Assistant — Environmental & Climate Data Analysis",
-  category: "Technical",
-  description: "Scoping review + spatial climate synthesis workflows.",
-  links: [
-    {
-      url: "https://ecologyandsociety.org/vol29/iss3/art22/",
-      label: "Published Article (Ecology & Society)"
-    }
-  ],
-  locations: [{ name: "Africa" }]
-},
-
-{
-  title: "Student Planner — Municipal Housing Policy",
-  category: "Applied GIS",
-  description: "Missing middle housing analysis using GIS and census data.",
-  links: [
-    {
-      url: "https://www.cambridgetimes.ca/news/housing-affordability-is-a-human-rights-issue-wilfrid-laurier-students-exploring-housing-concerns-with-city/article_c289ca4b-507c-5777-b38d-90a1d676d692.html",
-      label: "News Article (Interview)"
-    },
-    {
-      url: "data/EcoVital-Final-Deliverable-1.pdf",
-      label: "Final Deliverable (PDF)"
-    }
-  ],
-  locations: [{ name: "Cambridge", coords: [43.40175, -80.32597] }]
-},
-
-{
-  title: "ReSEC Research Assistant — Remote Sensing of Climate Change",
-  category: "Technical",
-  description: "Python + GIS analysis of lake ice variability using satellite data.",
-  locations: [
-    { name: "Great Bear Lake",  coords: [66, -121] },
-    { name: "Great Slave Lake", coords: [61, -114] }
-  ]
-},
-
-{
-  title: "Field Research Assistant — Coastal & Environmental Monitoring",
-  category: "Applied GIS",
-  description: "Field-based GPS and RTK GNSS coastal data collection, QA/QC, and spatial integration workflows.",
-  locations: [
-    { name: "Sauble Beach",     coords: [44.6296,  -81.26508] },
-    { name: "Burlington Beach", coords: [43.31523, -79.80701] },
-    { name: "Wasaga Beach",     coords: [44.52372, -80.0033] }
-  ]
-},
-
-{
-  title: "Research Presenter — Invasive Species Monitoring",
-  category: "Applied GIS",
-  description: "Spatial + NDVI analysis of Phragmites spread in Lake Bernard.",
-  links: [
-    {
-      url: "https://www.youtube.com/watch?v=5Io_79IMANw",
-      label: "Presentation Video"
-    }
-  ],
-  locations: [{ name: "Bernard Lake", coords: [45.72458, -79.3857] }]
-}
-
+  {
+    title: "ERA5-Land Lake Ice Thesis",
+    category: "Research",
+    description: "20-year lake ice bias evaluation across 7 Canadian lakes.",
+    links: [
+      { url: "https://uwspace.uwaterloo.ca/items/b983d97f-d2ec-4c1a-a6d0-82be963c476a", label: "Thesis (UW Space)" },
+      { url: "https://ari-ana-m.github.io/lake-ice-animations/", label: "Supplementary Animations" }
+    ],
+    locations: [
+      { name: "Great Bear Lake",  coords: [66, -121] },
+      { name: "Great Slave Lake", coords: [61, -114] },
+      { name: "Lake Athabasca",   coords: [59, -109] },
+      { name: "Lake Winnipeg",    coords: [52, -97] },
+      { name: "Lake Superior",    coords: [47.7, -87.5] },
+      { name: "Lake Huron",       coords: [45, -82.4] },
+      { name: "Lake Erie",        coords: [42.2, -81.2] }
+    ]
+  },
+  {
+    title: "Research Assistant — Environmental & Climate Data Analysis",
+    category: "Technical",
+    description: "Scoping review + spatial climate synthesis workflows.",
+    links: [
+      { url: "https://ecologyandsociety.org/vol29/iss3/art22/", label: "Published Article (Ecology & Society)" }
+    ],
+    locations: [{ name: "Africa" }]
+  },
+  {
+    title: "Student Planner — Municipal Housing Policy",
+    category: "Applied GIS",
+    description: "Missing middle housing analysis using GIS and census data.",
+    links: [
+      { url: "https://www.cambridgetimes.ca/news/housing-affordability-is-a-human-rights-issue-wilfrid-laurier-students-exploring-housing-concerns-with-city/article_c289ca4b-507c-5777-b38d-90a1d676d692.html", label: "News Article (Interview)" },
+      { url: "data/EcoVital-Final-Deliverable-1.pdf", label: "Final Deliverable (PDF)" }
+    ],
+    locations: [{ name: "Cambridge", coords: [43.40175, -80.32597] }]
+  },
+  {
+    title: "ReSEC Research Assistant — Remote Sensing of Climate Change",
+    category: "Technical",
+    description: "Python + GIS analysis of lake ice variability using satellite data.",
+    locations: [
+      { name: "Great Bear Lake",  coords: [66, -121] },
+      { name: "Great Slave Lake", coords: [61, -114] }
+    ]
+  },
+  {
+    title: "Field Research Assistant — Coastal & Environmental Monitoring",
+    category: "Applied GIS",
+    description: "Field-based GPS and RTK GNSS coastal data collection, QA/QC, and spatial integration workflows.",
+    locations: [
+      { name: "Sauble Beach",     coords: [44.6296,  -81.26508] },
+      { name: "Burlington Beach", coords: [43.31523, -79.80701] },
+      { name: "Wasaga Beach",     coords: [44.52372, -80.0033] }
+    ]
+  },
+  {
+    title: "Research Presenter — Invasive Species Monitoring",
+    category: "Applied GIS",
+    description: "Spatial + NDVI analysis of Phragmites spread in Lake Bernard.",
+    links: [
+      { url: "https://www.youtube.com/watch?v=5Io_79IMANw", label: "Presentation Video" }
+    ],
+    locations: [{ name: "Bernard Lake", coords: [45.72458, -79.3857] }]
+  }
 ];
 
 function applyPolygonsFromCache() {
   projects.forEach(project => {
-    const color = CATEGORY_COLORS[project.category];
     project.locations.forEach(loc => {
       if (!POLYGON_LAKES.has(loc.name) || !geojsonCache[loc.name]) return;
       const existing = (polygonInstances[loc.name] || []).find(e => e.project === project);
       if (existing) return;
 
+      const style = CATEGORY_COLORS[project.category];
       const poly = L.geoJSON(geojsonCache[loc.name], {
         style: {
-          color: CATEGORY_COLORS[project.category].color,
-          weight: CATEGORY_COLORS[project.category].weight,
-          fillColor: CATEGORY_COLORS[project.category].color,
-          fillOpacity: CATEGORY_COLORS[project.category].fillOpacity
+          color: style.color,
+          weight: style.weight,
+          fillColor: style.color,
+          fillOpacity: style.fillOpacity
         }
       });
 
       poly.addTo(categoryLayers[project.category]);
-      if (project.category === "Technical") {
-        poly.bringToFront();
-      }
+      if (project.category === "Technical") poly.bringToFront();
       poly.on("click", () => selectProject(project));
 
       if (!polygonInstances[loc.name]) polygonInstances[loc.name] = [];
       polygonInstances[loc.name].push({ poly, project });
 
-      if (!project.polygons) project.polygons = [];
-      project.polygons.push(poly);
+      if (!project.geoLayers) project.geoLayers = [];
+      project.geoLayers.push(poly);
     });
   });
 }
 
 projects.forEach(project => {
-  project.layers   = [];
-  project.polygons = [];
-  const color = CATEGORY_COLORS[project.category];
+  project.markerLayers = [];
+  project.geoLayers    = [];
 
   const div = document.createElement("div");
   div.innerHTML = `<span class="project-link">${project.title}</span>`;
@@ -454,7 +375,6 @@ projects.forEach(project => {
   project.locations.forEach(loc => {
     if (!POLYGON_LAKES.has(loc.name)) {
       const style = CATEGORY_COLORS[project.category];
-
       const marker = L.circleMarker(loc.coords, {
         radius: 8,
         fillColor: style.color,
@@ -464,7 +384,7 @@ projects.forEach(project => {
       }).addTo(categoryLayers[project.category]);
       marker._projectCategory = project.category;
       marker.on("click", () => selectProject(project));
-      project.layers.push(marker);
+      project.markerLayers.push(marker);
       allMarkers.push(marker);
     }
     const li = document.createElement("li");
@@ -478,104 +398,85 @@ projects.forEach(project => {
 function resetHighlight() {
   allMarkers.forEach(m => {
     const style = CATEGORY_COLORS[m._projectCategory];
-
     m.setStyle({
       radius: 8,
       color: "#fff",
       weight: style.weight,
-      fillColor: style.color,  
+      fillColor: style.color,
       fillOpacity: style.fillOpacity
     });
   });
 
-  Object.values(polygonInstances).forEach(arr => {
-    arr.forEach(({ poly, project }) => {
+  projects.forEach(project => {
+    (project.markerLayers || []).forEach(m => {
       const style = CATEGORY_COLORS[project.category];
-
+      m.setStyle({
+        radius: 8, color: "#fff",
+        weight: style.weight, fillColor: style.color, fillOpacity: style.fillOpacity
+      });
+    });
+    (project.geoLayers || []).forEach(poly => {
+      const style = CATEGORY_COLORS[project.category];
       poly.setStyle({
-        color: "#555",
-        weight: 1.2,
-        fillColor: CATEGORY_COLORS[project.category].color,
-        fillOpacity: 0.35
+        color: style.color, weight: style.weight,
+        fillColor: style.color, fillOpacity: style.fillOpacity
       });
     });
   });
-}
+} // FIX 3: closing brace was missing — selectProject was trapped inside resetHighlight
 
 function selectProject(project) {
   resetHighlight();
+
   const groupLayers = [];
 
-  project.layers.forEach(m => {
+  (project.markerLayers || []).forEach(m => {
     m.setStyle({ radius: 11, color: "#FFD700", weight: 2.5, fillColor: "#FFD700", fillOpacity: 1 });
     groupLayers.push(m);
   });
 
-  (project.polygons || []).forEach(poly => {
+  (project.geoLayers || []).forEach(poly => {
     poly.setStyle({ color: "#FFD700", weight: 3, fillColor: "#FFD700", fillOpacity: 0.45 });
     groupLayers.push(poly);
   });
 
-  if (groupLayers.length > 0) {
-    try {
-      const group = L.featureGroup(groupLayers);
-      map.fitBounds(group.getBounds(), { paddingTopLeft: [20, 20], paddingBottomRight: [280, 20] });
-    } catch(e) {}
+  const validLayers = groupLayers.filter(l => l && typeof l.getBounds !== "undefined");
+  if (validLayers.length > 0) {
+    const group = L.featureGroup(validLayers);
+    const bounds = group.getBounds();
+    if (bounds.isValid()) {
+      map.fitBounds(bounds, { paddingTopLeft: [20, 20], paddingBottomRight: [280, 20] });
+    }
   }
 
   openPanel(project);
 }
 
-// ── ArcGIS-style popup ─────────────────────────────────────
 const AFRICA_COUNTRIES = [
-  "Burkina Faso",
-  "Congo",
-  "Ethiopia",
-  "Gambia",
-  "Ghana",
-  "Kenya",
-  "Mali",
-  "Mozambique",
-  "Niger",
-  "Nigeria",
-  "Senegal",
-  "South Africa",
-  "Uganda",
-  "Zambia",
-  "Zimbabwe",
-  "Rwanda"
+  "Burkina Faso","Congo","Ethiopia","Gambia","Ghana","Kenya","Mali",
+  "Mozambique","Niger","Nigeria","Senegal","South Africa","Uganda",
+  "Zambia","Zimbabwe","Rwanda"
 ];
-  
+
 function openPanel(project) {
   document.getElementById("infoPanel").style.display = "block";
-  const color    = CATEGORY_COLORS[project.category];
+  const color   = CATEGORY_COLORS[project.category];
   const locList = project.locations.map(l => {
-    if (l.name === "Africa") {
-      return AFRICA_COUNTRIES.map(c => `<li>${c}</li>`).join("");
-    }
+    if (l.name === "Africa") return AFRICA_COUNTRIES.map(c => `<li>${c}</li>`).join("");
     return `<li>${l.name}</li>`;
   }).join("");
 
   let linkRow = "";
-
   if (project.links && project.links.length > 0) {
     linkRow = project.links.map(link => {
-      const safeTitle = project.title.replace(/'/g,"\\'");
-      const safeLabel = link.label.replace(/'/g,"\\'");
-  
+      const safeTitle = project.title.replace(/'/g, "\\'");
+      const safeLabel = link.label.replace(/'/g, "\\'");
       return `
         <div style="border-top:1px solid #ddd;">
-          <div style="padding:8px 12px; font-size:12px; font-weight:bold;">
-            ${link.label}
-          </div>
-          <a class="arcgis-popup-link" href="${link.url}" target="_blank">
-            🔗 Open in New Tab →
-          </a>
-          <button class="preview-btn" onclick="openViewer('${link.url}', '${safeTitle} — ${safeLabel}')">
-            ▶ Preview Below
-          </button>
-        </div>
-      `;
+          <div style="padding:8px 12px; font-size:12px; font-weight:bold;">${link.label}</div>
+          <a class="arcgis-popup-link" href="${link.url}" target="_blank">🔗 Open in New Tab →</a>
+          <button class="preview-btn" onclick="openViewer('${link.url}', '${safeTitle} — ${safeLabel}')">▶ Preview Below</button>
+        </div>`;
     }).join("");
   } else {
     linkRow = `<p style="padding:10px 12px; font-size:12px; color:#888; margin:0;">No link available for this project.</p>`;
@@ -587,18 +488,14 @@ function openPanel(project) {
         <h3>${project.title}</h3>
         <button onclick="closePanel()">✕</button>
       </div>
-      <div class="arcgis-popup-subheader" style="background:${color};">${project.category}</div>
+      <div class="arcgis-popup-subheader" style="background:${color.color};">${project.category}</div>
       <table class="arcgis-table">
         <tr><td>Category</td><td>${project.category}</td></tr>
         <tr><td>Description</td><td>${project.description}</td></tr>
-        <tr>
-          <td>Locations</td>
-          <td><ul style="margin:0; padding-left:1.2em;">${locList}</ul></td>
-        </tr>
+        <tr><td>Locations</td><td><ul style="margin:0; padding-left:1.2em;">${locList}</ul></td></tr>
       </table>
       ${linkRow}
-    </div>
-  `;
+    </div>`;
 }
 
 function closePanel() {
@@ -606,7 +503,6 @@ function closePanel() {
   resetHighlight();
 }
 
-// ── Web viewer ─────────────────────────────────────────────
 window.openViewer = function(url, title) {
   const panel    = document.getElementById("webViewerPanel");
   const frame    = document.getElementById("webViewerFrame");
@@ -622,63 +518,45 @@ window.openViewer = function(url, title) {
   fallback.style.display = "none";
   frame.style.display    = "block";
 
-  // 🔽 NEW: convert YouTube links to embeddable format
   let embedURL = url;
-
   if (url.includes("youtube.com/watch")) {
     const videoId = url.split("v=")[1]?.split("&")[0];
-    if (videoId) {
-      embedURL = `https://www.youtube.com/embed/${videoId}`;
-    }
+    if (videoId) embedURL = `https://www.youtube.com/embed/${videoId}`;
   }
-
   if (url.includes("youtu.be/")) {
     const videoId = url.split("youtu.be/")[1]?.split("?")[0];
-    if (videoId) {
-      embedURL = `https://www.youtube.com/embed/${videoId}`;
-    }
+    if (videoId) embedURL = `https://www.youtube.com/embed/${videoId}`;
   }
 
   frame.src = embedURL;
-
-  // Scroll down to the viewer
   panel.scrollIntoView({ behavior: "smooth", block: "start" });
 
   frame.onload = function() {
     try {
       const doc = frame.contentDocument || frame.contentWindow.document;
-      if (!doc || doc.body === null || doc.body.innerHTML.trim() === "") {
-        showFallback(url);
-      }
-    } catch(e) {
-      // Cross-origin (expected for YouTube)
-    }
+      if (!doc || doc.body === null || doc.body.innerHTML.trim() === "") showFallback(url);
+    } catch(e) { /* cross-origin — expected for YouTube */ }
   };
-
   frame.onerror = function() { showFallback(url); };
 };
 
 function showFallback(url) {
-  const frame    = document.getElementById("webViewerFrame");
-  const fallback = document.getElementById("viewerFallback");
-  frame.style.display    = "none";
-  fallback.style.display = "block";
+  document.getElementById("webViewerFrame").style.display = "none";
+  document.getElementById("viewerFallback").style.display = "block";
   document.getElementById("fallbackLink").href = url;
 }
 
 window.closeViewer = function() {
-  const panel = document.getElementById("webViewerPanel");
-  const frame = document.getElementById("webViewerFrame");
-  panel.style.display = "none";
-  frame.src = "about:blank";
+  document.getElementById("webViewerPanel").style.display = "none";
+  document.getElementById("webViewerFrame").src = "about:blank";
 };
 
-window.toggleLeftPanel = function () {
+window.toggleLeftPanel = function() {
   const panel = document.getElementById("leftPanel");
   panel.style.width = (panel.style.width === "0px") ? "160px" : "0px";
 };
 
-window.toggleCategory = function (cat) {
+window.toggleCategory = function(cat) {
   if (map.hasLayer(categoryLayers[cat])) map.removeLayer(categoryLayers[cat]);
   else map.addLayer(categoryLayers[cat]);
 };
@@ -686,3 +564,5 @@ window.toggleCategory = function (cat) {
 } catch(err) { console.error("App error:", err); }
 });
 </script>
+</body>
+</html>
