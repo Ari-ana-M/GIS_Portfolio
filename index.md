@@ -250,7 +250,8 @@ const CATEGORY_COLORS = {
 
 const POLYGON_LAKES = new Set([
   "Lake Superior", "Lake Huron", "Lake Erie", "Lake Winnipeg",
-  "Lake Athabasca", "Great Bear Lake", "Great Slave Lake", "Bernard Lake"
+  "Lake Athabasca", "Great Bear Lake", "Great Slave Lake", "Bernard Lake",
+  "Africa"
 ]);
 
 var map = L.map('map').setView([52, -90], 4);
@@ -278,7 +279,8 @@ const lakeFiles = {
   "Lake Athabasca":  "data/Athabasca.geojson",
   "Great Bear Lake": "data/GBL.geojson",
   "Great Slave Lake":"data/GSL.geojson",
-  "Bernard Lake":    "data/Bernard.geojson"
+  "Bernard Lake":    "data/Bernard.geojson",
+  "Africa": "data/afr_focus_FeaturesToJSON.geojson"
 };
 
 Object.entries(lakeFiles).forEach(([name, path]) => {
@@ -325,7 +327,7 @@ const projects = [
       label: "Published Article (Ecology & Society)"
     }
   ],
-  locations: [{ name: "Africa", coords: [0, 20] }]
+  locations: [{ name: "Africa" }]
 },
 
 {
