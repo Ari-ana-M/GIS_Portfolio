@@ -289,28 +289,45 @@ Object.entries(lakeFiles).forEach(([name, path]) => {
 });
 
 const projects = [
+
 {
-  title: "Field Research Assistant — Coastal & Environmental Monitoring",
-  category: "Applied GIS",
-  description: "Field-based GPS and RTK GNSS coastal data collection, QA/QC, and spatial integration workflows.",
-  locations: [
-    { name: "Sauble Beach",     coords: [44.6296,  -81.26508] },
-    { name: "Burlington Beach", coords: [43.31523, -79.80701] },
-    { name: "Wasaga Beach",     coords: [44.52372, -80.0033]  }
-  ]
-},
-{
-  title: "Research Presenter — Invasive Species Monitoring",
-  category: "Applied GIS",
-  description: "Spatial + NDVI analysis of Phragmites spread in Lake Bernard.",
+  title: "ERA5-Land Lake Ice Thesis",
+  category: "Research",
+  description: "20-year lake ice bias evaluation across 7 Canadian lakes.",
   links: [
     {
-      url: "https://www.youtube.com/watch?v=5Io_79IMANw",
-      label: "Presentation Video"
+      url: "https://uwspace.uwaterloo.ca/items/b983d97f-d2ec-4c1a-a6d0-82be963c476a",
+      label: "Thesis (UW Space)"
+    },
+    {
+      url: "https://ari-ana-m.github.io/lake-ice-animations/",
+      label: "Supplementary Animations"
     }
   ],
-  locations: [{ name: "Bernard Lake", coords: [45.72458, -79.3857] }]
+  locations: [
+    { name: "Great Bear Lake",  coords: [66, -121] },
+    { name: "Great Slave Lake", coords: [61, -114] },
+    { name: "Lake Athabasca",   coords: [59, -109] },
+    { name: "Lake Winnipeg",    coords: [52, -97] },
+    { name: "Lake Superior",    coords: [47.7, -87.5] },
+    { name: "Lake Huron",       coords: [45, -82.4] },
+    { name: "Lake Erie",        coords: [42.2, -81.2] }
+  ]
 },
+
+{
+  title: "Research Assistant — Environmental & Climate Data Analysis",
+  category: "Technical",
+  description: "Scoping review + spatial climate synthesis workflows.",
+  links: [
+    {
+      url: "https://ecologyandsociety.org/vol29/iss3/art22/",
+      label: "Published Article (Ecology & Society)"
+    }
+  ],
+  locations: [{ name: "Africa", coords: [0, 20] }]
+},
+
 {
   title: "Student Planner — Municipal Housing Policy",
   category: "Applied GIS",
@@ -327,13 +344,7 @@ const projects = [
   ],
   locations: [{ name: "Cambridge", coords: [43.40175, -80.32597] }]
 },
-{
-  title: "Research Assistant — Environmental & Climate Data Analysis",
-  category: "Technical",
-  description: "Scoping review + spatial climate synthesis workflows.",
-  link: "https://ecologyandsociety.org/vol29/iss3/art22/",
-  locations: [{ name: "Africa", coords: [0, 20] }]
-},
+
 {
   title: "ReSEC Research Assistant — Remote Sensing of Climate Change",
   category: "Technical",
@@ -343,30 +354,31 @@ const projects = [
     { name: "Great Slave Lake", coords: [61, -114] }
   ]
 },
+
 {
-  title: "ERA5-Land Lake Ice Thesis",
-  category: "Research",
-  description: "20-year lake ice bias evaluation across 7 Canadian lakes.",
-  links: [
-    {
-      url: "https://uwspace.uwaterloo.ca/items/b983d97f-d2ec-4c1a-a6d0-82be963c476a",
-      label: "Thesis (UW Space)"
-    },
-    {
-      url: "https://ari-ana-m.github.io/lake-ice-animations/",
-      label: "Supplementary Animations"
-    }
-  ],
+  title: "Field Research Assistant — Coastal & Environmental Monitoring",
+  category: "Applied GIS",
+  description: "Field-based GPS and RTK GNSS coastal data collection, QA/QC, and spatial integration workflows.",
   locations: [
-    { name: "Great Bear Lake",  coords: [66, -121]   },
-    { name: "Great Slave Lake", coords: [61, -114]   },
-    { name: "Lake Athabasca",   coords: [59, -109]   },
-    { name: "Lake Winnipeg",    coords: [52, -97]    },
-    { name: "Lake Superior",    coords: [47.7, -87.5] },
-    { name: "Lake Huron",       coords: [45, -82.4]  },
-    { name: "Lake Erie",        coords: [42.2, -81.2] }
+    { name: "Sauble Beach",     coords: [44.6296,  -81.26508] },
+    { name: "Burlington Beach", coords: [43.31523, -79.80701] },
+    { name: "Wasaga Beach",     coords: [44.52372, -80.0033] }
   ]
 },
+
+{
+  title: "Research Presenter — Invasive Species Monitoring",
+  category: "Applied GIS",
+  description: "Spatial + NDVI analysis of Phragmites spread in Lake Bernard.",
+  links: [
+    {
+      url: "https://www.youtube.com/watch?v=5Io_79IMANw",
+      label: "Presentation Video"
+    }
+  ],
+  locations: [{ name: "Bernard Lake", coords: [45.72458, -79.3857] }]
+}
+
 ];
 
 function applyPolygonsFromCache() {
