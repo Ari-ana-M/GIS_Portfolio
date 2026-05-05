@@ -296,14 +296,23 @@ const lakeFiles = {
 
 Object.entries(lakeFiles).forEach(([name, path]) => {
   fetch(path)
-    .then(res => { if (!res.ok) throw new Error("Missing"); return res.json(); })
+    .then(res => {
+      if (!res.ok) throw new Error("Missing");
+      return res.json();
+    })
     .then(data => {
       geojsonCache[name] = data;
-      applyPolygonsFromCache();
     })
     .catch(() => console.warn("Skipping polygon:", name));
 });
 
+// ✅ THIS LINE MUST BE OUTSIDE the loop
+function maybeInitPolygons() {
+  if (Object.keys(geojsonCache).length === Object.keys(lakeFiles).length) {
+    if (Object.keys(geojsonCache).length === Object.keys(lakeFiles).length) {
+  applyPolygonsFromCache();
+}
+    
 const projects = [
 
 {
@@ -444,8 +453,14 @@ projects.forEach(project => {
 
   project.locations.forEach(loc => {
     if (!POLYGON_LAKES.has(loc.name)) {
+      const style = CATEGORY_COLORS[project.category];
+
       const marker = L.circleMarker(loc.coords, {
-        radius: 8, fillColor: color, color: "#fff", weight: 1.5, fillOpacity: 0.9
+        radius: 8,
+        fillColor: style.color,
+        color: "#fff",
+        weight: style.weight,
+        fillOpacity: style.fillOpacity
       }).addTo(categoryLayers[project.category]);
       marker._projectCategory = project.category;
       marker.on("click", () => selectProject(project));
@@ -462,11 +477,27 @@ projects.forEach(project => {
 
 function resetHighlight() {
   allMarkers.forEach(m => {
-    m.setStyle({ radius: 8, color: "#fff", weight: 1.5, fillColor: CATEGORY_COLORS[m._projectCategory], fillOpacity: 0.9 });
+    const style = CATEGORY_COLORS[m._projectCategory];
+
+    m.setStyle({
+      radius: 8,
+      color: "#fff",
+      weight: style.weight,
+      fillColor: style.color,  
+      fillOpacity: style.fillOpacity
+    });
   });
+
   Object.values(polygonInstances).forEach(arr => {
     arr.forEach(({ poly, project }) => {
-      poly.setStyle({ color: "#555", weight: 1.2, fillColor: CATEGORY_COLORS[project.category], fillOpacity: 0.35 });
+      const style = CATEGORY_COLORS[project.category];
+
+      poly.setStyle({
+        color: "#555",
+        weight: 1.2,
+        fillColor: CATEGORY_COLORS[project.category].color,
+        fillOpacity: 0.35
+      });
     });
   });
 }
