@@ -392,7 +392,7 @@ function applyPolygonsFromCache() {
       if (existing) return;
 
       const poly = L.geoJSON(geojsonCache[loc.name], {
-        style: { color: "#555", weight: 1.2, fillColor: color, fillOpacity: 0.35 }
+        style: { color: "#555", weight: 1.2, fillColor: color, fillOpacity: 0.45 }
       });
 
       poly.addTo(categoryLayers[project.category]);
