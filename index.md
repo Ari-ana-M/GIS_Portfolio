@@ -310,7 +310,16 @@ const projects = [
   title: "Student Planner — Municipal Housing Policy",
   category: "Applied GIS",
   description: "Missing middle housing analysis using GIS and census data.",
-  link: "https://www.cambridgetimes.ca/news/housing-affordability-is-a-human-rights-issue-wilfrid-laurier-students-exploring-housing-concerns-with-city/article_c289ca4b-507c-5777-b38d-90a1d676d692.html",
+  links: [
+    {
+      url: "https://www.cambridgetimes.ca/news/housing-affordability-is-a-human-rights-issue-wilfrid-laurier-students-exploring-housing-concerns-with-city/article_c289ca4b-507c-5777-b38d-90a1d676d692.html",
+      label: "News Article (Interview)"
+    },
+    {
+      url: "data/EcoVital-Final-Deliverable-1.pdf",
+      label: "Final Deliverable (PDF)"
+    }
+  ],
   locations: [{ name: "Cambridge", coords: [43.40175, -80.32597] }]
 },
 {
@@ -333,7 +342,16 @@ const projects = [
   title: "ERA5-Land Lake Ice Thesis",
   category: "Research",
   description: "20-year lake ice bias evaluation across 7 Canadian lakes.",
-  link: "https://uwspace.uwaterloo.ca/items/b983d97f-d2ec-4c1a-a6d0-82be963c476a",
+  links: [
+    {
+      url: "https://uwspace.uwaterloo.ca/items/b983d97f-d2ec-4c1a-a6d0-82be963c476a",
+      label: "Thesis (UW Space)"
+    },
+    {
+      url: "https://ari-ana-m.github.io/lake-ice-animations/",
+      label: "Supplementary Animations"
+    }
+  ],
   locations: [
     { name: "Great Bear Lake",  coords: [66, -121]   },
     { name: "Great Slave Lake", coords: [61, -114]   },
@@ -343,7 +361,7 @@ const projects = [
     { name: "Lake Huron",       coords: [45, -82.4]  },
     { name: "Lake Erie",        coords: [42.2, -81.2] }
   ]
-}
+},
 ];
 
 function applyPolygonsFromCache() {
@@ -442,12 +460,30 @@ function openPanel(project) {
   const color    = CATEGORY_COLORS[project.category];
   const locList  = project.locations.map(l => `<li>${l.name}</li>`).join("");
 
-  const linkRow = project.link
-    ? `<a class="arcgis-popup-link" href="${project.link}" target="_blank">🔗 View Source →</a>
-       <button class="preview-btn" onclick="openViewer('${project.link}', '${project.title.replace(/'/g,"\\'")}')">
-         ▶ Preview Below
-       </button>`
-    : `<p style="padding:10px 12px; font-size:12px; color:#888; margin:0;">No link available for this project.</p>`;
+  let linkRow = "";
+
+  if (project.links && project.links.length > 0) {
+    linkRow = project.links.map(link => {
+      const safeTitle = project.title.replace(/'/g,"\\'");
+      const safeLabel = link.label.replace(/'/g,"\\'");
+  
+      return `
+        <div style="border-top:1px solid #ddd;">
+          <div style="padding:8px 12px; font-size:12px; font-weight:bold;">
+            ${link.label}
+          </div>
+          <a class="arcgis-popup-link" href="${link.url}" target="_blank">
+            🔗 Open in New Tab →
+          </a>
+          <button class="preview-btn" onclick="openViewer('${link.url}', '${safeTitle} — ${safeLabel}')">
+            ▶ Preview Below
+          </button>
+        </div>
+      `;
+    }).join("");
+  } else {
+    linkRow = `<p style="padding:10px 12px; font-size:12px; color:#888; margin:0;">No link available for this project.</p>`;
+  }
 
   document.getElementById("panelContent").innerHTML = `
     <div class="arcgis-popup">
