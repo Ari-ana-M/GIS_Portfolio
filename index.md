@@ -303,7 +303,12 @@ const projects = [
   title: "Research Presenter — Invasive Species Monitoring",
   category: "Applied GIS",
   description: "Spatial + NDVI analysis of Phragmites spread in Lake Bernard.",
-  link: "https://www.youtube.com/watch?v=5Io_79IMANw",
+  links: [
+    {
+      url: "https://www.youtube.com/watch?v=5Io_79IMANw",
+      label: "Presentation Video"
+    }
+  ],
   locations: [{ name: "Bernard Lake", coords: [45.72458, -79.3857] }]
 },
 {
