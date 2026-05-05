@@ -488,22 +488,37 @@ window.openViewer = function(url, title) {
   fbLink.href            = url;
   fallback.style.display = "none";
   frame.style.display    = "block";
-  frame.src              = url;
+
+  // 🔽 NEW: convert YouTube links to embeddable format
+  let embedURL = url;
+
+  if (url.includes("youtube.com/watch")) {
+    const videoId = url.split("v=")[1]?.split("&")[0];
+    if (videoId) {
+      embedURL = `https://www.youtube.com/embed/${videoId}`;
+    }
+  }
+
+  if (url.includes("youtu.be/")) {
+    const videoId = url.split("youtu.be/")[1]?.split("?")[0];
+    if (videoId) {
+      embedURL = `https://www.youtube.com/embed/${videoId}`;
+    }
+  }
+
+  frame.src = embedURL;
 
   // Scroll down to the viewer
   panel.scrollIntoView({ behavior: "smooth", block: "start" });
 
-  // Detect if iframe was blocked (load fires but content is empty / refused)
   frame.onload = function() {
     try {
-      // If we can access contentDocument it loaded fine (same-origin)
       const doc = frame.contentDocument || frame.contentWindow.document;
       if (!doc || doc.body === null || doc.body.innerHTML.trim() === "") {
         showFallback(url);
       }
     } catch(e) {
-      // Cross-origin: we can't inspect — assume it loaded
-      // Most blocking happens silently; user will see a blank iframe
+      // Cross-origin (expected for YouTube)
     }
   };
 
