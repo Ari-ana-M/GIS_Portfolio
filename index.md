@@ -243,11 +243,22 @@ const listDiv = document.getElementById("project-list");
 if (!mapDiv || !listDiv) { console.error("Missing DOM elements"); return; }
 
 const CATEGORY_COLORS = {
-  "Research":    "#38C6D0",
-  "Technical":   "#90E2BF",
-  "Applied GIS": "#F19FB4"
+  "Research": {
+    color: "#38C6D0",
+    fillOpacity: 0.25,
+    weight: 1.2
+  },
+  "Technical": {
+    color: "#90E2BF",
+    fillOpacity: 0.45,
+    weight: 1.5
+  },
+  "Applied GIS": {
+    color: "#F19FB4",
+    fillOpacity: 0.35,
+    weight: 1.2
+  }
 };
-
 const POLYGON_LAKES = new Set([
   "Lake Superior", "Lake Huron", "Lake Erie", "Lake Winnipeg",
   "Lake Athabasca", "Great Bear Lake", "Great Slave Lake", "Bernard Lake",
