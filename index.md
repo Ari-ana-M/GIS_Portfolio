@@ -148,7 +148,8 @@
     <iframe id="webViewerFrame"
       src="about:blank"
       style="flex:1; border:none; width:100%;"
-      sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen
       title="Project preview">
     </iframe>
 
