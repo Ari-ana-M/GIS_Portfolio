@@ -297,7 +297,10 @@ const lakeFiles = {
 Object.entries(lakeFiles).forEach(([name, path]) => {
   fetch(path)
     .then(res => { if (!res.ok) throw new Error("Missing"); return res.json(); })
-    .then(data => { geojsonCache[name] = data; applyPolygonsFromCache(); })
+    .then(data => {
+      geojsonCache[name] = data;
+      applyPolygonsFromCache();
+    })
     .catch(() => console.warn("Skipping polygon:", name));
 });
 
@@ -403,10 +406,18 @@ function applyPolygonsFromCache() {
       if (existing) return;
 
       const poly = L.geoJSON(geojsonCache[loc.name], {
-        style: { color: "#555", weight: 1.2, fillColor: color, fillOpacity: 0.45 }
+        style: {
+          color: CATEGORY_COLORS[project.category].color,
+          weight: CATEGORY_COLORS[project.category].weight,
+          fillColor: CATEGORY_COLORS[project.category].color,
+          fillOpacity: CATEGORY_COLORS[project.category].fillOpacity
+        }
       });
 
       poly.addTo(categoryLayers[project.category]);
+      if (project.category === "Technical") {
+        poly.bringToFront();
+      }
       poly.on("click", () => selectProject(project));
 
       if (!polygonInstances[loc.name]) polygonInstances[loc.name] = [];
