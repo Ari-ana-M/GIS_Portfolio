@@ -6,29 +6,36 @@
 body { margin: 0; padding: 16px; font-family: Arial, sans-serif; box-sizing: border-box; }
 
 /* ── Skill tags ── */
-.skill-tag {
+.skill-pill {
   display: inline-block;
-  font-size: 12px;
-  padding: 6px 10px;
-  border-radius: 12px;
-  margin: 3px 4px 0 0;
-  background: #e8f8fa;
-  color: #1a7a85;
-  border: 1px solid #b2e4ea;
+  font-size: 13px;
+  padding: 8px 14px;
+  border-radius: 18px;
+  margin: 5px 6px 0 0;
+  border: 1px solid transparent;
   white-space: nowrap;
 }
 
-/* ── TOOL TAGS (ADD THIS RIGHT BELOW) ── */
-.tool-tag {
-  display: inline-block;
-  font-size: 12px;
-  padding: 6px 10px;
-  border-radius: 8px;
-  margin: 3px 4px 0 0;
+/* Expert = strong teal (primary expertise) */
+.skill-pill.expert {
+  background: #d6f6f8;
+  border-color: #38C6D0;
+  color: #0d6b75;
+  font-weight: 600;
+}
+
+/* Proficient = softer green-blue */
+.skill-pill.proficient {
+  background: #e7f7ef;
+  border-color: #90E2BF;
+  color: #2f6b4f;
+}
+
+/* Familiar = neutral gray */
+.skill-pill.familiar {
   background: #f2f2f2;
-  color: #333;
-  border: 1px solid #ddd;
-  white-space: nowrap;
+  border-color: #ccc;
+  color: #444;
 }
 
 /* ── Interactive skill buttons ── */
@@ -350,95 +357,50 @@ body { margin: 0; padding: 16px; font-family: Arial, sans-serif; box-sizing: bor
 ════════════════════════════════════════════════ -->
 <div style="border:2px solid #333; border-radius:10px; padding:30px; margin-top:24px;">
 
-  <h2 style="margin-top:0;">Professional Skills & Tools</h2>
+  <h2 style="margin-top:0;">Core Skills & Technologies</h2>
 
-  <!-- EXPANDABLE SKILLS -->
-  <details open style="margin-bottom:14px;">
-    <summary style="cursor:pointer; font-weight:bold; font-size:15px;">
-      GIS & Spatial Analysis
-    </summary>
+  <h3 style="margin-top:18px;">Expert</h3>
+  <div>
+    <span class="skill-pill expert">ArcGIS Pro</span>
+    <span class="skill-pill expert">Spatial Analysis</span>
+    <span class="skill-pill expert">Cartography</span>
+    <span class="skill-pill expert">Remote Sensing</span>
+    <span class="skill-pill expert">Spatial Statistics</span>
+    <span class="skill-pill expert">Climate Data Analysis</span>
+    <span class="skill-pill expert">Temporal Analysis</span>
+    <span class="skill-pill expert">Cryosphere Research</span>
+    <span class="skill-pill expert">Lake Ice Systems</span>
+    <span class="skill-pill expert">Climate Projections</span>
+    <span class="skill-pill expert">Data Validation</span>
+    <span class="skill-pill expert">Automation</span>
+    <span class="skill-pill expert">Workflow Design</span>
+    <span class="skill-pill expert">Stakeholder Communication</span>
+    <span class="skill-pill expert">Technical Reporting</span>
+  </div>
+  
+  <h3 style="margin-top:18px;">Proficient</h3>
+  <div>
+    <span class="skill-pill proficient">NDVI Analysis</span>
+    <span class="skill-pill proficient">Image Classification</span>
+    <span class="skill-pill proficient">GIS Integration</span>
+    <span class="skill-pill proficient">Environmental Modeling</span>
+    <span class="skill-pill proficient">Python</span>
+    <span class="skill-pill proficient">ArcPy</span>
+    <span class="skill-pill proficient">SQL</span>
+    <span class="skill-pill proficient">Reproducible Pipelines</span>
+    <span class="skill-pill proficient">Field Data Collection</span>
+    <span class="skill-pill proficient">RTK GNSS</span>
+    <span class="skill-pill proficient">GPS Surveying</span>
+    <span class="skill-pill proficient">Leaflet</span>
+  </div>
+  
+  <h3 style="margin-top:18px;">Familiar</h3>
+  <div>
+    <span class="skill-pill familiar">Advanced GIS workflows</span>
+    <span class="skill-pill familiar">Data visualization extensions</span>
+  </div>
 
-    <div style="margin-top:10px;">
-      <span class="skill-tag">ArcGIS Pro</span>
-      <span class="skill-tag">QGIS</span>
-      <span class="skill-tag">Spatial Analysis</span>
-      <span class="skill-tag">Cartography</span>
-      <span class="skill-tag">Remote Sensing</span>
-      <span class="skill-tag">NDVI Analysis</span>
-      <span class="skill-tag">Image Classification</span>
-      <span class="skill-tag">Spatial Statistics</span>
-      <span class="skill-tag">GIS Integration</span>
-    </div>
-  </details>
-
-  <details style="margin-bottom:14px;">
-    <summary style="cursor:pointer; font-weight:bold; font-size:15px;">
-      Environmental & Climate Analysis
-    </summary>
-
-    <div style="margin-top:10px;">
-      <span class="skill-tag">Climate Data Analysis</span>
-      <span class="skill-tag">Environmental Modeling</span>
-      <span class="skill-tag">Temporal Analysis</span>
-      <span class="skill-tag">Environmental Monitoring</span>
-      <span class="skill-tag">Cryosphere Research</span>
-      <span class="skill-tag">Lake Ice Systems</span>
-      <span class="skill-tag">Climate Projections</span>
-    </div>
-  </details>
-
-  <details style="margin-bottom:14px;">
-    <summary style="cursor:pointer; font-weight:bold; font-size:15px;">
-      Programming & Data Workflows
-    </summary>
-
-    <div style="margin-top:10px;">
-      <span class="skill-tag">Python</span>
-      <span class="skill-tag">ArcPy</span>
-      <span class="skill-tag">SQL</span>
-      <span class="skill-tag">QA/QC</span>
-      <span class="skill-tag">Data Validation</span>
-      <span class="skill-tag">Automation</span>
-      <span class="skill-tag">Reproducible Pipelines</span>
-      <span class="skill-tag">Workflow Design</span>
-    </div>
-  </details>
-
-  <details style="margin-bottom:24px;">
-    <summary style="cursor:pointer; font-weight:bold; font-size:15px;">
-      Field & Applied Skills
-    </summary>
-
-    <div style="margin-top:10px;">
-      <span class="skill-tag">RTK GNSS</span>
-      <span class="skill-tag">GPS Surveying</span>
-      <span class="skill-tag">Field Data Collection</span>
-      <span class="skill-tag">Stakeholder Communication</span>
-      <span class="skill-tag">Planning Analysis</span>
-      <span class="skill-tag">Technical Reporting</span>
-    </div>
-  </details>
-
-  <!-- TOOLS -->
-  <h3>Tools & Technologies</h3>
-
-  <p>
-    <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">ArcGIS Pro</span>
-
-    <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">ArcGIS Online</span>
-
-    <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">QGIS</span>
-
-    <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">Python</span>
-
-    <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">ArcPy</span>
-
-    <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">SQL</span>
-
-    <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">Leaflet</span>
-
-    <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">RTK GNSS</span>
-  </p>
+</div>
 
 
   <!-- AWARDS -->
