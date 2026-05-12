@@ -400,8 +400,6 @@ body { margin: 0; padding: 16px; font-family: Arial, sans-serif; box-sizing: bor
     <span class="skill-pill familiar">Data visualization extensions</span>
   </div>
 
-</div>
-
 
   <!-- AWARDS -->
   <h3>Awards</h3>
