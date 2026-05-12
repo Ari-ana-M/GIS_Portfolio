@@ -151,107 +151,258 @@ body { margin: 0; padding: 16px; font-family: Arial, sans-serif; box-sizing: bor
 <body>
 
 <!-- ═══════════════════════════════════════════════
-     HEADER / INTRO
+     HERO PANEL
 ════════════════════════════════════════════════ -->
-<div style="display:flex; gap:40px; align-items:center; border:2px solid #333; padding:30px; border-radius:10px; margin-top:20px;">
-  <div style="flex:1; min-width:280px;">
-    <h1 style="margin-bottom:5px;">GIS & Spatial Data Portfolio</h1>
+<div style="
+  display:flex;
+  flex-wrap:wrap;
+  gap:40px;
+  align-items:flex-start; border:2px solid #333; padding:30px; border-radius:10px; margin-top:20px;">
+
+  <!-- LEFT SIDE -->
+  <div style="flex:1; min-width:320px;">
+
+    <h1 style="margin-top:0; margin-bottom:5px;">
+      GIS & Spatial Data Portfolio
+    </h1>
+
     <p style="margin-top:0;">
-  <b>
-    Environmental & Geospatial Analyst specializing in climate data, remote sensing, and applied GIS workflows
-  </b>
-</p>
-    <p style="font-size:13px; color:#444; margin-top:0;">Environmental and geospatial analyst with experience in environmental modelling, spatial analysis, and climate data interpretation. Skilled in evaluating model outputs, analyzing variability and uncertainty, and integrating spatial and field data to support environmental system understanding. Eligible for registration as a <b>Geoscientist-in-Training (GIT)</b> with Engineers and Geoscientists British Columbia.</p>
+      <b>
+        Environmental & Geospatial Analyst specializing in climate data,
+        remote sensing, and applied GIS workflows
+      </b>
+    </p>
+
+    <p style="font-size:13px; color:#444; line-height:1.6;">
+      Environmental and geospatial analyst with experience in environmental
+      modelling, spatial analysis, and climate data interpretation.
+      Skilled in evaluating model outputs, analyzing variability and
+      uncertainty, and integrating spatial and field data to support
+      environmental system understanding.
+      Eligible for registration as a
+      <b>Geoscientist-in-Training (GIT)</b>
+      with Engineers and Geoscientists British Columbia.
+    </p>
 
     <h3>Education</h3>
-    <ul style="list-style-type: disc; padding-left: 0;">
+
+    <ul style="list-style-type: disc; padding-left: 20px; line-height:1.6;">
+
       <li>
-        <b>MSc Geography</b> – University of Waterloo <span style="color:#888; font-size:12px;">(Sep 2022 – Dec 2025)</span>
-        <ul style="list-style-type: circle; margin-top: 5px; margin-bottom: 10px; padding-left: 20px;">
-          <li>Focus: Climate data, lake ice systems &amp; remote sensing</li>
+        <b>MSc Geography</b> – University of Waterloo
+        <span style="color:#888; font-size:12px;">
+          (Sep 2022 – Dec 2025)
+        </span>
+
+        <ul style="margin-top:5px;">
+          <li>Focus: Climate data, lake ice systems & remote sensing</li>
           <li>GPA: 3.93 / 4.0</li>
         </ul>
       </li>
+
       <li>
-        <b>Honours BA Environmental Studies</b> – Wilfrid Laurier University <span style="color:#888; font-size:12px;">(Sep 2018 – Apr 2022)</span>
-        <ul style="list-style-type: circle; margin-top: 5px; margin-bottom: 10px; padding-left: 20px;">
+        <b>Honours BA Environmental Studies</b> –
+        Wilfrid Laurier University
+
+        <span style="color:#888; font-size:12px;">
+          (Sep 2018 – Apr 2022)
+        </span>
+
+        <ul style="margin-top:5px;">
           <li>Option in Geomatics; Minor in Sociology</li>
           <li>GPA: 3.8 / 4.0 · Dean's List 2018–2022</li>
         </ul>
       </li>
+
     </ul>
 
-<h3>Core Skills</h3>
-
-<div id="skillsContainer" style="margin-bottom:20px;"></div>
-
-    <h3>Tools & Technologies</h3>
-
-    <p>
-      <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">ArcGIS Pro</span>
-    
-      <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">ArcGIS Online</span>
-    
-      <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">QGIS</span>
-    
-      <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">Python</span>
-    
-      <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">ArcPy</span>
-    
-      <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">SQL</span>
-    
-      <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">Leaflet</span>
-    
-      <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">RTK GNSS</span>
-    </p>
-
-    <h3>Awards</h3>
-    <ul style="font-size:13px; padding-left:1.2em; color:#333;">
-      <li><b>Barry Goodison Graduate Scholarship</b> – Cryospheric Research Excellence <span style="color:#888;">(2023)</span></li>
-      <li><b>Lorne Russwurm Award</b> – Best BA Thesis in Urban Geography <span style="color:#888;">(2022)</span></li>
-      <li><b>Paul &amp; Louise Puopolo Award</b> – Urban Planning Solution selected by City of Cambridge <span style="color:#888;">(2022)</span></li>
-      <li><b>CAG Undergraduate Award</b> – Canadian Association of Geographers <span style="color:#888;">(2022)</span></li>
-      <li><b>NSERC Undergraduate Student Research Award</b> – Lake ice thesis funding <span style="color:#888;">(2021)</span></li>
-    </ul>
   </div>
 
-  <div style="flex:1; display:flex; justify-content:center;">
-    <svg width="520" height="475" viewBox="0 0 520 440">
-      <rect x="10" y="60" width="500" height="395" fill="none" stroke="#333" stroke-width="1" rx="10"/>
-      <text x="260" y="25" text-anchor="middle" font-size="18" font-weight="bold">Communication & Translation</text>
-      <text x="260" y="45" text-anchor="middle" font-size="12">Presenting to stakeholders • Interdisciplinary collaboration • Reporting</text>
-      <circle cx="170" cy="210" r="110" fill="#38C6D0" fill-opacity="0.7"/>
-      <circle cx="350" cy="210" r="110" fill="#90E2BF" fill-opacity="0.6"/>
-      <circle cx="260" cy="320" r="110" fill="#F19FB4" fill-opacity="0.7"/>
-      <text x="150" y="95" text-anchor="middle" font-size="14" font-weight="bold">Data Acquisition</text>
-      <text x="370" y="95" text-anchor="middle" font-size="14" font-weight="bold">Geospatial Analysis &amp; Modeling</text>
-      <text x="260" y="445" text-anchor="middle" font-size="14" font-weight="bold">Applied Systems</text>
-      <text x="170" y="160" text-anchor="middle" font-size="13">
-        <tspan x="170" dy="0">Field Surveying</tspan>
-        <tspan x="170" dy="16">Remote Sensing</tspan>
-        <tspan x="170" dy="16">Data Sourcing</tspan>
+  <!-- RIGHT SIDE SVG -->
+  <div style="flex:1; display:flex; justify-content:center; align-items:flex-start;">
+
+    <svg width="520" height="460" viewBox="0 0 520 460">
+
+      <rect x="10" y="60" width="500" height="395"
+            fill="none" stroke="#333"
+            stroke-width="1" rx="10"/>
+
+      <text x="260" y="25"
+            text-anchor="middle"
+            font-size="18"
+            font-weight="bold">
+        Communication & Translation
       </text>
-      <text x="350" y="150" text-anchor="middle" font-size="13">
-        <tspan x="350" dy="0">GIS (ArcGIS, QGIS)</tspan>
-        <tspan x="350" dy="16">Python</tspan>
-        <tspan x="350" dy="16">Spatial Analysis</tspan>
-        <tspan x="350" dy="16">Climate modelling</tspan>
-        <tspan x="350" dy="16">workflows</tspan>
+
+      <text x="260" y="45"
+            text-anchor="middle"
+            font-size="12">
+        Presenting to stakeholders • Interdisciplinary collaboration • Reporting
       </text>
-      <text x="260" y="315" text-anchor="middle" font-size="13">
-        <tspan x="260" dy="0">Policy</tspan>
-        <tspan x="260" dy="16">Planning</tspan>
-        <tspan x="260" dy="16">Environmental Systems</tspan>
-        <tspan x="260" dy="16">Infrastructure Applications</tspan>
+
+      <circle cx="170" cy="210" r="110"
+              fill="#38C6D0" fill-opacity="0.7"/>
+
+      <circle cx="350" cy="210" r="110"
+              fill="#90E2BF" fill-opacity="0.6"/>
+
+      <circle cx="260" cy="320" r="110"
+              fill="#F19FB4" fill-opacity="0.7"/>
+
+      <text x="150" y="95"
+            text-anchor="middle"
+            font-size="14"
+            font-weight="bold">
+        Data Acquisition
       </text>
-      <rect x="210" y="230" width="100" height="45" rx="8" fill="white" opacity="0.40"/>
-      <text x="260" y="245" text-anchor="middle" font-size="11" font-weight="bold">
-        <tspan x="260" dy="0">End-to-End</tspan>
-        <tspan x="260" dy="13">Geospatial</tspan>
-        <tspan x="260" dy="13">Workflows</tspan>
+
+      <text x="370" y="95"
+            text-anchor="middle"
+            font-size="14"
+            font-weight="bold">
+        Geospatial Analysis & Modeling
       </text>
+
+      <text x="260" y="445"
+            text-anchor="middle"
+            font-size="14"
+            font-weight="bold">
+        Applied Systems
+      </text>
+
     </svg>
+
   </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SKILLS / TOOLS / AWARDS PANEL
+════════════════════════════════════════════════ -->
+<div style="border:2px solid #333; border-radius:10px; padding:30px; margin-top:24px;">
+
+  <h2 style="margin-top:0;">Professional Skills & Tools</h2>
+
+  <!-- EXPANDABLE SKILLS -->
+  <details open style="margin-bottom:14px;">
+    <summary style="cursor:pointer; font-weight:bold; font-size:15px;">
+      GIS & Spatial Analysis
+    </summary>
+
+    <div style="margin-top:10px;">
+      <span class="skill-tag">ArcGIS Pro</span>
+      <span class="skill-tag">QGIS</span>
+      <span class="skill-tag">Spatial Analysis</span>
+      <span class="skill-tag">Cartography</span>
+      <span class="skill-tag">Remote Sensing</span>
+      <span class="skill-tag">NDVI Analysis</span>
+      <span class="skill-tag">Image Classification</span>
+      <span class="skill-tag">Spatial Statistics</span>
+      <span class="skill-tag">GIS Integration</span>
+    </div>
+  </details>
+
+  <details style="margin-bottom:14px;">
+    <summary style="cursor:pointer; font-weight:bold; font-size:15px;">
+      Environmental & Climate Analysis
+    </summary>
+
+    <div style="margin-top:10px;">
+      <span class="skill-tag">Climate Data Analysis</span>
+      <span class="skill-tag">Environmental Modeling</span>
+      <span class="skill-tag">Temporal Analysis</span>
+      <span class="skill-tag">Environmental Monitoring</span>
+      <span class="skill-tag">Cryosphere Research</span>
+      <span class="skill-tag">Lake Ice Systems</span>
+      <span class="skill-tag">Climate Projections</span>
+    </div>
+  </details>
+
+  <details style="margin-bottom:14px;">
+    <summary style="cursor:pointer; font-weight:bold; font-size:15px;">
+      Programming & Data Workflows
+    </summary>
+
+    <div style="margin-top:10px;">
+      <span class="skill-tag">Python</span>
+      <span class="skill-tag">ArcPy</span>
+      <span class="skill-tag">SQL</span>
+      <span class="skill-tag">QA/QC</span>
+      <span class="skill-tag">Data Validation</span>
+      <span class="skill-tag">Automation</span>
+      <span class="skill-tag">Reproducible Pipelines</span>
+      <span class="skill-tag">Workflow Design</span>
+    </div>
+  </details>
+
+  <details style="margin-bottom:24px;">
+    <summary style="cursor:pointer; font-weight:bold; font-size:15px;">
+      Field & Applied Skills
+    </summary>
+
+    <div style="margin-top:10px;">
+      <span class="skill-tag">RTK GNSS</span>
+      <span class="skill-tag">GPS Surveying</span>
+      <span class="skill-tag">Field Data Collection</span>
+      <span class="skill-tag">Stakeholder Communication</span>
+      <span class="skill-tag">Planning Analysis</span>
+      <span class="skill-tag">Technical Reporting</span>
+    </div>
+  </details>
+
+  <!-- TOOLS -->
+  <h3>Tools & Technologies</h3>
+
+  <p>
+    <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">ArcGIS Pro</span>
+
+    <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">ArcGIS Online</span>
+
+    <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">QGIS</span>
+
+    <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">Python</span>
+
+    <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">ArcPy</span>
+
+    <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">SQL</span>
+
+    <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">Leaflet</span>
+
+    <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">RTK GNSS</span>
+  </p>
+
+  <!-- AWARDS -->
+  <h3>Awards</h3>
+
+  <ul style="font-size:13px; padding-left:1.2em; color:#333; line-height:1.7;">
+
+    <li>
+      <b>Barry Goodison Graduate Scholarship</b>
+      – Cryospheric Research Excellence (2023)
+    </li>
+
+    <li>
+      <b>Lorne Russwurm Award</b>
+      – Best BA Thesis in Urban Geography (2022)
+    </li>
+
+    <li>
+      <b>Paul & Louise Puopolo Award</b>
+      – Urban Planning Solution selected by City of Cambridge (2022)
+    </li>
+
+    <li>
+      <b>CAG Undergraduate Award</b>
+      – Canadian Association of Geographers (2022)
+    </li>
+
+    <li>
+      <b>NSERC Undergraduate Student Research Award</b>
+      – Lake ice thesis funding (2021)
+    </li>
+
+  </ul>
+
 </div>
 
 <!-- ═══════════════════════════════════════════════
@@ -716,100 +867,7 @@ function closePanel() {
   resetHighlight();
 }
 
-/* ════════════════════════════════════════════
-   SKILLS SECTION
-════════════════════════════════════════════ */
 
-function buildSkillsSection() {
-
-  const container = document.getElementById("skillsContainer");
-
-  const skillMap = {};
-
-  projects.forEach(project => {
-
-    (project.skills || []).forEach(skill => {
-
-      if (!skillMap[skill]) {
-        skillMap[skill] = [];
-      }
-
-      skillMap[skill].push(project);
-
-    });
-
-  });
-
-  Object.keys(skillMap)
-    .sort()
-    .forEach(skill => {
-
-      const btn = document.createElement("button");
-
-      btn.className = "skill-filter-btn";
-
-      btn.innerText = skill;
-
-      btn.onclick = () => {
-        openSkillPopup(skill, skillMap[skill]);
-      };
-
-      container.appendChild(btn);
-
-    });
-}
-
-function openSkillPopup(skill, relatedProjects) {
-
-  const panel = document.getElementById("infoPanel");
-
-  panel.style.display = "block";
-
-  const projectsHTML = relatedProjects.map(project => `
-
-    <div style="padding:10px 0;border-bottom:1px solid #eee;">
-
-      <div style="font-weight:bold;font-size:13px;">
-        ${project.title}
-      </div>
-
-      <div style="font-size:12px;color:#666;margin-top:4px;">
-        ${project.summary}
-      </div>
-
-    </div>
-
-  `).join("");
-
-  document.getElementById("panelContent").innerHTML = `
-
-    <div class="arcgis-popup">
-
-      <div class="arcgis-popup-header">
-
-        <h3>${skill}</h3>
-
-        <button onclick="closePanel()">✕</button>
-
-      </div>
-
-      <div style="padding:12px;">
-
-        <div style="font-size:12px;color:#666;margin-bottom:10px;">
-
-          Demonstrated across ${relatedProjects.length} projects:
-
-        </div>
-
-        ${projectsHTML}
-
-      </div>
-
-    </div>
-
-  `;
-}
-  
 /* ════════════════════════════════════════════
    TIMELINE  (Feature 2)
 ════════════════════════════════════════════ */
@@ -876,8 +934,6 @@ function showTimelineDetail(project) {
 }
 
 buildTimeline();
-
-buildSkillsSection();
 
 /* ════════════════════════════════════════════
    VIEW TOGGLE  (Map ↔ Timeline)
