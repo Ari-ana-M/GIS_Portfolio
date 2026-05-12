@@ -153,7 +153,7 @@ body { margin: 0; padding: 16px; font-family: Arial, sans-serif; box-sizing: bor
 <!-- ═══════════════════════════════════════════════
      HEADER / INTRO
 ════════════════════════════════════════════════ -->
-<div style="display:flex; flex-wrap:wrap; gap:40px; align-items:center;"> border:2px solid #333; padding:30px; border-radius:10px; margin-top:20px;">
+<div style="display:flex; gap:40px; align-items:center; border:2px solid #333; padding:30px; border-radius:10px; margin-top:20px;">
   <div style="flex:1; min-width:280px;">
     <h1 style="margin-bottom:5px;">GIS & Spatial Data Portfolio</h1>
     <p style="margin-top:0;">
