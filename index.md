@@ -13,6 +13,24 @@ body { margin: 0; padding: 16px; font-family: Arial, sans-serif; box-sizing: bor
   white-space: nowrap;
 }
 
+/* ── Interactive skill buttons ── */
+.skill-filter-btn {
+  background:#f4f4f4;
+  border:1px solid #ddd;
+  border-radius:20px;
+  padding:7px 12px;
+  margin:4px;
+  cursor:pointer;
+  font-size:12px;
+  transition:all .15s ease;
+}
+
+.skill-filter-btn:hover {
+  background:#38C6D0;
+  color:white;
+  border-color:#38C6D0;
+}
+
 /* ── Project list sidebar ── */
 .project-link {
   cursor: pointer; font-weight: 600; font-size: 12px; color: #38C6D0;
@@ -135,10 +153,14 @@ body { margin: 0; padding: 16px; font-family: Arial, sans-serif; box-sizing: bor
 <!-- ═══════════════════════════════════════════════
      HEADER / INTRO
 ════════════════════════════════════════════════ -->
-<div style="display:flex; gap:40px; align-items:center; border:2px solid #333; padding:30px; border-radius:10px; margin-top:20px;">
+<div style="display:flex; flex-wrap:wrap; gap:40px; align-items:center;"> border:2px solid #333; padding:30px; border-radius:10px; margin-top:20px;">
   <div style="flex:1; min-width:280px;">
     <h1 style="margin-bottom:5px;">GIS & Spatial Data Portfolio</h1>
-    <p style="margin-top:0;"><b>Environmental & Geospatial Analyst | Spatial Analysis | Climate Data | Environmental Systems</b></p>
+    <p style="margin-top:0;">
+  <b>
+    Environmental & Geospatial Analyst specializing in climate data, remote sensing, and applied GIS workflows
+  </b>
+</p>
     <p style="font-size:13px; color:#444; margin-top:0;">Environmental and geospatial analyst with experience in environmental modelling, spatial analysis, and climate data interpretation. Skilled in evaluating model outputs, analyzing variability and uncertainty, and integrating spatial and field data to support environmental system understanding. Eligible for registration as a <b>Geoscientist-in-Training (GIT)</b> with Engineers and Geoscientists British Columbia.</p>
 
     <h3>Education</h3>
@@ -159,18 +181,28 @@ body { margin: 0; padding: 16px; font-family: Arial, sans-serif; box-sizing: bor
       </li>
     </ul>
 
+<h3>Core Skills</h3>
+
+<div id="skillsContainer" style="margin-bottom:20px;"></div>
+
     <h3>Tools & Technologies</h3>
+
     <p>
       <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">ArcGIS Pro</span>
-      <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">ArcGIS Online / Enterprise</span>
+    
+      <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">ArcGIS Online</span>
+    
       <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">QGIS</span>
-      <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">Python (ArcPy)</span>
+    
+      <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">Python</span>
+    
+      <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">ArcPy</span>
+    
       <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">SQL</span>
-      <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">Remote Sensing</span>
-      <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">RTK GNSS / GPS</span>
-      <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">Catalyst</span>
-      <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">Spatial Analysis</span>
-      <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">QA/QC</span>
+    
+      <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">Leaflet</span>
+    
+      <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">RTK GNSS</span>
     </p>
 
     <h3>Awards</h3>
@@ -545,11 +577,15 @@ projects.forEach(project => {
   project.markerLayers = [];
   project.geoLayers    = [];
 
-  // Sidebar entry with skill tags
+  // Sidebar entry (simplified)
   const div = document.createElement("div");
-  const tagHTML = (project.skills || []).map(s => `<span class="skill-tag">${s}</span>`).join("");
-  div.innerHTML = `<span class="project-link">${project.title}</span><div style="margin-bottom:6px;">${tagHTML}</div>`;
+  
+  div.innerHTML = `
+    <span class="project-link">${project.title}</span>
+  `;
+  
   div.querySelector(".project-link").onclick = () => selectProject(project);
+  
   listDiv.appendChild(div);
 
   const ul = document.createElement("ul");
@@ -681,6 +717,100 @@ function closePanel() {
 }
 
 /* ════════════════════════════════════════════
+   SKILLS SECTION
+════════════════════════════════════════════ */
+
+function buildSkillsSection() {
+
+  const container = document.getElementById("skillsContainer");
+
+  const skillMap = {};
+
+  projects.forEach(project => {
+
+    (project.skills || []).forEach(skill => {
+
+      if (!skillMap[skill]) {
+        skillMap[skill] = [];
+      }
+
+      skillMap[skill].push(project);
+
+    });
+
+  });
+
+  Object.keys(skillMap)
+    .sort()
+    .forEach(skill => {
+
+      const btn = document.createElement("button");
+
+      btn.className = "skill-filter-btn";
+
+      btn.innerText = skill;
+
+      btn.onclick = () => {
+        openSkillPopup(skill, skillMap[skill]);
+      };
+
+      container.appendChild(btn);
+
+    });
+}
+
+function openSkillPopup(skill, relatedProjects) {
+
+  const panel = document.getElementById("infoPanel");
+
+  panel.style.display = "block";
+
+  const projectsHTML = relatedProjects.map(project => `
+
+    <div style="padding:10px 0;border-bottom:1px solid #eee;">
+
+      <div style="font-weight:bold;font-size:13px;">
+        ${project.title}
+      </div>
+
+      <div style="font-size:12px;color:#666;margin-top:4px;">
+        ${project.summary}
+      </div>
+
+    </div>
+
+  `).join("");
+
+  document.getElementById("panelContent").innerHTML = `
+
+    <div class="arcgis-popup">
+
+      <div class="arcgis-popup-header">
+
+        <h3>${skill}</h3>
+
+        <button onclick="closePanel()">✕</button>
+
+      </div>
+
+      <div style="padding:12px;">
+
+        <div style="font-size:12px;color:#666;margin-bottom:10px;">
+
+          Demonstrated across ${relatedProjects.length} projects:
+
+        </div>
+
+        ${projectsHTML}
+
+      </div>
+
+    </div>
+
+  `;
+}
+  
+/* ════════════════════════════════════════════
    TIMELINE  (Feature 2)
 ════════════════════════════════════════════ */
 function buildTimeline() {
@@ -704,9 +834,15 @@ function buildTimeline() {
         <div class="tl-skills">${skillPills}</div>
       </div>`;
     item.onclick = () => {
-      document.querySelectorAll(".tl-item").forEach(el => el.classList.remove("selected"));
+      document.querySelectorAll(".tl-item").forEach(el => {
+        el.classList.remove("selected");
+      });
+      
       item.classList.add("selected");
+      
       showTimelineDetail(project);
+      
+      selectProject(project);
     };
     container.appendChild(item);
   });
@@ -740,6 +876,8 @@ function showTimelineDetail(project) {
 }
 
 buildTimeline();
+
+buildSkillsSection();
 
 /* ════════════════════════════════════════════
    VIEW TOGGLE  (Map ↔ Timeline)
@@ -882,8 +1020,22 @@ window.closeViewer = function() {
    MISC CONTROLS
 ════════════════════════════════════════════ */
 window.toggleLeftPanel = function() {
+
   const panel = document.getElementById("leftPanel");
-  panel.style.width = (panel.style.width === "0px") ? "160px" : "0px";
+
+  if (
+    panel.style.width === "0px" ||
+    panel.style.width === ""
+  ) {
+    panel.style.width = "160px";
+    panel.style.padding = "10px";
+    panel.style.overflow = "auto";
+  } else {
+    panel.style.width = "0px";
+    panel.style.padding = "0px";
+    panel.style.overflow = "hidden";
+  }
+
 };
 
 window.toggleCategory = function(cat) {
