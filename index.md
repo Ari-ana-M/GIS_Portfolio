@@ -7,9 +7,27 @@ body { margin: 0; padding: 16px; font-family: Arial, sans-serif; box-sizing: bor
 
 /* ── Skill tags ── */
 .skill-tag {
-  display: inline-block; font-size: 10px; padding: 2px 7px;
-  border-radius: 10px; margin: 2px 2px 0 0;
-  background: #e8f8fa; color: #1a7a85; border: 1px solid #b2e4ea;
+  display: inline-block;
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 12px;
+  margin: 3px 4px 0 0;
+  background: #e8f8fa;
+  color: #1a7a85;
+  border: 1px solid #b2e4ea;
+  white-space: nowrap;
+}
+
+/* ── TOOL TAGS (ADD THIS RIGHT BELOW) ── */
+.tool-tag {
+  display: inline-block;
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  margin: 3px 4px 0 0;
+  background: #f2f2f2;
+  color: #333;
+  border: 1px solid #ddd;
   white-space: nowrap;
 }
 
@@ -221,55 +239,106 @@ body { margin: 0; padding: 16px; font-family: Arial, sans-serif; box-sizing: bor
   <!-- RIGHT SIDE SVG -->
   <div style="flex:1; display:flex; justify-content:center; align-items:flex-start;">
 
-    <svg width="520" height="460" viewBox="0 0 520 460">
+    <svg width="520" height="475" viewBox="0 0 520 480">
 
       <rect x="10" y="60" width="500" height="395"
             fill="none" stroke="#333"
             stroke-width="1" rx="10"/>
-
+    
       <text x="260" y="25"
             text-anchor="middle"
             font-size="18"
             font-weight="bold">
         Communication & Translation
       </text>
-
+    
       <text x="260" y="45"
             text-anchor="middle"
             font-size="12">
         Presenting to stakeholders • Interdisciplinary collaboration • Reporting
       </text>
-
+    
       <circle cx="170" cy="210" r="110"
               fill="#38C6D0" fill-opacity="0.7"/>
-
+    
       <circle cx="350" cy="210" r="110"
               fill="#90E2BF" fill-opacity="0.6"/>
-
+    
       <circle cx="260" cy="320" r="110"
               fill="#F19FB4" fill-opacity="0.7"/>
-
+    
       <text x="150" y="95"
             text-anchor="middle"
             font-size="14"
             font-weight="bold">
         Data Acquisition
       </text>
-
+    
       <text x="370" y="95"
             text-anchor="middle"
             font-size="14"
             font-weight="bold">
         Geospatial Analysis & Modeling
       </text>
-
+    
       <text x="260" y="445"
             text-anchor="middle"
             font-size="14"
             font-weight="bold">
         Applied Systems
       </text>
-
+    
+      <!-- LEFT CIRCLE DETAILS -->
+      <text x="170" y="160"
+            text-anchor="middle"
+            font-size="13">
+    
+        <tspan x="170" dy="0">Field Surveying</tspan>
+        <tspan x="170" dy="16">Remote Sensing</tspan>
+        <tspan x="170" dy="16">Data Sourcing</tspan>
+    
+      </text>
+    
+      <!-- RIGHT CIRCLE DETAILS -->
+      <text x="350" y="150"
+            text-anchor="middle"
+            font-size="13">
+    
+        <tspan x="350" dy="0">GIS (ArcGIS, QGIS)</tspan>
+        <tspan x="350" dy="16">Python</tspan>
+        <tspan x="350" dy="16">Spatial Analysis</tspan>
+        <tspan x="350" dy="16">Climate modelling</tspan>
+        <tspan x="350" dy="16">workflows</tspan>
+    
+      </text>
+    
+      <!-- BOTTOM CIRCLE DETAILS -->
+      <text x="260" y="315"
+            text-anchor="middle"
+            font-size="13">
+    
+        <tspan x="260" dy="0">Policy</tspan>
+        <tspan x="260" dy="16">Planning</tspan>
+        <tspan x="260" dy="16">Environmental Systems</tspan>
+        <tspan x="260" dy="16">Infrastructure Applications</tspan>
+    
+      </text>
+    
+      <!-- CENTER BOX -->
+      <rect x="210" y="230" width="100" height="45"
+            rx="8" fill="white" opacity="0.40"/>
+    
+      <text x="260" y="245"
+            text-anchor="middle"
+            font-size="11"
+            font-weight="bold">
+    
+        <tspan x="260" dy="0">End-to-End</tspan>
+        <tspan x="260" dy="13">Geospatial</tspan>
+        <tspan x="260" dy="13">Workflows</tspan>
+    
+      </text>
+    
     </svg>
 
   </div>
@@ -370,6 +439,7 @@ body { margin: 0; padding: 16px; font-family: Arial, sans-serif; box-sizing: bor
 
     <span style="background:#eee; padding:6px 10px; border-radius:8px; margin:3px; display:inline-block;">RTK GNSS</span>
   </p>
+
 
   <!-- AWARDS -->
   <h3>Awards</h3>
