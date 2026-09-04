@@ -193,20 +193,23 @@ body { margin: 0; padding: 16px; font-family: Arial, sans-serif; box-sizing: bor
 
     <p style="margin-top:0;">
       <b>
-        Environmental & Geospatial Analyst specializing in climate data,
-        remote sensing, and applied GIS workflows
+        GIS and spatial data analyst working across climate research,
+        environmental monitoring, and applied planning
       </b>
     </p>
 
     <p style="font-size:13px; color:#444; line-height:1.6;">
-      Environmental and geospatial analyst with experience in environmental
-      modelling, spatial analysis, and climate data interpretation.
-      Skilled in evaluating model outputs, analyzing variability and
-      uncertainty, and integrating spatial and field data to support
-      environmental system understanding.
-      Eligible for registration as a
+      I'm a GIS and spatial data analyst with an MSc in Geography from the
+      University of Waterloo, working across municipal, academic, and
+      environmental projects. I integrate, validate, and analyze large
+      spatial datasets using ArcGIS Pro, ArcGIS Enterprise/Online, SQL, and
+      Python, and turn that analysis into cartographic products and
+      decision-ready findings, from a peer-reviewed climate publication to
+      policy-ready municipal recommendations. I build the QA/QC workflows
+      and documentation that let findings hold up under scrutiny, and I'm
+      currently pursuing
       <b>Geoscientist-in-Training (GIT)</b>
-      with Engineers and Geoscientists British Columbia.
+      registration with Professional Geoscientists Ontario (PGO).
     </p>
 
     <h3>Education</h3>
@@ -353,6 +356,13 @@ body { margin: 0; padding: 16px; font-family: Arial, sans-serif; box-sizing: bor
 </div>
 
 <!-- ═══════════════════════════════════════════════
+     CAREER AT A GLANCE (stat strip)
+     Values are computed from the projects/awards data below —
+     nothing here is hardcoded, so it stays accurate as projects are added.
+════════════════════════════════════════════════ -->
+<div id="statsStrip" style="display:flex; flex-wrap:wrap; gap:14px; margin-top:16px;"></div>
+
+<!-- ═══════════════════════════════════════════════
      SKILLS / TOOLS / AWARDS PANEL
 ════════════════════════════════════════════════ -->
 <div style="border:2px solid #333; border-radius:10px; padding:30px; margin-top:24px;">
@@ -433,6 +443,16 @@ body { margin: 0; padding: 16px; font-family: Arial, sans-serif; box-sizing: bor
 
   </ul>
 
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     WHERE THE ANALYSIS MADE A DIFFERENCE
+     Populated from the same projects array used by the map/timeline below —
+     copy is drawn directly from each project's own description/context.
+════════════════════════════════════════════════ -->
+<div style="border:2px solid #333; border-radius:10px; padding:30px; margin-top:24px;">
+  <h2 style="margin-top:0;">Where the Analysis Made a Difference</h2>
+  <div id="impactGrid" style="display:flex; flex-wrap:wrap; gap:16px; margin-top:14px;"></div>
 </div>
 
 <!-- ═══════════════════════════════════════════════
@@ -694,9 +714,9 @@ const mapDiv  = document.getElementById("map");
 const listDiv = document.getElementById("project-list");
 
 var map = L.map('map').setView([52, -90], 4);
-L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-  attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> © <a href="https://carto.com/">CARTO</a>',
-  subdomains: 'abcd', maxZoom: 19
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  subdomains: 'abc', maxZoom: 19
 }).addTo(map);
 
 const categoryLayers = {
@@ -964,6 +984,78 @@ function showTimelineDetail(project) {
 }
 
 buildTimeline();
+
+/* ════════════════════════════════════════════
+   CAREER AT A GLANCE — computed from projects/awards
+════════════════════════════════════════════ */
+function buildStatsStrip() {
+  const strip = document.getElementById("statsStrip");
+  if (!strip) return;
+
+  const years = projects.map(p => p.year);
+  const totalLocations = projects.reduce((sum, p) => sum + p.locations.length, 0);
+
+  const stats = [
+    { value: projects.length,                         label: "Projects & Roles",        color: "#38C6D0" },
+    { value: `${Math.min(...years)}–${Math.max(...years)}`, label: "Years Active",       color: "#90E2BF" },
+    { value: awards.length,                            label: "Awards & Recognitions",   color: "#F19FB4" },
+    { value: totalLocations,                            label: "Study Sites Mapped",     color: "#38C6D0" }
+  ];
+
+  strip.innerHTML = stats.map(s => `
+    <div style="flex:1; min-width:140px; background:${s.color}; border-radius:10px; padding:16px 18px; color:#1c1c1c;">
+      <div style="font-size:26px; font-weight:bold; line-height:1;">${s.value}</div>
+      <div style="font-size:12px; margin-top:6px; font-weight:600;">${s.label}</div>
+    </div>`).join("");
+}
+buildStatsStrip();
+
+/* ════════════════════════════════════════════
+   WHERE THE ANALYSIS MADE A DIFFERENCE
+   Bullets are drawn straight from each project's own
+   description/context fields above — no new claims added.
+════════════════════════════════════════════ */
+function buildImpactGrid() {
+  const grid = document.getElementById("impactGrid");
+  if (!grid) return;
+
+  const highlights = [
+    {
+      title: "MSc Thesis — ERA5-Land Lake Ice Assessment",
+      tag: "Model Evaluation",
+      bullets: [
+        "Quantified spatial and temporal biases using MBE and MAE across freeze-up and break-up periods",
+        "Identified model limitations tied to snow cover omission and partial ice representation"
+      ]
+    },
+    {
+      title: "Invasive Species Monitoring — Lake Bernard Phragmites",
+      tag: "Field & Ecological Decisions",
+      bullets: [
+        "Modelled potential invasive spread using kernel density, buffer, and nearest-neighbor analysis",
+        "Turned UAV imagery and NDVI results into stakeholder-focused summaries"
+      ]
+    },
+    {
+      title: "Student Planner — City of Cambridge Housing Policy",
+      tag: "Policy & Planning",
+      bullets: [
+        "Integrated GIS and census data to support housing and development planning maps",
+        "Cartographic outputs supported evidence-based planning decisions; recognized with the Paul & Louise Puopolo Award"
+      ]
+    }
+  ];
+
+  grid.innerHTML = highlights.map(h => `
+    <div style="flex:1; min-width:260px; border:1px solid #ddd; border-left:5px solid #38C6D0; border-radius:8px; padding:16px 18px; background:#fafafa;">
+      <div style="font-size:11px; font-weight:bold; text-transform:uppercase; letter-spacing:.03em; color:#38C6D0; margin-bottom:6px;">${h.tag}</div>
+      <div style="font-weight:bold; font-size:13px; margin-bottom:8px;">${h.title}</div>
+      <ul style="margin:0; padding-left:1.2em; font-size:12px; color:#444; line-height:1.6;">
+        ${h.bullets.map(b => `<li>${b}</li>`).join("")}
+      </ul>
+    </div>`).join("");
+}
+buildImpactGrid();
 
 /* ════════════════════════════════════════════
    VIEW TOGGLE  (Map ↔ Timeline)
