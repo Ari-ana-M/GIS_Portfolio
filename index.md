@@ -1,6 +1,14 @@
-<html lang="en"> 
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>GIS & Spatial Data Portfolio</title>
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ariana Mansingh | GIS & Remote Sensing Analyst</title>
+<meta name="description" content="Ariana Mansingh: GIS and remote sensing analyst. Lake ice research, coastal field monitoring, and municipal planning GIS.">
+<meta property="og:title" content="Ariana Mansingh | GIS & Remote Sensing Analyst">
+<meta property="og:description" content="Interactive portfolio: spatial analysis, remote sensing, field data collection, and cartography.">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <style>
 /* ── Base ── */
 body { margin: 0; padding: 16px; font-family: Arial, sans-serif; box-sizing: border-box; }
@@ -15,8 +23,9 @@ body { margin: 0; padding: 16px; font-family: Arial, sans-serif; box-sizing: bor
   border: 1px solid transparent;
   white-space: nowrap;
 }
+.skill-pill:focus-visible { outline: 2px solid #0d6b75; outline-offset: 2px; }
 
-/* Expert = strong teal (primary expertise) */
+/* Core = strong teal (primary expertise) */
 .skill-pill.expert {
   background: #d6f6f8;
   border-color: #38C6D0;
@@ -24,18 +33,24 @@ body { margin: 0; padding: 16px; font-family: Arial, sans-serif; box-sizing: bor
   font-weight: 600;
 }
 
-/* Proficient = softer green-blue */
+/* Working knowledge = softer green-blue */
 .skill-pill.proficient {
   background: #e7f7ef;
   border-color: #90E2BF;
   color: #2f6b4f;
 }
 
-/* Familiar = neutral gray */
+/* Currently building = neutral gray */
 .skill-pill.familiar {
   background: #f2f2f2;
   border-color: #ccc;
   color: #444;
+}
+
+/* Small tags used inside project panels and the timeline */
+.skill-tag {
+  display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 10px;
+  background: #eef6f7; border: 1px solid #cfe3e6; margin: 2px 2px 0 0;
 }
 
 /* ── Interactive skill buttons ── */
@@ -164,6 +179,16 @@ body { margin: 0; padding: 16px; font-family: Arial, sans-serif; box-sizing: bor
 }
 #exportBtn:hover { background: #222; }
 
+/* ── Small screens: stack the map dashboard ── */
+@media (max-width: 760px) {
+  #mapRow { flex-direction: column; height: auto !important; }
+  #map { height: 420px; flex: none !important; width: 100%; }
+  #leftPanel { width: auto !important; border-right: none; border-bottom: 1px solid #ccc; max-height: 220px; }
+  #infoPanel { width: auto !important; border-left: none; border-top: 2px solid #333; }
+  #exportBtn { bottom: 12px; right: 12px; padding: 8px 12px; }
+  .view-toggle { flex-wrap: wrap; }
+}
+
 /* ── Print / PDF styles ── */
 @media print {
   #exportBtn, #webViewerPanel, .view-toggle { display: none !important; }
@@ -174,6 +199,13 @@ body { margin: 0; padding: 16px; font-family: Arial, sans-serif; box-sizing: bor
 </style>
 </head>
 <body>
+
+<noscript>
+  <p>Ariana Mansingh is a GIS and remote sensing analyst with an MSc in Geography from the University of Waterloo.
+  This portfolio is interactive and needs JavaScript. Contact:
+  <a href="mailto:ariana.mansingh.pro@gmail.com">ariana.mansingh.pro@gmail.com</a>,
+  <a href="https://linkedin.com/in/ariana-mansingh">LinkedIn</a>.</p>
+</noscript>
 
 <!-- ═══════════════════════════════════════════════
      HERO PANEL
@@ -204,12 +236,18 @@ body { margin: 0; padding: 16px; font-family: Arial, sans-serif; box-sizing: bor
       environmental projects. I integrate, validate, and analyze large
       spatial datasets using ArcGIS Pro, ArcGIS Enterprise/Online, SQL, and
       Python, and turn that analysis into cartographic products and
-      decision-ready findings, from a peer-reviewed climate publication to
-      policy-ready municipal recommendations. I build the QA/QC workflows
-      and documentation that let findings hold up under scrutiny, and I'm
-      currently pursuing
+      decision-ready findings, from research supporting a peer-reviewed
+      climate publication to policy-ready municipal recommendations. I build
+      the QA/QC workflows and documentation that let findings hold up under
+      scrutiny, and I'm currently pursuing
       <b>Geoscientist-in-Training (GIT)</b>
       registration with Professional Geoscientists Ontario (PGO).
+    </p>
+
+    <p style="font-size:13px;">
+      Open to GTA-area roles ·
+      <a href="mailto:ariana.mansingh.pro@gmail.com">Email</a> ·
+      <a href="https://linkedin.com/in/ariana-mansingh" target="_blank" rel="noopener">LinkedIn</a>
     </p>
 
     <h3>Education</h3>
@@ -217,9 +255,9 @@ body { margin: 0; padding: 16px; font-family: Arial, sans-serif; box-sizing: bor
     <ul style="list-style-type: disc; padding-left: 20px; line-height:1.6;">
 
       <li>
-        <b>MSc Geography</b> – University of Waterloo
+        <b>MSc Geography</b>, University of Waterloo
         <span style="color:#888; font-size:12px;">
-          (Sep 2022 – Dec 2025)
+          (Sep 2022 to Dec 2025)
         </span>
 
         <ul style="margin-top:5px;">
@@ -229,16 +267,16 @@ body { margin: 0; padding: 16px; font-family: Arial, sans-serif; box-sizing: bor
       </li>
 
       <li>
-        <b>Honours BA Environmental Studies</b> –
+        <b>Honours BA Environmental Studies</b>,
         Wilfrid Laurier University
 
         <span style="color:#888; font-size:12px;">
-          (Sep 2018 – Apr 2022)
+          (Sep 2018 to Apr 2022)
         </span>
 
         <ul style="margin-top:5px;">
           <li>Option in Geomatics; Minor in Sociology</li>
-          <li>GPA: 3.8 / 4.0 · Dean's List 2018–2022</li>
+          <li>GPA: 3.8 / 4.0 · Dean's List 2018 to 2022</li>
         </ul>
       </li>
 
@@ -247,118 +285,119 @@ body { margin: 0; padding: 16px; font-family: Arial, sans-serif; box-sizing: bor
   </div>
 
   <!-- RIGHT SIDE SVG -->
-  <div style="flex:1; display:flex; justify-content:center; align-items:flex-start;">
+  <div style="flex:1; display:flex; justify-content:center; align-items:flex-start; min-width:0;">
 
-    <svg width="520" height="475" viewBox="0 0 520 480">
+    <svg width="520" height="475" viewBox="0 0 520 480" style="max-width:100%; height:auto;">
 
       <rect x="10" y="60" width="500" height="395"
             fill="none" stroke="#333"
             stroke-width="1" rx="10"/>
-    
+
       <text x="260" y="25"
             text-anchor="middle"
             font-size="18"
             font-weight="bold">
         Communication & Translation
       </text>
-    
+
       <text x="260" y="45"
             text-anchor="middle"
             font-size="12">
         Presenting to stakeholders • Interdisciplinary collaboration • Reporting
       </text>
-    
+
       <circle cx="170" cy="210" r="110"
               fill="#38C6D0" fill-opacity="0.7"/>
-    
+
       <circle cx="350" cy="210" r="110"
               fill="#90E2BF" fill-opacity="0.6"/>
-    
+
       <circle cx="260" cy="320" r="110"
               fill="#F19FB4" fill-opacity="0.7"/>
-    
+
       <text x="150" y="95"
             text-anchor="middle"
             font-size="14"
             font-weight="bold">
         Data Acquisition
       </text>
-    
+
       <text x="370" y="95"
             text-anchor="middle"
             font-size="14"
             font-weight="bold">
         Geospatial Analysis & Modeling
       </text>
-    
+
       <text x="260" y="445"
             text-anchor="middle"
             font-size="14"
             font-weight="bold">
         Applied Systems
       </text>
-    
+
       <!-- LEFT CIRCLE DETAILS -->
       <text x="170" y="160"
             text-anchor="middle"
             font-size="13">
-    
+
         <tspan x="170" dy="0">Field Surveying</tspan>
         <tspan x="170" dy="16">Remote Sensing</tspan>
         <tspan x="170" dy="16">Data Sourcing</tspan>
-    
+
       </text>
-    
+
       <!-- RIGHT CIRCLE DETAILS -->
       <text x="350" y="150"
             text-anchor="middle"
             font-size="13">
-    
+
         <tspan x="350" dy="0">GIS (ArcGIS, QGIS)</tspan>
         <tspan x="350" dy="16">Python</tspan>
         <tspan x="350" dy="16">Spatial Analysis</tspan>
         <tspan x="350" dy="16">Climate modelling</tspan>
         <tspan x="350" dy="16">workflows</tspan>
-    
+
       </text>
-    
+
       <!-- BOTTOM CIRCLE DETAILS -->
       <text x="260" y="315"
             text-anchor="middle"
             font-size="13">
-    
+
         <tspan x="260" dy="0">Policy</tspan>
         <tspan x="260" dy="16">Planning</tspan>
         <tspan x="260" dy="16">Environmental Systems</tspan>
-        <tspan x="260" dy="16">Infrastructure Applications</tspan>
-    
+        <tspan x="260" dy="16">Municipal Applications</tspan>
+
       </text>
-    
+
       <!-- CENTER BOX -->
       <rect x="210" y="230" width="100" height="45"
             rx="8" fill="white" opacity="0.40"/>
-    
+
       <text x="260" y="245"
             text-anchor="middle"
             font-size="11"
             font-weight="bold">
-    
+
         <tspan x="260" dy="0">End-to-End</tspan>
         <tspan x="260" dy="13">Geospatial</tspan>
         <tspan x="260" dy="13">Workflows</tspan>
-    
+
       </text>
-    
+
     </svg>
 
   </div>
 
 </div>
 
+<!-- Preset banner: filled in by applyPreset() when the link ends in #field, #data, #planning, or #water -->
+<div id="presetBanner" style="display:none; margin-top:16px; padding:12px 16px; background:#e7f7ef; border-left:5px solid #38C6D0; border-radius:6px; font-size:13px;"></div>
+
 <!-- ═══════════════════════════════════════════════
      CAREER AT A GLANCE (stat strip)
-     Values are computed from the projects/awards data below —
-     nothing here is hardcoded, so it stays accurate as projects are added.
 ════════════════════════════════════════════════ -->
 <div id="statsStrip" style="display:flex; flex-wrap:wrap; gap:14px; margin-top:16px;"></div>
 
@@ -368,48 +407,8 @@ body { margin: 0; padding: 16px; font-family: Arial, sans-serif; box-sizing: bor
 <div style="border:2px solid #333; border-radius:10px; padding:30px; margin-top:24px;">
 
   <h2 style="margin-top:0;">Core Skills & Technologies</h2>
-
-  <h3 style="margin-top:18px;">Expert</h3>
-  <div>
-    <span class="skill-pill expert">ArcGIS Pro</span>
-    <span class="skill-pill expert">Spatial Analysis</span>
-    <span class="skill-pill expert">Cartography</span>
-    <span class="skill-pill expert">Remote Sensing</span>
-    <span class="skill-pill expert">Spatial Statistics</span>
-    <span class="skill-pill expert">Climate Data Analysis</span>
-    <span class="skill-pill expert">Temporal Analysis</span>
-    <span class="skill-pill expert">Cryosphere Research</span>
-    <span class="skill-pill expert">Lake Ice Systems</span>
-    <span class="skill-pill expert">Climate Projections</span>
-    <span class="skill-pill expert">Data Validation</span>
-    <span class="skill-pill expert">Automation</span>
-    <span class="skill-pill expert">Workflow Design</span>
-    <span class="skill-pill expert">Stakeholder Communication</span>
-    <span class="skill-pill expert">Technical Reporting</span>
-  </div>
-  
-  <h3 style="margin-top:18px;">Proficient</h3>
-  <div>
-    <span class="skill-pill proficient">NDVI Analysis</span>
-    <span class="skill-pill proficient">Image Classification</span>
-    <span class="skill-pill proficient">GIS Integration</span>
-    <span class="skill-pill proficient">Environmental Modeling</span>
-    <span class="skill-pill proficient">Python</span>
-    <span class="skill-pill proficient">ArcPy</span>
-    <span class="skill-pill proficient">SQL</span>
-    <span class="skill-pill proficient">Reproducible Pipelines</span>
-    <span class="skill-pill proficient">Field Data Collection</span>
-    <span class="skill-pill proficient">RTK GNSS</span>
-    <span class="skill-pill proficient">GPS Surveying</span>
-    <span class="skill-pill proficient">Leaflet</span>
-  </div>
-  
-  <h3 style="margin-top:18px;">Familiar</h3>
-  <div>
-    <span class="skill-pill familiar">Advanced GIS workflows</span>
-    <span class="skill-pill familiar">Data visualization extensions</span>
-  </div>
-
+  <p style="font-size:12px; color:#666; margin:4px 0 0;">Click a skill to see where I used it. Dashed skills are certificate-backed, with a project in progress.</p>
+  <div id="skillsGrid"></div>
 
   <!-- AWARDS -->
   <h3>Awards</h3>
@@ -417,28 +416,28 @@ body { margin: 0; padding: 16px; font-family: Arial, sans-serif; box-sizing: bor
   <ul style="font-size:13px; padding-left:1.2em; color:#333; line-height:1.7;">
 
     <li>
-      <b>Barry Goodison Graduate Scholarship</b>
-      – Cryospheric Research Excellence (2023)
+      <b>Barry Goodison Graduate Scholarship</b>:
+      Cryospheric Research Excellence (2023)
     </li>
 
     <li>
-      <b>Lorne Russwurm Award</b>
-      – Best BA Thesis in Urban Geography (2022)
+      <b>Lorne Russwurm Award</b>:
+      Best BA Thesis in Urban Geography (2022)
     </li>
 
     <li>
-      <b>Paul & Louise Puopolo Award</b>
-      – Urban Planning Solution selected by City of Cambridge (2022)
+      <b>Paul & Louise Puopolo Award</b>:
+      Urban Planning Solution selected by City of Cambridge (2022)
     </li>
 
     <li>
-      <b>CAG Undergraduate Award</b>
-      – Canadian Association of Geographers (2022)
+      <b>CAG Undergraduate Award</b>:
+      Canadian Association of Geographers (2022)
     </li>
 
     <li>
-      <b>NSERC Undergraduate Student Research Award</b>
-      – Lake ice thesis funding (2021)
+      <b>NSERC Undergraduate Student Research Award</b>:
+      Lake ice thesis funding (2021)
     </li>
 
   </ul>
@@ -447,8 +446,6 @@ body { margin: 0; padding: 16px; font-family: Arial, sans-serif; box-sizing: bor
 
 <!-- ═══════════════════════════════════════════════
      WHERE THE ANALYSIS MADE A DIFFERENCE
-     Populated from the same projects array used by the map/timeline below —
-     copy is drawn directly from each project's own description/context.
 ════════════════════════════════════════════════ -->
 <div style="border:2px solid #333; border-radius:10px; padding:30px; margin-top:24px;">
   <h2 style="margin-top:0;">Where the Analysis Made a Difference</h2>
@@ -526,14 +523,14 @@ body { margin: 0; padding: 16px; font-family: Arial, sans-serif; box-sizing: bor
   <div id="webViewerPanel" style="display:none; border-top:2px solid #333; flex-direction:column; height:500px;">
     <div style="display:flex; align-items:center; gap:10px; padding:8px 12px; background:#4a4a4a; color:white; font-family:Arial,sans-serif; font-size:13px; flex-shrink:0;">
       <span id="viewerLabel" style="flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Web Preview</span>
-      <a id="viewerOpenBtn" href="#" target="_blank" style="color:#90E2BF; text-decoration:none; white-space:nowrap; font-size:12px;">↗ Open in new tab</a>
+      <a id="viewerOpenBtn" href="#" target="_blank" rel="noopener" style="color:#90E2BF; text-decoration:none; white-space:nowrap; font-size:12px;">↗ Open in new tab</a>
       <button onclick="closeViewer()" style="background:none; border:none; color:white; font-size:16px; cursor:pointer; padding:0; line-height:1;">✕</button>
     </div>
     <div id="viewerFallback" style="display:none; padding:24px; font-family:Arial,sans-serif; font-size:13px; color:#555; text-align:center; background:#f9f9f9; border-bottom:1px solid #ddd;">
       <div style="font-size:28px; margin-bottom:10px;">🔒</div>
       <p style="margin:0 0 6px;"><b>This site can't be previewed here.</b></p>
       <p style="margin:0 0 14px; font-size:12px; color:#888;">Many sites block iframe embedding for security reasons.</p>
-      <a id="fallbackLink" href="#" target="_blank"
+      <a id="fallbackLink" href="#" target="_blank" rel="noopener"
          style="display:inline-block; background:#38C6D0; color:white; padding:8px 18px; border-radius:6px; text-decoration:none; font-size:13px; font-weight:bold;">
         Open in New Tab →
       </a>
@@ -550,13 +547,15 @@ body { margin: 0; padding: 16px; font-family: Arial, sans-serif; box-sizing: bor
 <!-- ── Floating export button ── -->
 <button id="exportBtn" onclick="exportPDF()">⬇ Download Summary PDF</button>
 
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 try {
 
 /* ════════════════════════════════════════════
-   PROJECT DATA  — sourced from CV + project briefs
+   PROJECT DATA
+   Keep each skills list to the 5 or 6 that matter most.
+   Dates match the resume.
 ════════════════════════════════════════════ */
 const projects = [
   {
@@ -564,11 +563,12 @@ const projects = [
     category: "Research",
     subcategory: "Climate & Cryosphere Analysis",
     year: 2025,
-    dateRange: "Sep 2022 – Dec 2025",
+    dateRange: "Sep 2022 to Dec 2025",
     summary: "Evaluated ERA5-Land lake ice variables against satellite observations across seven Canadian lakes using spatial and statistical analysis workflows. Assessed freeze-up, break-up, ice fraction, and surface temperature variability to identify environmental model biases and climate system trends.",
-    description: "Evaluated ERA5-Land lake ice fraction, timing, and surface temperature against satellite observations across seven Canadian lakes (2004–2023). Quantified spatial and temporal biases using MBE and MAE during freeze-up and break-up periods. Identified key model limitations related to snow cover omission and partial ice representation, with implications for climate modelling accuracy.",
-    skills: ["Climate Data Analysis", "Spatial Statistics (MBE, MAE)", "Environmental Model Validation", "ArcGIS Pro", "QGIS", "Python", "Satellite Remote Sensing", "Temporal Analysis", "Data Integration & QA/QC", "Cartographic Visualization", "Technical Reporting"],
-    context: ["MSc Geography thesis project", "Multi-year environmental dataset analysis (2004–2023)", "Combined ERA5-Land + IMS satellite observations", "Focused on cryosphere and environmental systems interpretation"],
+    description: "Evaluated ERA5-Land lake ice fraction, timing, and surface temperature against satellite observations across seven Canadian lakes (2004 to 2023). Quantified spatial and temporal biases using MBE and MAE during freeze-up and break-up periods. Identified key model limitations related to snow cover omission and partial ice representation, with implications for climate modelling accuracy.",
+    result: "Quantified model-observation bias across seven lakes and 20 years; identified snow cover omission and partial ice representation as key limitations.",
+    skills: ["Spatial Statistics (MBE, MAE)", "ArcGIS Pro", "QGIS", "Python", "Satellite Remote Sensing", "Cartographic Visualization"],
+    context: ["MSc Geography thesis project", "Multi-year environmental dataset analysis (2004 to 2023)", "Combined ERA5-Land + IMS satellite observations", "Focused on cryosphere and environmental systems interpretation"],
     links: [
       { url: "https://uwspace.uwaterloo.ca/items/b983d97f-d2ec-4c1a-a6d0-82be963c476a", label: "Thesis (UW Space)" },
       { url: "https://ari-ana-m.github.io/lake-ice-animations/", label: "Supplementary Animations" }
@@ -584,14 +584,15 @@ const projects = [
     ]
   },
   {
-    title: "Research Analyst — Environmental & Climate Data Analysis",
+    title: "Research Analyst: Environmental & Climate Data Analysis",
     category: "Technical",
     subcategory: "Research Analytics",
     year: 2023,
-    dateRange: "Jan 2023 – Apr 2023",
-    summary: "Conducted structured climate resilience and environmental data analysis using spatial, statistical, and SQL-based workflows. Produced publication-quality visualizations and synthesized findings into interdisciplinary research outputs.",
-    description: "Conducted structured scoping review of climate resilience literature. Extracted and analyzed data using SQL-based querying and systematic workflows. Produced graphs, statistical summaries, and workflow diagrams for interdisciplinary research reporting. Applied data validation to ensure accuracy and consistency.",
-    skills: ["SQL Querying", "Data Organization", "Climate Data Analysis", "GIS Workflows", "Statistical Summaries", "Data Validation & QA/QC", "Workflow Reproducibility", "Research Synthesis", "Scientific Visualization", "Technical Communication"],
+    dateRange: "Jan 2023 to Apr 2023",
+    summary: "Conducted a structured scoping review of climate resilience research using SQL-based workflows, and produced graphs, statistical summaries, and workflow diagrams that supported a peer-reviewed publication.",
+    description: "Conducted a scoping review of 50+ studies on climate resilience in smallholder agricultural systems. Extracted and validated study-level data using SQL-based querying and systematic workflows to identify trends across dominant intervention strategies. Produced graphs, statistical summaries, and workflow diagrams for interdisciplinary research reporting.",
+    result: "Findings were synthesized into graphs and workflow diagrams that supported a peer-reviewed publication.",
+    skills: ["SQL Querying", "Data Validation & QA/QC", "Statistical Summaries", "Research Synthesis", "Scientific Visualization"],
     context: ["University of Waterloo research role", "Supported interdisciplinary environmental research", "Focused on structured analytical workflows and reporting"],
     links: [
       { url: "https://ecologyandsociety.org/vol29/iss3/art22/", label: "Published Article (Ecology & Society)" }
@@ -601,27 +602,29 @@ const projects = [
   {
     title: "Lake Ice Projections under Climate Scenarios (Undergraduate Thesis)",
     category: "Research",
-    subcategory: "Remote Sensing / Climate Projection",
+    subcategory: "Climate Projection Analysis",
     year: 2022,
-    dateRange: "Sep 2021 – Apr 2022",
-    summary: "Processed and analyzed environmental and climate datasets using Python, GIS, and remote sensing workflows to assess lake ice variability and climate-driven environmental change.",
-    description: "Analyzed projected lake ice thickness and phenology for Great Bear and Great Slave Lakes under multiple RCP climate scenarios. Processed and integrated climate model outputs to force the CLIMoGrid thermodynamic lake ice model. Conducted trend and scenario analysis to assess climate-driven changes in ice duration and thickness.",
-    skills: ["Python Automation", "SQL Workflows", "Remote Sensing", "Climate Projections", "GIS Analysis", "Spatial Data Processing", "Environmental Modeling", "QA/QC Workflows", "Reproducible Pipelines", "Data Visualization"],
-    context: ["Remote Sensing of Environmental Change (ReSEC) group", "Supported climate scenario and lake ice research", "Integrated satellite and modeled environmental datasets"],
+    dateRange: "Sep 2021 to Apr 2022",
+    summary: "Analyzed projected air temperature and lake ice conditions for two large northern lakes under multiple RCP climate scenarios.",
+    description: "Analyzed projected air temperature and surface water and ice conditions for Great Bear and Great Slave Lakes under multiple RCP climate scenarios, using rolling averages and statistical summaries. Conducted trend and scenario analysis to assess climate-driven changes in ice duration and thickness, and produced cartographic and statistical outputs summarizing projected change.",
+    result: "Scenario-based summaries of projected change in ice duration and thickness for Great Bear and Great Slave Lakes.",
+    skills: ["Climate Projections", "Scenario & Trend Analysis", "Python", "Statistical Summaries", "Cartographic Outputs"],
+    context: ["Undergraduate honours thesis, Wilfrid Laurier University", "Funded by an NSERC Undergraduate Student Research Award (2021)", "Linked to the lake ice work in the ReSEC group"],
     locations: [
       { name: "Great Bear Lake",  coords: [66, -121] },
       { name: "Great Slave Lake", coords: [61, -114] }
     ]
   },
   {
-    title: "Student Planner — Housing Policy & GIS Analysis",
+    title: "Student Planner: Housing Policy & GIS Analysis",
     category: "Applied GIS",
     subcategory: "Planning",
     year: 2022,
-    dateRange: "Sep 2021 – Sep 2022",
+    dateRange: "Sep 2021 to Sep 2022",
     summary: "Supported municipal housing and planning analysis through GIS-based spatial workflows, census integration, and cartographic visualization. Produced stakeholder-focused planning outputs supporting housing and development assessment.",
-    description: "Analyzed and integrated GIS and census datasets to support planning maps and spatial insights for the City of Cambridge. Produced cartographic outputs and visualizations for housing and development analysis. Collaborated with staff and stakeholders to support evidence-based planning decisions. Recognized with the Paul & Louise Puopolo Award.",
-    skills: ["GIS Spatial Analysis", "Census Data Integration", "Cartography", "ArcGIS Pro", "Planning Analysis", "Stakeholder Communication", "Data Organization", "Policy Research", "Spatial Visualization", "Workflow Improvement"],
+    description: "Integrated GIS, census, and land-use datasets into planning maps for the City of Cambridge, and maintained corporate GIS databases cross-referenced against SharePoint records. Applied spatial analysis to identify priority areas where zoning and development policy change would have the greatest impact. Presented maps and findings to planning staff. Recognized with the Paul & Louise Puopolo Award.",
+    result: "Maps and findings presented to planning staff; the planning solution was selected by the City of Cambridge.",
+    skills: ["GIS Spatial Analysis", "Census Data Integration", "Cartography", "ArcGIS Pro", "Stakeholder Communication", "GIS Database Maintenance"],
     context: ["Collaboration with City of Cambridge", "Applied GIS within municipal planning context", "Contributed to award-recognized planning project"],
     links: [
       { url: "https://www.cambridgetimes.ca/news/housing-affordability-is-a-human-rights-issue-wilfrid-laurier-students-exploring-housing-concerns-with-city/article_c289ca4b-507c-5777-b38d-90a1d676d692.html", label: "News Article (Interview)" },
@@ -630,30 +633,32 @@ const projects = [
     locations: [{ name: "Cambridge", coords: [43.40175, -80.32597] }]
   },
   {
-    title: "Remote Sensing & GIS Assistant — Climate Change Projection (ReSEC)",
+    title: "Remote Sensing & GIS Assistant: Climate Change Projection (ReSEC)",
     category: "Technical",
     subcategory: "Remote Sensing",
     year: 2021,
-    dateRange: "May 2021 – Sep 2021",
-    summary: "Processed and analyzed environmental and climate datasets using Python, GIS, and remote sensing workflows to assess lake ice variability and climate-driven environmental change.",
-    description: "Extracted and processed large geospatial datasets using Python and SQL workflows. Applied GIS and remote sensing techniques to generate spatial products supporting environmental analysis of lake ice variability. Built reproducible data pipelines with integrated QA/QC checks. Visualized spatial patterns through interpretable map outputs.",
-    skills: ["Python Automation", "SQL Workflows", "Remote Sensing", "Climate Projections", "GIS Analysis", "Spatial Data Processing", "Environmental Modeling", "QA/QC Workflows", "Reproducible Pipelines", "Data Visualization"],
-    context: ["Remote Sensing of Environmental Change (ReSEC) group", "Supported climate scenario and lake ice research", "Integrated satellite and modeled environmental datasets"],
+    dateRange: "May 2021 to Sep 2021",
+    summary: "Built reproducible Python pipelines with embedded QA/QC checkpoints to turn raw climate model output into analysis-ready lake ice inputs, and produced publication-quality maps.",
+    description: "Led an NSERC-funded independent research project projecting lake ice phenology for Great Bear and Great Slave Lake under multiple RCP scenarios, running the CLIMoGrid thermodynamic model on MRI-CGCM3 climate outputs. Georeferenced open climate projection data into gridded spatial datasets using original model metadata. Built reproducible Python pipelines with QA/QC checkpoints and produced cartographic outputs of projected surface water and ice conditions.",
+    result: "Analysis-ready hydrological inputs and publication-quality maps of projected surface water and ice conditions.",
+    skills: ["Python Automation", "Georeferencing", "Reproducible Pipelines", "QA/QC Workflows", "Climate Projections", "Cartography"],
+    context: ["Remote Sensing of Environmental Change (ReSEC) group", "Supported climate scenario and lake ice research", "Integrated modeled climate datasets into GIS"],
     locations: [
       { name: "Great Bear Lake",  coords: [66, -121] },
       { name: "Great Slave Lake", coords: [61, -114] }
     ]
   },
   {
-    title: "Geospatial Field Assistant — Coastal & Environmental Monitoring",
+    title: "Geospatial Field Assistant: Coastal & Environmental Monitoring",
     category: "Applied GIS",
     subcategory: "Field Data Collection",
     year: 2021,
-    dateRange: "Jun 2021 – Oct 2021",
-    summary: "Collected and validated coastal and environmental spatial datasets using RTK GNSS, GPS, and surveying workflows. Integrated field observations into GIS analysis and mapping products supporting environmental monitoring initiatives.",
-    description: "Collected spatial data using RTK GNSS, GPS, and surveying tools for environmental monitoring at three Ontario shoreline sites. Performed QA/QC validation to ensure positional accuracy. Integrated field data into GIS workflows for downstream analysis and mapping. Supported preparation of technical reports and map-based deliverables.",
-    skills: ["RTK GNSS Surveying", "GPS Field Collection", "Spatial QA/QC", "Environmental Monitoring", "GIS Integration", "Field Data Validation", "Coastal Data Collection", "Mapping Workflows", "Technical Reporting", "Data Accuracy Assessment"],
-    context: ["Combined field surveying with GIS analysis", "Worked across multiple Ontario coastal environments", "Supported environmental and hydrological monitoring activities"],
+    dateRange: "Jun 2021 to Oct 2021",
+    summary: "Collected and validated coastal spatial data using RTK GNSS, GPS, and total stations, and integrated field observations into GIS analysis and mapping products for environmental monitoring.",
+    description: "Collected coastal morphology and surface data using RTK GNSS, GPS, and total stations at three Ontario shoreline sites, supporting longitudinal erosion and water resource monitoring. Performed QA/QC validation on positional and environmental data before GIS integration. Co-prepared technical reports and map-based deliverables for an external consulting client.",
+    result: "Validated field data integrated into GIS for erosion and water resource monitoring, with technical reports for a consulting client.",
+    skills: ["RTK GNSS Surveying", "Total Station", "Spatial QA/QC", "Coastal Monitoring", "GIS Integration", "Technical Reporting"],
+    context: ["Wilfrid Laurier University and Zuzek Inc.", "Worked across multiple Ontario coastal environments", "Supported environmental and hydrological monitoring activities"],
     locations: [
       { name: "Sauble Beach",     coords: [44.6296,  -81.26508] },
       { name: "Burlington Beach", coords: [43.31523, -79.80701] },
@@ -661,14 +666,15 @@ const projects = [
     ]
   },
   {
-    title: "Invasive Species Monitoring — Lake Bernard Phragmites",
+    title: "Invasive Species Monitoring: Lake Bernard Phragmites",
     category: "Applied GIS",
     subcategory: "Remote Sensing",
-    year: 2020,
-    dateRange: "Jan 2020 – Apr 2020",
-    summary: "Conducted GIS and remote sensing analysis of invasive Phragmites distribution using NDVI, image classification, and spatial statistics to support ecological monitoring and environmental management.",
-    description: "Conducted spatial analysis of Phragmites distribution using ArcGIS to assess ecological impacts. Applied NDVI analysis and image classification to evaluate vegetation health and invasive spread. Performed kernel density estimation, buffer analysis, and nearest neighbor analysis to model potential spread. Integrated UAV imagery and monitoring reports for stakeholder-focused summaries.",
-    skills: ["ArcGIS Spatial Analysis", "NDVI Analysis", "Image Classification", "UAV Imagery Integration", "Kernel Density Analysis", "Buffer Analysis", "Nearest Neighbor Analysis", "Ecological GIS Workflows", "Remote Sensing Interpretation", "Scientific Presentation"],
+    year: 2021,
+    dateRange: "May 2021",
+    summary: "Mapped invasive Phragmites distribution using NDVI, image classification, and spatial statistics to support ecological monitoring and management decisions.",
+    description: "Classified remote sensing imagery and Ontario GeoHub open data to distinguish vegetation, water, soil, and invasive Phragmites australis. Applied NDVI, kernel density estimation, buffer, and nearest-neighbour analysis to model potential spread, and produced cartographic products for stakeholder reporting.",
+    result: "Spread analysis supported field management decisions; findings presented by invitation at the Students of Phrag webinar series.",
+    skills: ["Image Classification", "NDVI Analysis", "Kernel Density Analysis", "Nearest-Neighbour Analysis", "UAV Imagery", "Stakeholder Reporting"],
     context: ["Great Lakes Phragmites Collaborative project", "Combined remote sensing with ecological assessment", "Presented findings through stakeholder-oriented communication"],
     links: [
       { url: "https://www.youtube.com/watch?v=5Io_79IMANw", label: "Presentation Video" }
@@ -687,6 +693,52 @@ const awards = [
   { year: 2022, title: "Canadian Association of Geographers Undergraduate Award", body: "CAG", note: "Presented to outstanding graduating students with a Geography honours/major at a national level." },
   { year: 2021, title: "NSERC Undergraduate Student Research Award", body: "NSERC", note: "Received funding for undergraduate thesis research on lake ice projections based on climate projections." }
 ];
+
+/* ════════════════════════════════════════════
+   SKILLS DATA
+   e: keywords matched against project titles (click a skill to open its project)
+   Skills with no project get a dashed border and a note.
+════════════════════════════════════════════ */
+const skillGroups = [
+  { label: "Core: used in project and job work", cls: "expert", skills: [
+    { n: "ArcGIS Pro", e: ["ERA5", "Student Planner", "Phragmites"] },
+    { n: "QGIS", e: ["ERA5"] },
+    { n: "Remote sensing & image classification", e: ["Phragmites", "ERA5", "ReSEC"] },
+    { n: "Spatial analysis", e: ["Student Planner", "Phragmites"] },
+    { n: "Cartography", e: ["ERA5", "Student Planner"] },
+    { n: "Python (ArcPy, pandas)", e: ["ReSEC", "ERA5"] },
+    { n: "SQL", e: ["Research Analyst"] },
+    { n: "QA/QC workflows", e: ["Field Assistant", "ReSEC"] },
+    { n: "RTK GNSS & field data collection", e: ["Field Assistant"] },
+    { n: "Spatial statistics (MBE, MAE)", e: ["ERA5"] }
+  ]},
+  { label: "Working knowledge", cls: "proficient", skills: [
+    { n: "Geodatabase design & metadata", e: ["Student Planner"] },
+    { n: "UAV imagery integration", e: ["Phragmites"] },
+    { n: "Leaflet.js & GeoJSON", e: [], note: "Built into this portfolio" },
+    { n: "ArcGIS Online & Enterprise", e: [] },
+    { n: "Survey123", e: [], note: "Esri certificate; demo project in progress" },
+    { n: "Experience Builder", e: [], note: "Esri certificate; demo project in progress" },
+    { n: "FME", e: [], note: "LinkedIn Learning certificate" },
+    { n: "Power BI", e: [], note: "Microsoft Press certificate" }
+  ]},
+  { label: "Currently building", cls: "familiar", skills: [
+    { n: "Field Maps & Dashboards", e: [] },
+    { n: "JavaScript", e: [] },
+    { n: "GeoAI / deep learning in ArcGIS Pro", e: [], note: "Esri course completed; applying it to a project" }
+  ]}
+];
+
+/* ════════════════════════════════════════════
+   EMPLOYER / AUDIENCE PRESET LINKS
+   Share  .../GIS_Portfolio/#field   .../#data   .../#planning   .../#water
+════════════════════════════════════════════ */
+const presets = {
+  field:    { key: "Field Assistant", text: "Field-to-map work: RTK GNSS, GPS, and total station monitoring at three Ontario shoreline sites." },
+  data:     { key: "ReSEC",           text: "Data pipelines: reproducible Python workflows with embedded QA/QC, built for analysis-ready outputs." },
+  planning: { key: "Student Planner", text: "Applied GIS for municipal planning: maps and findings presented to planning staff." },
+  water:    { key: "ERA5",            text: "Surface water and lake ice analysis across seven Canadian lakes over 20 years." }
+};
 
 /* ════════════════════════════════════════════
    CONSTANTS
@@ -771,6 +823,8 @@ function applyPolygonsFromCache() {
       project.geoLayers.push(poly);
     });
   });
+  // Polygons are ready, so a preset link can now zoom to the right project
+  applyPreset();
 }
 
 /* ── Build sidebar + markers ── */
@@ -780,13 +834,13 @@ projects.forEach(project => {
 
   // Sidebar entry (simplified)
   const div = document.createElement("div");
-  
+
   div.innerHTML = `
     <span class="project-link">${project.title}</span>
   `;
-  
+
   div.querySelector(".project-link").onclick = () => selectProject(project);
-  
+
   listDiv.appendChild(div);
 
   const ul = document.createElement("ul");
@@ -877,6 +931,10 @@ function openPanel(project) {
     ? `<tr><td>Context</td><td><ul style="margin:0; padding-left:1.2em;">${project.context.map(c => `<li>${c}</li>`).join("")}</ul></td></tr>`
     : "";
 
+  const resultHTML = project.result
+    ? `<tr><td>Result</td><td>${project.result}</td></tr>`
+    : "";
+
   let linkRow = "";
   if (project.links && project.links.length > 0) {
     linkRow = project.links.map(link => {
@@ -885,8 +943,8 @@ function openPanel(project) {
       return `
         <div style="border-top:1px solid #ddd;">
           <div style="padding:8px 12px; font-size:12px; font-weight:bold;">${link.label}</div>
-          <a class="arcgis-popup-link" href="${link.url}" target="_blank">🔗 Open in New Tab →</a>
-          <button class="preview-btn" onclick="openViewer('${link.url}','${safeTitle} — ${safeLabel}')">▶ Preview Below</button>
+          <a class="arcgis-popup-link" href="${link.url}" target="_blank" rel="noopener">🔗 Open in New Tab →</a>
+          <button class="preview-btn" onclick="openViewer('${link.url}','${safeTitle}: ${safeLabel}')">▶ Preview Below</button>
         </div>`;
     }).join("");
   } else {
@@ -904,6 +962,7 @@ function openPanel(project) {
       <table class="arcgis-table">
         <tr><td>Period</td><td>${project.dateRange || project.year}</td></tr>
         <tr><td>Details</td><td>${project.description}</td></tr>
+        ${resultHTML}
         <tr><td>Skills</td><td>${skillsHTML}</td></tr>
         ${contextHTML}
         <tr><td>Locations</td><td><ul style="margin:0; padding-left:1.2em;">${locList}</ul></td></tr>
@@ -919,7 +978,7 @@ function closePanel() {
 
 
 /* ════════════════════════════════════════════
-   TIMELINE  (Feature 2)
+   TIMELINE
 ════════════════════════════════════════════ */
 function buildTimeline() {
   const container = document.getElementById("tl-items");
@@ -945,11 +1004,11 @@ function buildTimeline() {
       document.querySelectorAll(".tl-item").forEach(el => {
         el.classList.remove("selected");
       });
-      
+
       item.classList.add("selected");
-      
+
       showTimelineDetail(project);
-      
+
       selectProject(project);
     };
     container.appendChild(item);
@@ -962,7 +1021,7 @@ function showTimelineDetail(project) {
   const color   = CATEGORY_COLORS[project.category].color;
   const skillPills = (project.skills || []).map(s => `<span class="skill-tag">${s}</span>`).join(" ");
   const linkList = (project.links || []).map(l =>
-    `<a href="${l.url}" target="_blank" style="color:#0079c1; font-size:12px; display:block; margin-top:4px;">🔗 ${l.label}</a>`
+    `<a href="${l.url}" target="_blank" rel="noopener" style="color:#0079c1; font-size:12px; display:block; margin-top:4px;">🔗 ${l.label}</a>`
   ).join("");
   const contextList = (project.context || []).length > 0
     ? `<ul style="margin:8px 0 0; padding-left:1.3em; font-size:11px; color:#666;">${project.context.map(c => `<li>${c}</li>`).join("")}</ul>`
@@ -977,6 +1036,7 @@ function showTimelineDetail(project) {
     <div style="font-weight:bold; font-size:14px; margin-bottom:6px;">${project.title}</div>
     ${project.summary ? `<div style="font-size:12px; color:#444; margin-bottom:8px; font-style:italic; line-height:1.5;">${project.summary}</div>` : ""}
     <div style="font-size:12px; color:#555; margin-bottom:10px;">${project.description}</div>
+    ${project.result ? `<div style="font-size:12px; color:#333; margin-bottom:10px;"><b>Result:</b> ${project.result}</div>` : ""}
     <div style="margin-bottom:6px;">${skillPills}</div>
     ${contextList}
     ${linkList}`;
@@ -986,20 +1046,18 @@ function showTimelineDetail(project) {
 buildTimeline();
 
 /* ════════════════════════════════════════════
-   CAREER AT A GLANCE — computed from projects/awards
+   CAREER AT A GLANCE
+   Figures come from the thesis and resume, so they are stated directly.
 ════════════════════════════════════════════ */
 function buildStatsStrip() {
   const strip = document.getElementById("statsStrip");
   if (!strip) return;
 
-  const years = projects.map(p => p.year);
-  const totalLocations = projects.reduce((sum, p) => sum + p.locations.length, 0);
-
   const stats = [
-    { value: projects.length,                         label: "Projects & Roles",        color: "#38C6D0" },
-    { value: `${Math.min(...years)}–${Math.max(...years)}`, label: "Years Active",       color: "#90E2BF" },
-    { value: awards.length,                            label: "Awards & Recognitions",   color: "#F19FB4" },
-    { value: totalLocations,                            label: "Study Sites Mapped",     color: "#38C6D0" }
+    { value: "7",       label: "Canadian lakes assessed",            color: "#38C6D0" },
+    { value: "20 yrs",  label: "of satellite and reanalysis data",   color: "#90E2BF" },
+    { value: awards.length, label: "Awards & Recognitions",         color: "#F19FB4" },
+    { value: "$47K",    label: "funding secured (EGSA)",             color: "#38C6D0" }
   ];
 
   strip.innerHTML = stats.map(s => `
@@ -1011,9 +1069,47 @@ function buildStatsStrip() {
 buildStatsStrip();
 
 /* ════════════════════════════════════════════
+   SKILLS SECTION
+════════════════════════════════════════════ */
+function buildSkills() {
+  const grid = document.getElementById("skillsGrid");
+  if (!grid) return;
+  skillGroups.forEach(g => {
+    const h = document.createElement("h3");
+    h.style.marginTop = "18px";
+    h.textContent = g.label;
+    grid.appendChild(h);
+    const wrap = document.createElement("div");
+    g.skills.forEach(s => {
+      const pill = document.createElement("span");
+      pill.className = "skill-pill " + g.cls;
+      pill.textContent = s.n;
+      const hits = (s.e || []).map(k => projects.find(p => p.title.includes(k))).filter(Boolean);
+      if (hits.length) {
+        const open = () => {
+          selectProject(hits[0]);
+          document.getElementById("dashboardWrap").scrollIntoView({ behavior: "smooth" });
+        };
+        pill.style.cursor = "pointer";
+        pill.setAttribute("role", "button");
+        pill.tabIndex = 0;
+        pill.title = "Used in: " + hits.map(p => p.title).join("; ");
+        pill.onclick = open;
+        pill.onkeydown = ev => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); open(); } };
+      } else {
+        pill.style.borderStyle = "dashed";
+        pill.title = s.note || "Certificate-backed; project in progress";
+      }
+      wrap.appendChild(pill);
+    });
+    grid.appendChild(wrap);
+  });
+}
+buildSkills();
+
+/* ════════════════════════════════════════════
    WHERE THE ANALYSIS MADE A DIFFERENCE
-   Bullets are drawn straight from each project's own
-   description/context fields above — no new claims added.
+   Bullets are drawn from each project's own fields above.
 ════════════════════════════════════════════ */
 function buildImpactGrid() {
   const grid = document.getElementById("impactGrid");
@@ -1021,7 +1117,7 @@ function buildImpactGrid() {
 
   const highlights = [
     {
-      title: "MSc Thesis — ERA5-Land Lake Ice Assessment",
+      title: "MSc Thesis: ERA5-Land Lake Ice Assessment",
       tag: "Model Evaluation",
       bullets: [
         "Quantified spatial and temporal biases using MBE and MAE across freeze-up and break-up periods",
@@ -1029,19 +1125,19 @@ function buildImpactGrid() {
       ]
     },
     {
-      title: "Invasive Species Monitoring — Lake Bernard Phragmites",
+      title: "Invasive Species Monitoring: Lake Bernard Phragmites",
       tag: "Field & Ecological Decisions",
       bullets: [
-        "Modelled potential invasive spread using kernel density, buffer, and nearest-neighbor analysis",
-        "Turned UAV imagery and NDVI results into stakeholder-focused summaries"
+        "Modelled potential invasive spread using kernel density, buffer, and nearest-neighbour analysis",
+        "Turned classified imagery and NDVI results into stakeholder reporting; presented by invitation at the Students of Phrag webinar series"
       ]
     },
     {
-      title: "Student Planner — City of Cambridge Housing Policy",
+      title: "Student Planner: City of Cambridge Housing Policy",
       tag: "Policy & Planning",
       bullets: [
         "Integrated GIS and census data to support housing and development planning maps",
-        "Cartographic outputs supported evidence-based planning decisions; recognized with the Paul & Louise Puopolo Award"
+        "Presented maps and findings to planning staff; recognized with the Paul & Louise Puopolo Award"
       ]
     }
   ];
@@ -1058,7 +1154,21 @@ function buildImpactGrid() {
 buildImpactGrid();
 
 /* ════════════════════════════════════════════
-   VIEW TOGGLE  (Map ↔ Timeline)
+   PRESET LINKS (#field, #data, #planning, #water)
+════════════════════════════════════════════ */
+function applyPreset() {
+  const p = presets[location.hash.replace("#", "")];
+  if (!p) return;
+  const banner = document.getElementById("presetBanner");
+  banner.textContent = p.text;
+  banner.style.display = "block";
+  const proj = projects.find(x => x.title.includes(p.key));
+  if (proj) selectProject(proj);
+}
+window.addEventListener("hashchange", applyPreset);
+
+/* ════════════════════════════════════════════
+   VIEW TOGGLE  (Map and Timeline)
 ════════════════════════════════════════════ */
 window.switchView = function(view) {
   const mapRow   = document.getElementById("mapRow");
@@ -1081,7 +1191,7 @@ window.switchView = function(view) {
 };
 
 /* ════════════════════════════════════════════
-   PDF EXPORT  (Feature 3)
+   PDF EXPORT
 ════════════════════════════════════════════ */
 window.exportPDF = function() {
   const rows = projects
@@ -1100,6 +1210,7 @@ window.exportPDF = function() {
           <div style="font-size:11px; color:#888; margin-bottom:6px;">${p.category}${p.subcategory ? " · " + p.subcategory : ""} · ${p.dateRange || p.year}</div>
           ${p.summary ? `<div style="font-size:12px; color:#333; font-style:italic; margin-bottom:6px; line-height:1.5;">${p.summary}</div>` : ""}
           <div style="font-size:12px; color:#444; margin-bottom:6px;">${p.description}</div>
+          ${p.result ? `<div style="font-size:12px; color:#333; margin-bottom:6px;"><b>Result:</b> ${p.result}</div>` : ""}
           <div style="font-size:11px; color:#666; margin-bottom:4px;"><b>Skills:</b> ${skills}</div>
           <div style="font-size:11px; color:#666; margin-bottom:4px;"><b>Locations:</b> ${locs}</div>
           ${context ? `<div style="font-size:11px; color:#666;"><b>Context:</b>${context}</div>` : ""}
@@ -1125,15 +1236,16 @@ window.exportPDF = function() {
       @media print { body { padding: 16px; } }
     </style>
     </head><body>
-    <h1>GIS & Spatial Data Portfolio</h1>
+    <h1>Ariana Mansingh: GIS & Spatial Data Portfolio</h1>
     <p>Environmental & Geospatial Analyst | Spatial Analysis | Climate Data | Environmental Systems<br>
-    Eligible for registration as Geoscientist-in-Training (GIT) — Engineers and Geoscientists BC</p>
+    Pursuing Geoscientist-in-Training (GIT) registration with Professional Geoscientists Ontario (PGO)<br>
+    ariana.mansingh.pro@gmail.com | linkedin.com/in/ariana-mansingh</p>
     <hr style="margin: 16px 0 20px;">
     <h2>Projects & Experience</h2>
     ${rows}
     <h2>Awards & Recognition</h2>
     ${awardRows}
-    <p style="font-size:10px; color:#aaa; margin-top:24px; text-align:center;">Generated from interactive portfolio</p>
+    <p style="font-size:10px; color:#aaa; margin-top:24px; text-align:center;">Generated from interactive portfolio: ari-ana-m.github.io/GIS_Portfolio</p>
     </body></html>`;
 
   const win = window.open("", "_blank");
